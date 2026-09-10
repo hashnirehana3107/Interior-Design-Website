@@ -1,0 +1,510 @@
+/* ServiceCard.css — Card & Detail Modal styling */
+
+.sc-card {
+    background-color: #ffffff;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.sc-card:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    transform: translateY(-4px);
+}
+
+/* ── Card Image & Hover Overlay ── */
+.sc-img {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.sc-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    display: block;
+}
+
+.sc-card:hover .sc-img img {
+    transform: scale(1.06);
+}
+
+.sc-img-hover-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(26, 25, 23, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sc-img:hover .sc-img-hover-overlay {
+    opacity: 1;
+}
+
+.sc-img-hover-overlay span {
+    color: #ffffff;
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    background: rgba(179, 128, 88, 0.9);
+    padding: 8px 16px;
+    border-radius: 2px;
+    text-transform: uppercase;
+}
+
+/* ── Content ── */
+.sc-content {
+    padding: 35px 25px 25px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/* Floating icon circle */
+.sc-icon-wrap {
+    position: absolute;
+    top: -25px;
+    left: 25px;
+    width: 50px;
+    height: 50px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #B38058;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.sc-content h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 19px;
+    font-weight: 400;
+    color: #222222;
+    margin: 0 0 10px;
+    line-height: 1.3;
+}
+
+.sc-content p {
+    font-size: 13px;
+    color: #666666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* ── Learn More Button ── */
+.sc-link {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #B38058;
+    letter-spacing: 1.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: gap 0.3s ease, color 0.2s ease;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: auto;
+}
+
+.sc-link:hover {
+    gap: 13px;
+    color: #9a6d45;
+}
+
+/* ════════════════════════════════════════
+   MODAL POPUP STYLES
+   ════════════════════════════════════════ */
+
+.sc-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(12, 11, 10, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 4%;
+    animation: scModalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes scModalFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.sc-modal-container {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    max-height: 90vh;
+    background-color: #faf9f7;
+    border-radius: 6px;
+    overflow-y: auto;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(179, 128, 88, 0.3);
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    animation: scModalPop 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes scModalPop {
+    from {
+        transform: scale(0.94) translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Close button */
+.sc-modal-close-btn {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid #e0ddd6;
+    color: #333333;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    z-index: 10;
+}
+
+.sc-modal-close-btn:hover {
+    background: #B38058;
+    color: #ffffff;
+    border-color: #B38058;
+    transform: rotate(90deg);
+}
+
+/* Modal Header */
+.sc-modal-header {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eae6df;
+}
+
+.sc-modal-kicker {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #B38058;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.sc-modal-title {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: #1a1a1a;
+    margin: 0;
+    line-height: 1.15;
+}
+
+/* Modal Body 2-Column Grid */
+.sc-modal-body {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+/* ── Left Column: 5-Image Carousel ── */
+.sc-carousel-col {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sc-carousel-main {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #1a1a19;
+}
+
+.sc-carousel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.4s ease;
+}
+
+/* Carousel Arrow Controls */
+.sc-carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(20, 20, 20, 0.65);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 5;
+}
+
+.sc-carousel-arrow:hover {
+    background: #B38058;
+    border-color: #B38058;
+}
+
+.sc-carousel-arrow.left {
+    left: 15px;
+}
+
+.sc-carousel-arrow.right {
+    right: 15px;
+}
+
+.sc-carousel-counter {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background: rgba(15, 15, 15, 0.75);
+    backdrop-filter: blur(4px);
+    color: #ffffff;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Thumbnails Strip (5 Images) */
+.sc-thumbnails-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+.sc-thumb-btn {
+    height: 70px;
+    border-radius: 3px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.65;
+}
+
+.sc-thumb-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.sc-thumb-btn:hover {
+    opacity: 1;
+}
+
+.sc-thumb-btn.active {
+    border-color: #B38058;
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(179, 128, 88, 0.4);
+}
+
+/* ── Right Column: Info & Features ── */
+.sc-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.sc-info-block h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #B38058;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+}
+
+.sc-full-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #444444;
+    margin: 0;
+}
+
+/* Highlights Checklist */
+.sc-highlights-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sc-highlights-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 13.5px;
+    color: #333333;
+    line-height: 1.5;
+}
+
+.sc-check-icon {
+    color: #B38058;
+    font-size: 17px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Deliverables Box */
+.sc-deliverables-box {
+    background-color: #ffffff;
+    border: 1px solid #eae6df;
+    padding: 16px 20px;
+    border-radius: 4px;
+    border-left: 3px solid #B38058;
+}
+
+.sc-deliverables-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #777777;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.sc-deliverables-text {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+/* Modal Action Buttons */
+.sc-modal-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.sc-btn-gold {
+    background-color: #B38058;
+    color: #ffffff;
+    padding: 14px 28px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    border: none;
+    border-radius: 2px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.sc-btn-gold:hover {
+    background-color: #9a6d45;
+    color: #ffffff;
+    box-shadow: 0 5px 15px rgba(179, 128, 88, 0.3);
+}
+
+.sc-btn-outline {
+    background: transparent;
+    border: 1px solid #ccc;
+    color: #555;
+    padding: 14px 24px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.sc-btn-outline:hover {
+    border-color: #1a1a1a;
+    color: #1a1a1a;
+}
+
+/* Responsive Modal */
+@media (max-width: 900px) {
+    .sc-modal-body {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .sc-modal-container {
+        padding: 25px;
+    }
+
+    .sc-carousel-main {
+        height: 280px;
+    }
+
+    .sc-thumb-btn {
+        height: 55px;
+    }
+
+    .sc-modal-title {
+        font-size: 28px;
+    }
+}

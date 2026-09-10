@@ -1,0 +1,564 @@
+/* src/pages/About.css */
+
+.about-page {
+    font-family: 'Montserrat', sans-serif;
+    color: #333333;
+    background-color: #faf9f7;
+}
+
+/* 1. Hero Section */
+.about-hero {
+    position: relative;
+    width: 100%;
+    height: 48vh;
+    min-height: 380px;
+    background-size: cover;
+    background-position: center;
+}
+
+.about-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, rgba(20, 20, 20, 0.9) 0%, rgba(20, 20, 20, 0.5) 100%);
+    display: flex;
+    align-items: center;
+    padding: 0 8%;
+}
+
+.about-hero-content {
+    max-width: 800px;
+    color: #ffffff;
+}
+
+.about-hero-content .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #c48b59;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.about-hero-content h1 {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: 44px;
+    font-weight: 400;
+    line-height: 1.18;
+    color: #ffffff;
+    margin: 0 0 20px;
+}
+
+.highlight-text {
+    color: #c48b59;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-weight: 400;
+}
+
+.about-hero-content p {
+    font-size: 14.5px;
+    color: #cccccc;
+    line-height: 1.65;
+    max-width: 500px;
+    margin: 0 0 20px;
+}
+
+/* 2. Who We Are */
+.about-who-section,
+.about-philosophy-section {
+    display: flex;
+    align-items: stretch;
+    padding: 60px 10% 30px;
+    gap: 80px;
+}
+
+.about-who-content,
+.about-philosophy-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.section-subtitle {
+    font-size: 11px;
+    font-weight: 700;
+    color: #B38058;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.about-who-content h2,
+.about-philosophy-content h2 {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: 42px;
+    font-weight: 400;
+    color: #1a1a1a;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.about-who-content p,
+.about-philosophy-content p {
+    font-size: 14.5px;
+    color: #555555;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.about-who-image,
+.about-philosophy-image {
+    flex: 1;
+}
+
+.about-who-image img,
+.about-philosophy-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.btn-outline-gold {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 30px;
+    border: 1px solid #B38058;
+    color: #B38058;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    align-self: flex-start;
+    margin-top: 5px;
+    border-radius: 3px;
+}
+
+.btn-outline-gold:hover {
+    background-color: #B38058;
+    color: #ffffff;
+}
+
+.btn-icon {
+    font-size: 15px;
+}
+
+/* 3. Mission & Vision */
+.about-purpose-section {
+    padding: 30px 10% 60px;
+    background-color: #faf9f7;
+}
+
+.section-heading-center {
+    text-align: center;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.section-heading-center h2 {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: 42px;
+    font-weight: 400;
+    color: #1a1a1a;
+    margin-top: 10px;
+}
+
+.purpose-cards-container {
+    display: flex;
+    background-color: #f7f5f0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.purpose-card {
+    flex: 1;
+    padding: 50px 60px;
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.purpose-cards-container .purpose-card:first-child {
+    border-right: 1px solid #e8e6e1;
+}
+
+.purpose-icon {
+    font-size: 32px;
+    color: #c48b59;
+    background-color: #1a1a1a;
+    padding: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 80px;
+    min-height: 80px;
+}
+
+.purpose-text h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+}
+
+.purpose-text p {
+    font-size: 14px;
+    color: #555555;
+    line-height: 1.7;
+}
+
+/* 4. Achievements */
+.about-achievements-section {
+    background-color: #1f1d1b;
+    padding: 60px 10%;
+    text-align: center;
+    color: #ffffff;
+}
+
+.dark-section-subtitle {
+    font-size: 11px;
+    font-weight: 700;
+    color: #B38058;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.about-achievements-section h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 36px;
+    font-weight: 300;
+    margin: 10px 0 40px;
+}
+
+.achievements-grid {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.achievement-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.achievement-icon {
+    font-size: 38px;
+    color: #B38058;
+    font-weight: 100;
+}
+
+.achievement-item h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 34px;
+    font-weight: 300;
+    color: #f7f7f7;
+    margin: 5px 0 0;
+}
+
+.achievement-item p {
+    font-size: 10.5px;
+    color: #aaaaaa;
+    font-weight: 500;
+}
+
+/* 5. Philosophy */
+.about-philosophy-section {
+    background-color: #ffffff;
+}
+
+.philosophy-list {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.philosophy-list li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: #333333;
+}
+
+.check-icon {
+    color: #B38058;
+    font-size: 18px;
+}
+
+/* 6. Team */
+.about-team-section {
+    background-color: #1a1a1a;
+    padding: 65px 10%;
+    color: #ffffff;
+}
+
+.about-team-row {
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+.team-left-col {
+    flex: 0 0 32%;
+}
+
+.team-left-col h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 42px;
+    font-weight: 300;
+    margin: 15px 0 25px;
+    line-height: 1.2;
+}
+
+.team-left-col p {
+    font-size: 14px;
+    color: #bbbbbb;
+    line-height: 1.7;
+}
+
+.team-right-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.team-action-container {
+    align-self: flex-end;
+    margin-bottom: 25px;
+}
+
+.team-action-container .btn-outline-gold {
+    color: #ffffff;
+    border: 1px solid rgba(179, 128, 88, 0.4);
+}
+
+.team-action-container .btn-outline-gold:hover {
+    background-color: transparent;
+    border: 1px solid rgba(179, 128, 88, 1);
+}
+
+.team-traits-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.trait-card {
+    background: transparent;
+    padding: 10px 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.trait-icon {
+    font-size: 48px;
+    color: #B38058;
+    margin-bottom: 25px;
+}
+
+.trait-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+.trait-card p {
+    font-size: 12px;
+    color: #888888;
+    line-height: 1.6;
+}
+
+/* 7. CTA Strip */
+.about-cta-strip {
+    background-color: #f7f6f2;
+    /* Off-white matching image 1 */
+    padding: 50px 10%;
+    display: flex;
+    justify-content: center;
+}
+
+.cta-strip-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.cta-strip-left {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.cta-strip-icon {
+    font-size: 60px;
+    color: #B38058;
+}
+
+.cta-vertical-divider {
+    width: 2px;
+    height: 70px;
+    background-color: #eaeaea;
+    margin: 0 10px 0 5px;
+}
+
+.cta-strip-subtitle {
+    font-size: 11px;
+    font-weight: 700;
+    color: #888888;
+    letter-spacing: 1.5px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.cta-strip-text h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 34px;
+    font-weight: 400;
+    color: #1a1a1a;
+}
+
+.btn-solid-gold {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 40px;
+    background-color: #B38058;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.btn-solid-gold:hover {
+    background-color: #9C6C47;
+}
+
+/* Responsive Styles */
+@media (max-width: 1300px) {
+    .team-traits-grid {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 1200px) {
+
+    .about-who-section,
+    .about-philosophy-section {
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    .about-team-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 40px;
+    }
+
+    .team-left-col {
+        flex: 1;
+        width: 100%;
+    }
+
+    .team-action-container {
+        align-self: flex-start;
+    }
+
+    .cta-strip-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .cta-strip-left {
+        flex-direction: column;
+    }
+
+    .cta-vertical-divider {
+        display: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .purpose-cards-container {
+        flex-direction: column;
+    }
+
+    .purpose-card {
+        max-width: 100%;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .achievements-grid {
+        gap: 50px 30px;
+    }
+
+    .team-traits-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .achievement-item {
+        width: 40%;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .about-hero-overlay,
+    .about-who-section,
+    .about-purpose-section,
+    .about-achievements-section,
+    .about-philosophy-section,
+    .about-team-section {
+        padding-left: 6%;
+        padding-right: 6%;
+    }
+
+    .about-hero-content h1 {
+        font-size: 40px;
+    }
+
+    .cta-strip-inner {
+        max-width: 90%;
+        padding: 40px 30px;
+    }
+
+    .team-traits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .achievement-item {
+        width: 100%;
+    }
+}

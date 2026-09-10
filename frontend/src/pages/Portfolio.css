@@ -1,0 +1,385 @@
+/* src/pages/Portfolio.css */
+
+.portfolio-page {
+    font-family: 'Montserrat', sans-serif;
+    color: #333333;
+    background-color: #faf9f7;
+}
+
+/* 1. Hero Section */
+.portfolio-hero {
+    position: relative;
+    width: 100%;
+    height: 48vh;
+    min-height: 380px;
+    background-size: cover;
+    background-position: center;
+}
+
+.portfolio-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, rgba(20, 18, 16, 0.92) 0%, rgba(20, 18, 16, 0.65) 100%);
+    display: flex;
+    align-items: center;
+    padding: 0 8%;
+}
+
+.portfolio-hero-content {
+    max-width: 800px;
+    color: #ffffff;
+}
+
+.portfolio-kicker {
+    font-size: 11px;
+    font-weight: 700;
+    color: #c48b59;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.portfolio-hero-content h1 {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: 44px;
+    font-weight: 400;
+    line-height: 1.18;
+    color: #ffffff;
+    margin: 0 0 20px;
+}
+
+.portfolio-hero-content .gold-text {
+    color: #c48b59;
+}
+
+.portfolio-hero-content p {
+    font-size: 14.5px;
+    color: #cccccc;
+    line-height: 1.65;
+    margin: 0;
+}
+
+/* 2. Content Section & Filter Tabs */
+.portfolio-content-section {
+    background-color: #faf9f7;
+    padding-bottom: 80px;
+}
+
+.filter-tabs-container {
+    padding: 40px 8% 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.filter-tabs-list {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.filter-tab-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: #444444;
+    padding: 10px 24px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.filter-tab-btn:hover {
+    color: #c48b59;
+}
+
+.filter-tab-btn.active {
+    background-color: #c48b59;
+    color: #ffffff;
+    border-color: #c48b59;
+    font-weight: 700;
+}
+
+/* Projects Grid */
+.portfolio-grid-container {
+    padding: 10px 8% 0;
+}
+
+.portfolio-projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.portfolio-card-item {
+    background-color: #f7f5f0;
+    border: 1px solid #e8e4db;
+    border-radius: 2px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.portfolio-card-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.07);
+}
+
+.portfolio-card-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 260px;
+    overflow: hidden;
+}
+
+.portfolio-card-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.portfolio-card-item:hover .portfolio-card-img-wrap img {
+    transform: scale(1.06);
+}
+
+.project-badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #1a1917;
+    color: #c48b59;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 14px;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 1.5px;
+}
+
+.portfolio-card-body {
+    padding: 30px 25px 26px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.project-title {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: #0e2439;
+    margin: 0 0 6px;
+    line-height: 1.25;
+}
+
+.project-category-tag {
+    font-size: 10px;
+    font-weight: 700;
+    color: #c48b59;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.project-desc {
+    font-size: 13px;
+    color: #6a7482;
+    line-height: 1.55;
+    margin: 0 0 25px;
+    flex: 1;
+}
+
+.project-view-link {
+    font-size: 11px;
+    font-weight: 700;
+    color: #c48b59;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    transition: gap 0.3s ease;
+}
+
+.project-view-link:hover {
+    gap: 12px;
+}
+
+.btn-arrow-icon {
+    font-size: 13px;
+}
+
+/* View More Button Container */
+.view-more-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.btn-view-more {
+    background-color: transparent;
+    border: 1px solid #c48b59;
+    color: #c48b59;
+    padding: 13px 32px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-radius: 2px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-view-more:hover {
+    background-color: #c48b59;
+    color: #ffffff;
+}
+
+/* 3. Pre-Footer CTA Strip */
+.portfolio-cta-strip {
+    background-color: #1a1a19;
+    padding: 35px 8%;
+    color: #ffffff;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.cta-strip-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.cta-strip-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex: 1.5;
+}
+
+.cta-icon-box {
+    width: 68px;
+    height: 68px;
+    border: 1.5px solid #c48b59;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 28px;
+    flex-shrink: 0;
+}
+
+.cta-strip-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.cta-strip-subtitle {
+    font-size: 10px;
+    font-weight: 700;
+    color: #c48b59;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.cta-strip-title {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: 27px;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 1.25;
+    margin: 0;
+}
+
+.cta-strip-middle {
+    flex: 1.2;
+}
+
+.cta-strip-middle p {
+    font-size: 12.5px;
+    color: #d1d1d1;
+    line-height: 1.65;
+    margin: 0;
+}
+
+.cta-strip-right {
+    flex-shrink: 0;
+}
+
+.cta-strip-right .btn-solid-gold {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13.5px 28px;
+    background-color: #c48b59;
+    border: 1px solid #c48b59;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.cta-strip-right .btn-solid-gold:hover {
+    background-color: #aa7344;
+    border-color: #aa7344;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    .portfolio-projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cta-strip-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 25px;
+    }
+
+    .cta-strip-left {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .portfolio-projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .portfolio-hero-content h1 {
+        font-size: 34px;
+    }
+
+    .filter-tabs-list {
+        gap: 8px;
+    }
+
+    .filter-tab-btn {
+        padding: 8px 16px;
+        font-size: 10px;
+    }
+}

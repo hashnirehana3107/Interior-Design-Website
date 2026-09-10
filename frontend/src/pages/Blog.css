@@ -1,0 +1,755 @@
+/* ════════════════════════════════════════
+   Blog.css  —  matches Image 2 design
+   Layout: hero → [main-col | sidebar] 2-col
+   ════════════════════════════════════════ */
+
+/* ── Page wrapper ── */
+.blog-page {
+    width: 100%;
+    background-color: #f7f6f2;
+    overflow-x: hidden;
+}
+
+/* ════════════════════════════════════════
+   1. Hero Section
+   ════════════════════════════════════════ */
+.blog-hero {
+    position: relative;
+    width: 100%;
+    height: 48vh;
+    min-height: 380px;
+    background-size: cover;
+    background-position: center;
+}
+
+.blog-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+            rgba(18, 16, 14, 0.96) 0%,
+            rgba(18, 16, 14, 0.85) 45%,
+            rgba(18, 16, 14, 0.25) 80%,
+            transparent 100%);
+    display: flex;
+    align-items: center;
+    padding: 0 8%;
+}
+
+.blog-hero-content {
+    max-width: 800px;
+    color: #fff;
+}
+
+.blog-kicker {
+    font-size: 11px;
+    font-weight: 700;
+    color: #c48b59;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.blog-title {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: 44px;
+    color: #fff;
+    line-height: 1.18;
+    margin: 0 0 20px;
+    font-weight: 400;
+}
+
+.gold-text-italic {
+    color: #c48b59;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+}
+
+.hero-gold-line {
+    width: 60px;
+    height: 1.5px;
+    background-color: #c48b59;
+    margin-bottom: 20px;
+}
+
+.blog-desc {
+    color: #ccc;
+    font-size: 14.5px;
+    line-height: 1.65;
+    max-width: 500px;
+}
+
+/* ════════════════════════════════════════
+   2. Main Container + 2-column layout
+   ════════════════════════════════════════ */
+.blog-main-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 60px 4% 80px;
+}
+
+/* Persistent 2-col flex row */
+.blog-layout {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+/* ── Left: main content column ── */
+.blog-main-col {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+/* ════════════════════════════════════════
+   3. Featured Article Card
+   ════════════════════════════════════════ */
+.featured-article-card {
+    background-color: #ffffff;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+    border: 1px solid #efebea;
+}
+
+.featured-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 420px;
+}
+
+.featured-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.article-badge-gold {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    background-color: #ba8c53;
+    color: #fff;
+    padding: 7px 14px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    border-radius: 2px;
+    text-transform: uppercase;
+}
+
+.featured-content {
+    padding: 30px 35px 35px;
+}
+
+.article-meta {
+    font-size: 10px;
+    font-weight: 600;
+    color: #888;
+    letter-spacing: 1.5px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+}
+
+.meta-dot {
+    margin: 0 6px;
+    color: #bbb;
+}
+
+.featured-content h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 500;
+    color: #2b2b2b;
+    line-height: 1.25;
+    margin-bottom: 14px;
+}
+
+.featured-content p {
+    font-size: 13.5px;
+    color: #555;
+    line-height: 1.65;
+    margin-bottom: 22px;
+}
+
+/* ════════════════════════════════════════
+   4. Section Label + Read-more btn
+   ════════════════════════════════════════ */
+.section-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #c48b59;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: inline-block;
+    line-height: 1;
+}
+
+.btn-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #ba8c53;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+    transition: gap 0.3s;
+    text-transform: uppercase;
+    margin-top: auto;
+}
+
+.btn-read-more:hover {
+    gap: 13px;
+}
+
+.read-more-icon {
+    font-size: 14px;
+}
+
+/* ════════════════════════════════════════
+   5. All Articles Section
+   ════════════════════════════════════════ */
+.blog-articles-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.all-articles-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e6e2de;
+}
+
+/* Sort dropdown */
+.sort-dropdown {
+    position: relative;
+}
+
+.sort-btn {
+    background: transparent;
+    border: none;
+    font-size: 10px;
+    font-weight: 700;
+    color: #555;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-transform: uppercase;
+    font-family: 'Outfit', sans-serif;
+}
+
+.sort-icon {
+    font-size: 14px;
+    transition: transform 0.3s;
+}
+
+.sort-icon.rotated {
+    transform: rotate(180deg);
+}
+
+.sort-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: #fff;
+    border: 1px solid #eaeaea;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+    list-style: none;
+    padding: 8px 0;
+    width: 150px;
+    border-radius: 4px;
+    z-index: 10;
+}
+
+.sort-option {
+    padding: 10px 20px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 1px;
+}
+
+.sort-option:hover {
+    background: #f5f5f5;
+}
+
+.sort-option.active {
+    color: #ba8c53;
+}
+
+/* Articles Grid — 3 columns */
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.article-card {
+    background: #fff;
+    border-radius: 4px;
+    border: 1px solid #efebea;
+    overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.article-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.05);
+}
+
+.article-img-wrap {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.article-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.article-content {
+    padding: 22px 22px 26px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.article-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: #2b2b2b;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.article-content p {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 18px;
+}
+
+/* Load more */
+.load-more-center {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}
+
+.btn-outline-dark-gold {
+    background: transparent;
+    border: 1px solid #ba8c53;
+    color: #ba8c53;
+    padding: 14px 30px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 2px;
+    transition: all 0.3s;
+    font-family: 'Outfit', sans-serif;
+}
+
+.btn-outline-dark-gold:hover {
+    background: #ba8c53;
+    color: #fff;
+}
+
+.load-icon {
+    font-size: 14px;
+}
+
+/* ════════════════════════════════════════
+   6. Sidebar
+   ════════════════════════════════════════ */
+.blog-sidebar {
+    width: 300px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    align-self: flex-start;
+    /* sticky sidebar so it stays visible while scrolling */
+    position: sticky;
+    top: 90px;
+}
+
+/* Common sidebar card box */
+.sidebar-box {
+    background-color: #ffffff;
+    border: 1px solid #efebea;
+    padding: 25px;
+    border-radius: 4px;
+}
+
+.sidebar-box h3,
+.sidebar-tags h3 {
+    font-size: 11px;
+    font-weight: 700;
+    color: #2b2b2b;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+.sidebar-title-gold-line {
+    width: 30px;
+    height: 2px;
+    background-color: #c48b59;
+    margin-top: 8px;
+    margin-bottom: 18px;
+}
+
+/* Popular posts list */
+.popular-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.popular-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.popular-item img {
+    width: 62px;
+    height: 62px;
+    border-radius: 4px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.popular-item-info {
+    flex: 1;
+}
+
+.popular-item-info h4 {
+    font-size: 13px;
+    font-weight: 500;
+    color: #2b2b2b;
+    margin-bottom: 5px;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.popular-item-info h4:hover {
+    color: #ba8c53;
+}
+
+.popular-date {
+    font-size: 11px;
+    color: #888;
+}
+
+/* Subscribe box */
+.sidebar-subscribe {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+}
+
+.subscribe-overlay {
+    background: rgba(20, 20, 18, 0.88);
+    padding: 32px 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+}
+
+.subs-icon {
+    width: 48px;
+    height: 48px;
+    border: 1px solid #c48b59;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+}
+
+.subscribe-overlay h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.subscribe-overlay p {
+    font-size: 12px;
+    color: #ccc;
+    margin-bottom: 22px;
+    line-height: 1.55;
+}
+
+.subs-form {
+    width: 100%;
+}
+
+.subs-form input {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.92);
+    border: none;
+    padding: 11px 12px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    border-radius: 2px;
+    margin-bottom: 10px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.btn-subs {
+    width: 100%;
+    justify-content: center;
+    padding: 12px;
+    font-size: 11px;
+}
+
+/* Tags box */
+.sidebar-tags {
+    background-color: #ffffff;
+    border: 1px solid #efebea;
+    padding: 25px;
+    border-radius: 4px;
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag-pill {
+    padding: 7px 13px;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    font-size: 11px;
+    color: #555;
+    cursor: pointer;
+    background-color: transparent;
+    transition: all 0.2s;
+}
+
+.tag-pill:hover {
+    border-color: #ba8c53;
+    color: #ba8c53;
+    background-color: rgba(186, 140, 83, 0.06);
+}
+
+.tag-pill--active {
+    background-color: #ba8c53;
+    border-color: #ba8c53;
+    color: #fff !important;
+    font-weight: 600;
+}
+
+.tag-clear-btn {
+    background: transparent;
+    border: 1px solid #ba8c53;
+    color: #ba8c53;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 5px 12px;
+    border-radius: 2px;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    transition: all 0.2s;
+    text-transform: uppercase;
+}
+
+.tag-clear-btn:hover {
+    background: #ba8c53;
+    color: #fff;
+}
+
+/* ════════════════════════════════════════
+   7. Gold Buttons
+   ════════════════════════════════════════ */
+.btn-solid-gold {
+    background-color: #b38b55;
+    color: #fff;
+    padding: 14px 28px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.btn-solid-gold:hover {
+    background-color: #9d7847;
+    color: #fff;
+}
+
+.btn-arrow-icon {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.btn-solid-gold:hover .btn-arrow-icon {
+    transform: translateX(5px);
+}
+
+/* ════════════════════════════════════════
+   8. CTA Banner
+   ════════════════════════════════════════ */
+.blog-bottom-cta {
+    padding: 2rem 5%;
+}
+
+.blog-cta-container {
+    max-width: 1260px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+.blog-cta-content {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.blog-cta-icon-box {
+    width: 58px;
+    height: 58px;
+    border: 1.5px solid #c4a880;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.cta-calendar-icon {
+    font-size: 24px;
+    color: #c48b59;
+}
+
+.blog-cta-v-divider {
+    width: 1px;
+    height: 46px;
+    background-color: rgba(255, 255, 255, 0.15);
+    margin: 0 24px;
+}
+
+.blog-cta-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.blog-cta-kicker {
+    font-family: 'Outfit', sans-serif;
+    color: #c48b59;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.blog-cta-heading {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: 30px;
+    color: #ffffff;
+    font-weight: 400;
+    line-height: 1.1;
+    margin: 0;
+}
+
+/* ════════════════════════════════════════
+   9. Responsive
+   ════════════════════════════════════════ */
+@media (max-width: 1024px) {
+    .blog-layout {
+        flex-direction: column;
+    }
+
+    .blog-sidebar {
+        width: 100%;
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+
+    .sidebar-tags {
+        grid-column: span 1;
+    }
+
+    .articles-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .blog-sidebar {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .articles-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .blog-cta-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .blog-cta-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .blog-cta-v-divider {
+        width: 100%;
+        height: 1px;
+        margin: 15px 0;
+    }
+}

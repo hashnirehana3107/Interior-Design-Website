@@ -1,0 +1,717 @@
+/* src/pages/Services.css */
+
+.services-page {
+    font-family: 'Montserrat', sans-serif;
+    color: #333333;
+    background-color: #faf9f7;
+}
+
+/* 1. Hero Section */
+.services-hero {
+    position: relative;
+    width: 100%;
+    height: 48vh;
+    min-height: 380px;
+    background-size: cover;
+    background-position: center;
+}
+
+.services-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, rgba(30, 25, 20, 0.95) 0%, rgba(30, 25, 20, 0.6) 100%);
+    display: flex;
+    align-items: center;
+    padding: 0 8%;
+}
+
+.services-hero-content {
+    max-width: 800px;
+    color: #ffffff;
+    position: relative;
+}
+
+/* Simulate the vertical text on the right side if needed, or just let the layout handle it.
+   The original design has vertical text on the right edge. */
+.services-hero-overlay::after {
+    content: "SPACES\A PEOPLE \A BETTER \A LIVES";
+    white-space: pre;
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    color: #a0a0a0;
+    line-height: 2.5;
+    text-align: right;
+    border-right: 1px solid #c48b59;
+    padding-right: 15px;
+}
+
+.services-hero-content .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #c48b59;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.services-hero-content h1 {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: 44px;
+    font-weight: 400;
+    line-height: 1.18;
+    color: #ffffff;
+    margin: 0 0 20px;
+}
+
+.highlight-text {
+    color: #c48b59;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-weight: 400;
+}
+
+.services-hero-content p {
+    font-size: 14.5px;
+    color: #cccccc;
+    line-height: 1.65;
+    max-width: 500px;
+    margin: 0 0 20px;
+}
+
+/* 2. What We Offer */
+.services-offer-section {
+    padding: 80px 10%;
+    background-color: #faf9f7;
+}
+
+.services-offer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 50px;
+}
+
+.offer-header-left {
+    flex: 1;
+}
+
+.section-subtitle {
+    font-size: 11px;
+    font-weight: 700;
+    color: #B38058;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.offer-header-left h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 40px;
+    font-weight: 400;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.offer-header-right {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    padding-left: 50px;
+}
+
+.offer-header-right p {
+    font-size: 13.5px;
+    color: #555555;
+    line-height: 1.6;
+    margin: 0;
+    flex: 1;
+}
+
+.btn-outline-gold {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 30px;
+    border: 1px solid #B38058;
+    color: #B38058;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+    white-space: nowrap;
+}
+
+.btn-outline-gold:hover {
+    background-color: #B38058;
+    color: #ffffff;
+}
+
+/* Services Grid */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.service-card {
+    background-color: #ffffff;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+}
+
+.service-img {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+}
+
+.service-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.service-card:hover .service-img img {
+    transform: scale(1.05);
+}
+
+.service-content {
+    padding: 35px 25px 25px;
+    position: relative;
+}
+
+.service-icon-wrapper {
+    position: absolute;
+    top: -25px;
+    left: 25px;
+    width: 50px;
+    height: 50px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #B38058;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.service-content h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: #222222;
+    margin: 0 0 10px;
+}
+
+.service-content p {
+    font-size: 13px;
+    color: #666666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.service-link {
+    font-size: 11px;
+    font-weight: 700;
+    color: #B38058;
+    text-decoration: none;
+    letter-spacing: 1px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: gap 0.3s ease;
+}
+
+.service-link:hover {
+    gap: 12px;
+}
+
+/* 3. Our Process */
+.services-process-section {
+    background-color: #1a1a1a;
+    padding: 80px 10%;
+    color: #ffffff;
+}
+
+.dark-section-subtitle {
+    font-size: 11px;
+    font-weight: 700;
+    color: #B38058;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.process-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 60px;
+}
+
+.process-header-left {
+    flex: 1;
+}
+
+.process-header-left h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 38px;
+    font-weight: 300;
+    margin: 0;
+    color: #f7f7f7;
+}
+
+.process-header-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.process-header-right p {
+    font-size: 14px;
+    color: #aaaaaa;
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0;
+}
+
+.process-timeline {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+/* Horizontal line behind process icons */
+.process-timeline::before {
+    content: '';
+    position: absolute;
+    top: 25px;
+    left: 40px;
+    right: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(196, 139, 89, 0.4) 0%, rgba(255, 255, 255, 0.15) 100%);
+    z-index: 0;
+}
+
+.process-step {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    z-index: 1;
+    position: relative;
+    flex: 1;
+}
+
+.process-icon {
+    width: 50px;
+    height: 50px;
+    border: 1px solid rgba(196, 139, 89, 0.6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #c48b59;
+    background-color: #1a1a1a;
+    box-shadow: 0 0 0 8px #1a1a1a;
+    flex-shrink: 0;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.process-step:hover .process-icon {
+    border-color: #c48b59;
+    background-color: #c48b59;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.process-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.process-info h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #c48b59;
+    margin: 0 0 4px;
+    letter-spacing: 1px;
+}
+
+.process-info h5 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 8px;
+    color: #ffffff;
+    line-height: 1.35;
+}
+
+.process-info p {
+    font-size: 12px;
+    color: #999999;
+    line-height: 1.55;
+    margin: 0;
+}
+
+.process-arrow {
+    display: none;
+}
+
+.process-step:last-child .process-arrow {
+    display: none;
+}
+
+.process-step:last-child::after {
+    display: none;
+}
+
+/* 4. Why Choose Us */
+.services-why-section {
+    display: flex;
+    padding: 80px 10%;
+    gap: 60px;
+    background-color: #ffffff;
+    align-items: center;
+}
+
+.why-left-col {
+    flex: 1;
+}
+
+.why-left-col h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 40px;
+    font-weight: 400;
+    color: #1a1a1a;
+    line-height: 1.2;
+    margin: 0 0 20px;
+}
+
+.why-desc {
+    font-size: 14.5px;
+    color: #555555;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    max-width: 450px;
+}
+
+.why-features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.why-feature {
+    display: flex;
+    flex-direction: column;
+}
+
+.why-feature-icon {
+    font-size: 32px;
+    color: #B38058;
+    margin-bottom: 15px;
+}
+
+.why-feature h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #222222;
+    margin: 0 0 8px;
+}
+
+.why-feature p {
+    font-size: 12px;
+    color: #777777;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Quote Image Box */
+.why-right-col {
+    flex: 1;
+}
+
+.why-img-container {
+    position: relative;
+    max-width: 600px;
+}
+
+.why-img-container img {
+    width: 80%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: -20px 20px 40px rgba(0, 0, 0, 0.05);
+}
+
+.quote-box {
+    position: absolute;
+    bottom: 30px;
+    right: 0;
+    width: 50%;
+    background-color: #fdfaf6;
+    padding: 40px;
+    border-left: 2px solid #B38058;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+    /* Frame effect anchor */
+    isolation: isolate;
+}
+
+/* Top-right corner accent */
+.quote-box::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    border-top: 1.5px solid #B38058;
+    border-right: 1.5px solid #B38058;
+    pointer-events: none;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+/* Bottom-left corner accent */
+.quote-box::after {
+    content: '';
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 36px;
+    height: 36px;
+    border-bottom: 1.5px solid #B38058;
+    border-left: 1.5px solid #B38058;
+    pointer-events: none;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.quote-box:hover::before,
+.quote-box:hover::after {
+    opacity: 1;
+}
+
+.quote-icon-mark {
+    font-size: 30px;
+    color: #B38058;
+    opacity: 0.5;
+    margin-bottom: 15px;
+}
+
+.quote-box h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #222222;
+    margin: 0 0 20px;
+}
+
+.quote-author {
+    font-size: 10px;
+    font-weight: 700;
+    color: #555555;
+    letter-spacing: 2px;
+}
+
+.quote-author span {
+    color: #B38058;
+    font-weight: 500;
+}
+
+/* 5. CTA Section */
+.services-cta-section {
+    position: relative;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    text-align: center;
+}
+
+.services-cta-overlay {
+    background: rgba(18, 18, 18, 0.88);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 5%;
+}
+
+.cta-subtitle {
+    font-size: 11px;
+    font-weight: 600;
+    color: #c48b59;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    z-index: 2;
+    position: relative;
+}
+
+.services-cta-section h2 {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: #ffffff;
+    margin: 0 0 25px;
+    line-height: 1.25;
+    letter-spacing: 0.2px;
+    z-index: 2;
+    position: relative;
+}
+
+.services-cta-section .cta-buttons {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    z-index: 2;
+    position: relative;
+    width: auto;
+}
+
+.services-cta-section .btn-solid-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 44px;
+    background-color: #c48b59;
+    border: 1.5px solid #c48b59;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.services-cta-section .btn-solid-gold:hover {
+    background-color: #aa7344;
+    border-color: #aa7344;
+    box-shadow: 0 8px 24px rgba(196, 139, 89, 0.4);
+    transform: translateY(-1px);
+}
+
+.services-cta-section .cta-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 28px;
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.services-cta-section .cta-outline:hover {
+    border-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+    .services-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1100px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .process-timeline {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .process-timeline::before {
+        display: none;
+    }
+
+    .process-arrow {
+        display: none;
+    }
+
+    .process-step {
+        max-width: 100%;
+    }
+
+    .services-why-section {
+        flex-direction: column;
+    }
+
+    .why-right-col {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .services-offer-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .offer-header-right {
+        padding-left: 0;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .process-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .why-features-grid {
+        grid-template-columns: 1fr;
+    }
+}

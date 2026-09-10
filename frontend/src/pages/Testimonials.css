@@ -1,0 +1,546 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+.testimonials-page {
+    width: 100%;
+    background-color: #fcfbf9;
+}
+
+.testi-hero {
+    position: relative;
+    width: 100%;
+    height: 48vh;
+    min-height: 380px;
+    background-size: cover;
+    background-position: center;
+}
+
+.testi-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, rgba(20, 18, 16, 0.92) 0%, rgba(20, 18, 16, 0.65) 100%);
+    display: flex;
+    align-items: center;
+    padding: 0 8%;
+}
+
+.testi-hero-content {
+    max-width: 800px;
+    color: #ffffff;
+}
+
+.testi-kicker {
+    font-size: 11px;
+    font-weight: 700;
+    color: #c48b59;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.testi-title {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: 44px;
+    color: #ffffff;
+    line-height: 1.18;
+    margin: 0 0 20px;
+    font-weight: 400;
+}
+
+.gold-text-italic {
+    color: #c48b59;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+}
+
+.hero-gold-line {
+    width: 60px;
+    height: 1.5px;
+    background-color: #c48b59;
+    margin-bottom: 20px;
+}
+
+.testi-desc {
+    color: #cccccc;
+    font-size: 14.5px;
+    line-height: 1.65;
+    max-width: 500px;
+}
+
+/* 2. Stats Section */
+.testi-stats-section {
+    position: relative;
+    margin-top: -60px;
+    z-index: 10;
+    padding: 0 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.testi-stats-container {
+    background-color: #ffffff;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 2.5rem 4rem;
+}
+
+.testi-stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+}
+
+.stat-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.5rem;
+}
+
+.stat-icon {
+    font-size: 2rem;
+    color: #d4af37;
+}
+
+.stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #1a1a1a;
+    font-weight: 500;
+}
+
+.stat-stars {
+    color: #d4af37;
+    font-size: 0.9rem;
+    display: flex;
+    gap: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    color: #555555;
+    font-weight: 500;
+}
+
+.mt-label {
+    margin-top: 5px;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 60px;
+    background-color: #eaeaea;
+}
+
+/* 3. Grid Section */
+.testi-grid-section {
+    padding: 6rem 5% 4rem;
+    background-color: #fcfbf9;
+}
+
+.testi-grid-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.testi-kicker-center {
+    font-family: 'Outfit', sans-serif;
+    color: #d4af37;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.testi-main-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: #1a1a1a;
+    font-weight: 400;
+}
+
+.testi-categories {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 4rem;
+}
+
+.testi-cat-btn {
+    background-color: transparent;
+    border: 1px solid #e0e0e0;
+    padding: 0.75rem 1.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #555555;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+.testi-cat-btn:hover {
+    border-color: #d4af37;
+    color: #1a1a1a;
+}
+
+.testi-cat-btn.active {
+    background-color: #c0994f;
+    border-color: #c0994f;
+    color: #ffffff;
+}
+
+.testi-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.testi-card {
+    background-color: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+}
+
+.testi-card-img-wrap {
+    position: relative;
+    height: 220px;
+}
+
+.testi-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.quote-icon-badge {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 44px;
+    background-color: #c0994f;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 4px solid #ffffff;
+}
+
+.testi-card-content {
+    padding: 3rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.testi-card-stars {
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+    color: #c0994f;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.testi-card-quote {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    color: #444444;
+    line-height: 1.6;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    min-height: 90px;
+}
+
+.testi-card-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #eaeaea, transparent);
+    margin-bottom: 1.5rem;
+}
+
+.testi-author-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: auto;
+}
+
+.testi-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.testi-author-details h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    color: #1a1a1a;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.testi-author-details p {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.8rem;
+    color: #888888;
+}
+
+/* 4. Large Quote Banner */
+.testi-quote-banner {
+    background-color: #161616;
+    padding: 0;
+    display: flex;
+    align-items: stretch;
+    height: 250px;
+}
+
+.testi-quote-banner-inner {
+    display: flex;
+    width: 100%;
+}
+
+.testi-quote-left {
+    flex: 1.5;
+    padding: 0 0 0 15%;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.big-quote-mark {
+    color: #c48b59;
+    font-size: 4.5rem;
+    line-height: 1;
+    margin-top: -65px;
+}
+
+.big-quote-text h3 {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: 20px;
+    color: #e0e0e0;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    max-width: 600px;
+    letter-spacing: 0.2px;
+}
+
+.quote-author {
+    font-family: 'Outfit', sans-serif;
+    color: #c48b59;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.testi-quote-right {
+    flex: 1;
+    background-position: left center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.testi-quote-right::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 250px;
+    background: linear-gradient(to right, #161616 0%, rgba(22, 22, 22, 0.85) 30%, transparent 100%);
+}
+
+/* 5. Bottom CTA Section */
+.testi-bottom-cta {
+    background-color: #f7f6f2;
+    /* precise off-white matching image */
+    padding: 3rem 5%;
+    border-top: 2px solid #222;
+    border-bottom: 2px solid #222;
+    margin-bottom: -2px;
+    /* adjust for overlapping global layout issues if any */
+}
+
+.testi-cta-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.testi-cta-content {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    /* managed by explicit margins on divider */
+}
+
+.testi-cta-icon-box {
+    width: 65px;
+    height: 65px;
+    border: 1.5px solid #d4be9f;
+    /* Exact subtle gold border */
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.testi-cta-v-divider {
+    width: 1px;
+    height: 50px;
+    background-color: #e6e6e6;
+    /* Soft gray line */
+    margin: 0 25px;
+    /* Creates the gap beautifully */
+}
+
+.cta-calendar-icon {
+    font-size: 2.2rem;
+    color: #c48b59;
+    stroke-width: 1.2px;
+    /* Thinner standard stroke style */
+}
+
+.testi-cta-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.testi-cta-kicker {
+    font-family: 'Outfit', sans-serif;
+    color: #8a8a8a;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.testi-cta-heading {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-size: 32px;
+    color: #2b2b2b;
+    font-weight: 400;
+    line-height: 1.1;
+}
+
+.btn-solid-gold {
+    background-color: #b38b55;
+    /* The specific muted flat gold */
+    color: #ffffff;
+    padding: 14px 28px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.btn-solid-gold:hover {
+    background-color: #9d7847;
+    color: #ffffff;
+}
+
+.btn-arrow-icon {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.btn-solid-gold:hover .btn-arrow-icon {
+    transform: translateX(5px);
+}
+
+/* Responsiveness */
+@media (max-width: 1200px) {
+    .testi-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .testi-stats-container {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 2rem;
+    }
+
+    .stat-divider {
+        width: 100%;
+        height: 1px;
+    }
+
+    .testi-quote-banner-inner {
+        flex-direction: column;
+    }
+
+    .testi-quote-right {
+        height: 400px;
+    }
+
+    .testi-quote-right::after {
+        background: linear-gradient(to bottom, #1a1a19 0%, transparent 100%);
+        width: 100%;
+        height: 20%;
+    }
+
+    .testi-cta-container {
+        flex-direction: column;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .testi-cta-content {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 600px) {
+    .testi-cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .testi-title {
+        font-size: 3rem;
+    }
+}
