@@ -177,7 +177,7 @@ const Login = () => {
             });
             window.google.accounts.id.prompt();
         } else {
-            showToast('. Please try again in 2 seconds.', 'info', 4000);
+            showToast('Please wait a moment and try again.', 'info', 4000);
         }
     };
 

@@ -102,7 +102,7 @@ const BlogDetail = () => {
 
  if (res.ok) {
  setNewsletterSuccess(true);
- if (showToast) showToast('! check your inbox for an email.', 'success');
+ if (showToast) showToast('Successfully subscribed! Please check your inbox for updates.', 'success');
  setNewsletterEmail('');
  } else {
  setNewsletterError(data.message || 'Subscription failed');

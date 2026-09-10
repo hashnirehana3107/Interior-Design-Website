@@ -540,7 +540,7 @@ const AdminDashboard = () => {
                 body: JSON.stringify(authBrandingData)
             });
             if (res.ok) {
-                if (showToast) showToast('& Features saved successfully!', 'success');
+                if (showToast) showToast('Why Choose Us features saved successfully!', 'success');
                 fetchAuthBranding();
             } else {
                 if (showToast) showToast('An error occurred. Please try again.', 'error');
@@ -734,7 +734,7 @@ const AdminDashboard = () => {
             });
             const data = await res.json();
             if (res.ok) {
-                if (showToast) showToast(`${editingUser ? 'updated' : 'created'} successfully!`, 'success');
+                if (showToast) showToast(`User ${editingUser ? 'updated' : 'created'} successfully!`, 'success');
                 setUserModalOpen(false);
                 fetchUsers();
             } else {
@@ -803,7 +803,7 @@ const AdminDashboard = () => {
     const handleSaveBlogPost = async (e) => {
         e.preventDefault();
         if (!blogPostForm.title || !blogPostForm.desc || !blogPostForm.img) {
-            if (showToast) showToast(', description, and cover image are required.', 'error');
+            if (showToast) showToast('Title, description, and cover image are required.', 'error');
             return;
         }
 

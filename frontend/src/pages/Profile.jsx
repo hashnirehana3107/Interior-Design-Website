@@ -52,12 +52,12 @@ const Profile = () => {
         if (!file) return;
 
         if (!file.type.startsWith('image/')) {
-            if (showToast) showToast('(JPG, PNG, WebP).', 'error');
+            if (showToast) showToast('Please select a valid image file (JPG, PNG, WebP).', 'error');
             return;
         }
 
         if (file.size > 5 * 1024 * 1024) {
-            if (showToast) showToast('Failed to upload profile photo.', 'error');
+            if (showToast) showToast('Failed to process profile photo.', 'error');
             return;
         }
 
@@ -75,7 +75,7 @@ const Profile = () => {
                 if (showToast) showToast('Changes saved successfully', 'success');
             } catch (err) {
                 console.error('Photo upload failed:', err);
-                if (showToast) showToast('Failed to upload profile photo.', 'error');
+                if (showToast) showToast('Failed to process profile photo.', 'error');
             } finally {
                 setIsUploadingPhoto(false);
             }
@@ -92,10 +92,10 @@ const Profile = () => {
                 country: formData.country,
                 avatar: ''
             });
-            if (showToast) showToast('.', 'info');
+            if (showToast) showToast('Profile photo removed.', 'info');
         } catch (err) {
             console.error('Photo removal failed:', err);
-            if (showToast) showToast('Failed to upload profile photo.', 'error');
+            if (showToast) showToast('Failed to process profile photo.', 'error');
         } finally {
             setIsUploadingPhoto(false);
         }
@@ -123,7 +123,7 @@ const Profile = () => {
 
         if (!validateForm()) {
             setFormError('Please fix profile validation errors.');
-            if (showToast) showToast('Failed to upload profile photo.', 'error');
+            if (showToast) showToast('Failed to process profile photo.', 'error');
             return;
         }
 

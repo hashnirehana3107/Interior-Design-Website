@@ -235,7 +235,7 @@ export const AuthProvider = ({ children }) => {
  setToken('');
  setUser(null);
  if (notify) {
- showToast('.', 'info', 3500);
+ showToast('Logged out successfully. Have a great day!', 'info', 3500);
  }
  };
 
