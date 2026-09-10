@@ -48,7 +48,7 @@ const Signup = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [authBranding, setAuthBranding] = useState(null);
 
-    const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
+    const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '163952309094-b7k8osgc8fb91ip41nmnodubeaobd9o5.apps.googleusercontent.com';
 
     // Fetch dynamic Auth Branding (signup title, subtitle & features)
     React.useEffect(() => {
