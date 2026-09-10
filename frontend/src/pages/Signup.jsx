@@ -10,6 +10,7 @@ import { IoShieldCheckmarkOutline, IoCheckmarkCircle } from 'react-icons/io5';
 import logo from '../assets/logo.svg';
 import detailImg from '../assets/detail_img.png';
 import { useAuth } from '../context/AuthContext';
+import { countriesList } from '../utils/countries';
 import '../pages/Login.css';
 import './Signup.css';
 
@@ -360,11 +361,9 @@ const Signup = () => {
                                                 onChange={handleChange}
                                             >
                                                 <option value="" disabled hidden>Select country</option>
-                                                <option value="Sri Lanka">Sri Lanka</option>
-                                                <option value="United States">United States</option>
-                                                <option value="United Kingdom">United Kingdom</option>
-                                                <option value="Australia">Australia</option>
-                                                <option value="United Arab Emirates">United Arab Emirates</option>
+                                                {countriesList.map((c) => (
+                                                     <option key={c} value={c}>{c}</option>
+                                                 ))}
                                             </select>
                                             <FaChevronDown className="select-arrow" />
                                         </div>
