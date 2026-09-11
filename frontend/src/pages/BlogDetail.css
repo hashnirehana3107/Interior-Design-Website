@@ -137,10 +137,10 @@
 }
 
 .blog-rich-content {
-    font-family: 'Montserrat', sans-serif;
-    color: #4a4a4a;
-    font-size: 14px;
-    line-height: 1.7;
+    font-family: 'Cormorant Garamond', serif;
+    color: #2e2e2e;
+    font-size: 16px;
+    line-height: 1.8;
 }
 
 .blog-rich-content p {
@@ -150,8 +150,8 @@
 .blog-rich-content h2 {
     font-family: 'Cormorant Garamond', serif;
     font-size: 28px;
-    font-weight: 500;
-    color: #2b2b2b;
+    font-weight: 600;
+    color: #1e1e1e;
     margin: 40px 0 20px;
 }
 
