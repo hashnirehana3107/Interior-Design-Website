@@ -1721,7 +1721,8 @@
     }
 
     .table-container-luxury,
-    .luxury-table-wrapper {
+    .luxury-table-wrapper,
+    .table-wrapper {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
@@ -1742,6 +1743,12 @@
 
     .overview-grid {
         grid-template-columns: 1fr;
+    }
+
+    .card-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
     }
 
     .branding-preview-grid {

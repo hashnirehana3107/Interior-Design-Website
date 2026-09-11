@@ -2554,7 +2554,7 @@ const AdminDashboard = () => {
                                 </div>
 
                                 {/* User Management Sub-Tabs */}
-                                <div style={{ display: 'flex', gap: '12px', borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '20px', paddingBottom: '10px', flexWrap: 'wrap' }}>
+                                <div className="admin-subtab-bar">
                                     <button
                                         onClick={() => setUserSubTab('accounts')}
                                         style={{
@@ -4507,7 +4507,7 @@ const AdminDashboard = () => {
                             </div>
 
                             {/* Horizontal Sub-tabs */}
-                            <div style={{ display: 'flex', gap: '12px', borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '20px', paddingBottom: '10px' }}>
+                            <div className="admin-subtab-bar">
                                 <button
                                     onClick={() => setTestiSubTab('reviews')}
                                     style={{
