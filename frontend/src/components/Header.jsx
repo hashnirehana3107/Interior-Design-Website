@@ -27,7 +27,7 @@ const Header = () => {
     useEffect(() => {
         const fetchGlobalSettings = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/global-settings`);
+                const res = await fetch(`${API_BASE}/api/global-settings`);
                 const data = await res.json();
                 if (res.ok) {
                     const settingsData = data.settings || data;

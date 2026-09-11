@@ -8,7 +8,7 @@ import ForgotPasswordModal from '../components/ForgotPasswordModal';
 import { useAuth } from '../context/AuthContext';
 import './Login.css';
 
-const API_BASE = 'http://localhost:5000';
+import API_BASE from '../config/api';
 
 const Login = () => {
     const { login, loginWithGoogle, showToast } = useAuth();

@@ -29,12 +29,12 @@ const ProjectDetails = () => {
  try {
  let project = null;
  // Fetch specific project
- const projRes = await fetch(`http://localhost:5000/api/projects/${id}`);
+ const projRes = await fetch(`${API_BASE}/api/projects/${id}`);
  if (projRes.ok) {
  project = await projRes.json();
  } else {
  // Fallback to fetch all and find (in case backend wasn't restarted and route is missing)
- const tempRes = await fetch('http://localhost:5000/api/projects');
+ const tempRes = await fetch(`${API_BASE}/api/projects`);
  if (tempRes.ok) {
  const tempJson = await tempRes.json();
  project = (tempJson.projects || []).find(p => p._id === id || String(p.id) === String(id));
@@ -45,7 +45,7 @@ const ProjectDetails = () => {
  setProjectInfo(project);
 
  // Fetch all projects for "Related Projects"
- const allRes = await fetch('http://localhost:5000/api/projects');
+ const allRes = await fetch(`${API_BASE}/api/projects`);
  if (allRes.ok) {
  const allJson = await allRes.json();
  const filtered = (allJson.projects || []).filter(p => (p._id || p.id) !== (project._id || project.id)).slice(0, 4);

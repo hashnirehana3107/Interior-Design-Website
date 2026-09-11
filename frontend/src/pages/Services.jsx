@@ -15,7 +15,7 @@ import ServiceCard from '../components/ServiceCard';
 import { useAuth } from '../context/AuthContext';
 import './Services.css';
 
-const API_BASE = 'http://localhost:5000';
+import API_BASE from '../config/api';
 
 const defaultProcessSteps = [
  { stepNumber: '01', title: 'Initial Consultation', description: 'We listen to your ideas, needs and vision.', iconName: 'chat' },

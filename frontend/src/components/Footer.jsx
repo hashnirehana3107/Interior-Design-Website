@@ -4,7 +4,7 @@ import './Footer.css';
 import logo from '../assets/logo.svg';
 import { FaFacebookF, FaInstagram, FaPinterestP, FaLinkedinIn, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaClock } from 'react-icons/fa';
 
-const API_BASE = 'http://localhost:5000';
+import API_BASE from '../config/api';
 
 const Footer = () => {
     const [services, setServices] = useState([]);

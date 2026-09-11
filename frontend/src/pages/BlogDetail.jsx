@@ -45,8 +45,8 @@ const BlogDetail = () => {
  try {
  setLoading(true);
  const [singleRes, allRes] = await Promise.all([
- fetch(`http://localhost:5000/api/blog/posts/${id}`),
- fetch(`http://localhost:5000/api/blog/posts`)
+ fetch(`${API_BASE}/api/blog/posts/${id}`),
+ fetch(`${API_BASE}/api/blog/posts`)
  ]);
 
  let currentArticle = null;
@@ -93,7 +93,7 @@ const BlogDetail = () => {
  }
 
  try {
- const res = await fetch('http://localhost:5000/api/subscribers', {
+ const res = await fetch(`${API_BASE}/api/subscribers`, {
  method: 'POST',
  headers: { 'Content-Type': 'application/json' },
  body: JSON.stringify({ email: newsletterEmail })

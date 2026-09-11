@@ -15,7 +15,7 @@ import '../pages/Login.css';
 import './Signup.css';
 
 
-const API_BASE = 'http://localhost:5000';
+import API_BASE from '../config/api';
 
 const SignupIconMapper = ({ iconName }) => {
     const icons = {

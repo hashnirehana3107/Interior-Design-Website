@@ -14,7 +14,7 @@ import logo from '../assets/logo.svg';
 import aboutImg from '../assets/about_img.png';
 import './AdminDashboard.css';
 
-const API_BASE = 'http://localhost:5000';
+import API_BASE from '../config/api';
 
 // ── Image Compression Utility ──
 const compressImage = (file) => {

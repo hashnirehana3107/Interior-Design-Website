@@ -41,7 +41,7 @@ const ConsultationModal = ({ isOpen, onClose, initialService = '' }) => {
  useEffect(() => {
  const fetchBackendServices = async () => {
  try {
- const res = await fetch('http://localhost:5000/api/services');
+ const res = await fetch(`${API_BASE}/api/services`);
  const data = await res.json();
  if (res.ok && data.services && data.services.length > 0) {
  const fetchedTitles = data.services.map(s => s.title);
@@ -144,7 +144,7 @@ const ConsultationModal = ({ isOpen, onClose, initialService = '' }) => {
  headers['Authorization'] = `Bearer ${token}`;
  }
 
- const response = await fetch('http://localhost:5000/api/consultations', {
+ const response = await fetch(`${API_BASE}/api/consultations`, {
  method: 'POST',
  headers,
  body: JSON.stringify(formData)
