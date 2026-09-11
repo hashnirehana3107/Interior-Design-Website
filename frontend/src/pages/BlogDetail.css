@@ -355,4 +355,29 @@
     .blog-detail-title {
         font-size: 30px;
     }
+
+    .blog-rich-content {
+        font-size: 13.5px;
+        line-height: 1.75;
+    }
+
+    .blog-rich-content h2 {
+        font-size: 22px;
+        margin: 30px 0 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .blog-rich-content {
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    .blog-rich-content h2 {
+        font-size: 20px;
+    }
+
+    .blog-detail-title {
+        font-size: 26px;
+    }
 }
