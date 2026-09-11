@@ -2500,7 +2500,7 @@ const AdminDashboard = () => {
                                         <TbEdit /> Edit Branding
                                     </button>
                                 </div>
-                                <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr 1fr', gap: '20px', alignItems: 'center' }}>
+                                <div className="branding-preview-grid">
                                     {/* Logo Preview */}
                                     <div style={{ background: '#0f172a', borderRadius: '10px', padding: '12px 18px', display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: '100px', border: '1px dashed rgba(255,255,255,0.1)' }}>
                                         {globalSettings?.logoUrl ? (

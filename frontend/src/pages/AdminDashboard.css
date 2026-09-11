@@ -519,6 +519,14 @@
     gap: 24px;
 }
 
+/* Global Site Branding card inner grid */
+.branding-preview-grid {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+}
+
 .overview-card {
     background: #181c26;
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1590,6 +1598,22 @@
         padding: 0 15px;
         margin-top: 20px;
         gap: 20px;
+        grid-template-columns: 1fr;
+    }
+
+    .admin-tab-nav {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 8px;
+        position: static;
+    }
+
+    .overview-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .branding-preview-grid {
+        grid-template-columns: 1fr;
     }
 
     .admin-content-panel {
