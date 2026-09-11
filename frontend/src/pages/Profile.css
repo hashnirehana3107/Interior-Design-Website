@@ -379,7 +379,8 @@
     margin-right: 10px;
 }
 
-.profile-input-wrapper input {
+.profile-input-wrapper input,
+.profile-input-wrapper select {
     width: 100%;
     padding: 14px 0;
     border: none;
@@ -390,7 +391,8 @@
     outline: none;
 }
 
-.profile-input-wrapper.disabled input {
+.profile-input-wrapper.disabled input,
+.profile-input-wrapper.disabled select {
     color: #7A7268;
     cursor: not-allowed;
 }
