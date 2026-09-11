@@ -2897,7 +2897,7 @@ const AdminDashboard = () => {
                             </div>
 
                             {/* Home Sub-tabs */}
-                            <div style={{ display: 'flex', gap: '12px', borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '20px', paddingBottom: '10px', flexWrap: 'wrap' }}>
+                            <div className="admin-subtab-bar">
                                 <button
                                     onClick={() => setHomeSubTab('slides')}
                                     style={{
@@ -3188,7 +3188,7 @@ const AdminDashboard = () => {
                             </div>
 
                             {/* Portfolio Sub-tabs */}
-                            <div style={{ display: 'flex', gap: '12px', borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '20px', paddingBottom: '10px', flexWrap: 'wrap' }}>
+                            <div className="admin-subtab-bar">
                                 <button
                                     onClick={() => setPortfolioSubTab('projects')}
                                     style={{
@@ -3364,7 +3364,7 @@ const AdminDashboard = () => {
                             </div>
 
                             {/* Horizontal Sub-tabs */}
-                            <div style={{ display: 'flex', gap: '12px', borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '20px', paddingBottom: '10px', flexWrap: 'wrap' }}>
+                            <div className="admin-subtab-bar">
                                 <button
                                     onClick={() => setServicesSubTab('cards')}
                                     style={{
@@ -3443,35 +3443,35 @@ const AdminDashboard = () => {
                             {servicesSubTab === 'cards' && (
                                 <div className="services-list-luxury">
                                     {services.map(srv => (
-                                        <div key={srv._id || srv.serviceId || srv.title} className="service-card-row" style={{ background: '#1e293b', borderRadius: '10px', padding: '16px', marginBottom: '14px', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', gap: '20px', alignItems: 'center' }}>
-                                            <div className="srv-image-box" style={{ width: '140px', height: '100px', borderRadius: '8px', overflow: 'hidden', flexShrink: 0, background: '#0f172a' }}>
-                                                <img src={srv.image || (srv.images && srv.images[0]) || 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=300&q=80'} alt={srv.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        <div key={srv._id || srv.serviceId || srv.title} className="service-card-row">
+                                            <div className="srv-image-box">
+                                                <img src={srv.image || (srv.images && srv.images[0]) || 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=300&q=80'} alt={srv.title} />
                                             </div>
-                                            <div className="srv-content-box" style={{ flex: 1 }}>
-                                                <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '4px' }}>
-                                                    <span style={{ background: '#c48b59', color: '#fff', fontSize: '0.68rem', fontWeight: '700', padding: '2px 8px', borderRadius: '4px', textTransform: 'uppercase' }}>
+                                            <div className="srv-content-box">
+                                                <div className="srv-meta-tags">
+                                                    <span className="srv-kicker-tag">
                                                         {srv.kicker || 'OUR SERVICE'}
                                                     </span>
-                                                    <span style={{ color: '#94a3b8', fontSize: '0.75rem' }}>Icon: {srv.iconName || 'sofa'}</span>
+                                                    <span className="srv-icon-label">Icon: {srv.iconName || 'sofa'}</span>
                                                 </div>
-                                                <h3 style={{ color: '#fff', fontSize: '1.1rem', margin: '4px 0 6px 0' }}>{srv.title}</h3>
-                                                <p style={{ color: '#cbd5e1', fontSize: '0.85rem', marginBottom: '8px', lineHeight: '1.4' }}>{srv.desc || srv.description}</p>
+                                                <h3 className="srv-title-heading">{srv.title}</h3>
+                                                <p className="srv-desc-text">{srv.desc || srv.description}</p>
                                                 {srv.deliverables && (
-                                                    <span style={{ fontSize: '0.75rem', color: '#c48b59', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                                    <span className="srv-deliverables-text">
                                                         <TbPackage style={{ fontSize: '13px' }} /> Deliverables: {srv.deliverables}
                                                     </span>
                                                 )}
                                             </div>
-                                            <div className="srv-actions-box" style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+                                            <div className="srv-actions-box">
                                                 <button
                                                     onClick={() => handleOpenEditService(srv)}
-                                                    style={{ background: 'rgba(59, 130, 246, 0.15)', color: '#60a5fa', border: '1px solid rgba(59, 130, 246, 0.3)', borderRadius: '6px', padding: '8px 14px', fontSize: '0.82rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
+                                                    className="btn-srv-edit"
                                                 >
                                                     <TbEdit /> Edit Service
                                                 </button>
                                                 <button
                                                     onClick={() => handleDeleteService(srv._id)}
-                                                    style={{ background: 'rgba(239, 68, 68, 0.15)', color: '#f87171', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: '6px', padding: '8px 12px', fontSize: '0.82rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                                                    className="btn-srv-delete"
                                                 >
                                                     <TbTrash />
                                                 </button>

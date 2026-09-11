@@ -527,6 +527,138 @@
     align-items: center;
 }
 
+/* ── SUBTAB NAV BAR ── */
+.admin-subtab-bar {
+    display: flex;
+    gap: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+/* ── SERVICE CARD ROW STYLES ── */
+.service-card-row {
+    background: #1e293b;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    transition: background 0.2s ease;
+}
+
+.srv-image-box {
+    width: 140px;
+    height: 100px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #0f172a;
+}
+
+.srv-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.srv-content-box {
+    flex: 1;
+    min-width: 0;
+}
+
+.srv-meta-tags {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+}
+
+.srv-kicker-tag {
+    background: #c48b59;
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.srv-icon-label {
+    color: #94a3b8;
+    font-size: 0.75rem;
+}
+
+.srv-title-heading {
+    color: #fff;
+    font-size: 1.1rem;
+    margin: 4px 0 6px 0;
+}
+
+.srv-desc-text {
+    color: #cbd5e1;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.srv-deliverables-text {
+    font-size: 0.75rem;
+    color: #c48b59;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.srv-actions-box {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.btn-srv-edit {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn-srv-edit:hover {
+    background: rgba(59, 130, 246, 0.25);
+    color: #ffffff;
+}
+
+.btn-srv-delete {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s ease;
+}
+
+.btn-srv-delete:hover {
+    background: rgba(239, 68, 68, 0.25);
+    color: #ffffff;
+}
+
 .overview-card {
     background: #181c26;
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1664,6 +1796,77 @@
 
     .tab-icon {
         font-size: 1.1rem;
+    }
+
+    /* Subtab bar horizontal scroll on mobile */
+    .admin-subtab-bar {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 12px;
+        margin-bottom: 16px;
+    }
+
+    .admin-subtab-bar button {
+        flex-shrink: 0;
+    }
+
+    .admin-subtab-bar::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .admin-subtab-bar::-webkit-scrollbar-thumb {
+        background: rgba(196, 139, 89, 0.4);
+        border-radius: 4px;
+    }
+
+    /* Hero Slides grid & Portfolio projects grid mobile responsiveness */
+    .hero-slides-grid-luxury,
+    .projects-grid-luxury {
+        grid-template-columns: 1fr;
+    }
+
+    .slide-card-footer {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        padding: 12px 14px;
+    }
+
+    .slide-card-footer .btn-action-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 8px 6px;
+        font-size: 0.78rem;
+        box-sizing: border-box;
+    }
+
+    /* Services page card row mobile responsiveness */
+    .service-card-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+        padding: 14px;
+    }
+
+    .srv-image-box {
+        width: 100%;
+        height: 160px;
+    }
+
+    .srv-actions-box {
+        width: 100%;
+        display: flex;
+        gap: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding-top: 12px;
+    }
+
+    .srv-actions-box button {
+        flex: 1;
+        justify-content: center;
+        padding: 10px 14px;
     }
 
     /* Hide the custom scrollbar on mobile */
