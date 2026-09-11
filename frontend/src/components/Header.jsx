@@ -6,6 +6,7 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 import { FiUser, FiLogOut, FiChevronDown, FiShield } from 'react-icons/fi';
 
 import { useAuth } from '../context/AuthContext';
+import API_BASE from '../config/api';
 
 const Header = () => {
     const { user, isAuthenticated, logout, openConsultation } = useAuth();
