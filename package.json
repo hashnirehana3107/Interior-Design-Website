@@ -1,0 +1,19 @@
+{
+    "name": "interior-design-website",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "build": "cd frontend && npm install && npm run build",
+        "start": "cd backend && npm start"
+    },
+    "dependencies": {
+        "bcryptjs": "^3.0.3",
+        "cors": "^2.8.6",
+        "dotenv": "^17.4.2",
+        "express": "^5.2.1",
+        "google-auth-library": "^11.0.2",
+        "jsonwebtoken": "^9.0.3",
+        "mongoose": "^9.9.3",
+        "nodemailer": "^10.0.1"
+    }
+}
