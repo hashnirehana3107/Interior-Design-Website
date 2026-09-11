@@ -295,13 +295,13 @@ const Testimonials = () => {
                                 ))}
                             </div>
                         </div>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+                        <div className="form-row-2col">
                             <input type="text" placeholder="Your Name" required value={reviewForm.name} onChange={e => setReviewForm({ ...reviewForm, name: e.target.value })} style={{ padding: '14px', border: '1px solid #ddd', outline: 'none', borderRadius: '4px', fontSize: '14px' }} />
                             <input type="text" placeholder="Your Role / Location (e.g. Homeowner • Colombo)" required value={reviewForm.role} onChange={e => setReviewForm({ ...reviewForm, role: e.target.value })} style={{ padding: '14px', border: '1px solid #ddd', outline: 'none', borderRadius: '4px', fontSize: '14px' }} />
                         </div>
                         <textarea placeholder="Your Review..." rows="4" required value={reviewForm.quote} onChange={e => setReviewForm({ ...reviewForm, quote: e.target.value })} style={{ padding: '14px', border: '1px solid #ddd', outline: 'none', resize: 'vertical', borderRadius: '4px', fontSize: '14px' }}></textarea>
 
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+                        <div className="form-row-2col">
                             <div style={{ position: 'relative' }}>
                                 <input id="avatarUpload" type="file" accept="image/*" onChange={(e) => handleImageFileUpload(e, (b64) => setReviewForm({ ...reviewForm, avatar: b64 }))} style={{ display: 'none' }} />
                                 <label htmlFor="avatarUpload" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', padding: '14px', border: '1px solid #ddd', background: '#fff', fontSize: '14px', color: reviewForm.avatar && reviewForm.avatar.length > 200 ? '#22c55e' : '#777', cursor: 'pointer', outline: 'none', transition: 'all 0.2s', height: '100%', borderRadius: '4px' }}>

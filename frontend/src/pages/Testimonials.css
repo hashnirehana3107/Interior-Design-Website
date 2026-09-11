@@ -491,6 +491,13 @@
     transform: translateX(5px);
 }
 
+/* Form Row */
+.form-row-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
 /* Responsiveness */
 @media (max-width: 1200px) {
     .testi-cards-grid {
@@ -501,7 +508,7 @@
 @media (max-width: 900px) {
     .testi-stats-container {
         flex-direction: column;
-        gap: 2rem;
+        gap: 1.5rem;
         padding: 2rem;
     }
 
@@ -510,16 +517,31 @@
         height: 1px;
     }
 
+    .testi-quote-banner {
+        height: auto;
+    }
+
     .testi-quote-banner-inner {
         flex-direction: column;
     }
 
+    .testi-quote-left {
+        padding: 2.5rem 5%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .big-quote-mark {
+        margin-top: 0;
+    }
+
     .testi-quote-right {
-        height: 400px;
+        height: 280px;
     }
 
     .testi-quote-right::after {
-        background: linear-gradient(to bottom, #1a1a19 0%, transparent 100%);
+        background: linear-gradient(to bottom, #161616 0%, transparent 100%);
         width: 100%;
         height: 20%;
     }
@@ -532,15 +554,151 @@
 
     .testi-cta-content {
         flex-direction: column;
+        align-items: center;
+    }
+
+    .testi-cta-v-divider {
+        width: 50px;
+        height: 1px;
+        margin: 10px 0;
+    }
+
+    .testi-grid-section {
+        padding: 4rem 4% 3rem;
+    }
+
+    .testi-main-heading {
+        font-size: 2.2rem;
+    }
+
+    .testi-categories {
+        gap: 0.5rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .testi-cat-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.72rem;
     }
 }
 
 @media (max-width: 600px) {
     .testi-cards-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .testi-title {
-        font-size: 3rem;
+        font-size: 2rem;
+    }
+
+    .testi-hero {
+        min-height: 320px;
+        height: 45vh;
+    }
+
+    .testi-hero-overlay {
+        padding: 0 5%;
+    }
+
+    .testi-desc {
+        font-size: 13px;
+    }
+
+    .testi-stats-section {
+        margin-top: -40px;
+        padding: 0 4%;
+    }
+
+    .testi-stats-container {
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .stat-icon {
+        font-size: 1.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.8rem;
+    }
+
+    .testi-grid-section {
+        padding: 3rem 4% 2rem;
+    }
+
+    .testi-main-heading {
+        font-size: 1.8rem;
+    }
+
+    .testi-categories {
+        gap: 0.4rem;
+        margin-bottom: 2rem;
+    }
+
+    .testi-cat-btn {
+        padding: 0.55rem 0.9rem;
+        font-size: 0.68rem;
+        letter-spacing: 0.5px;
+    }
+
+    .testi-card-img-wrap {
+        height: 200px;
+    }
+
+    .testi-card-content {
+        padding: 2.5rem 1.2rem 1.2rem;
+    }
+
+    .testi-card-quote {
+        font-size: 0.88rem;
+        min-height: unset;
+    }
+
+    .testi-quote-left {
+        padding: 2rem 5%;
+    }
+
+    .big-quote-text h3 {
+        font-size: 16px;
+    }
+
+    .testi-quote-right {
+        height: 200px;
+    }
+
+    .testi-cta-heading {
+        font-size: 24px;
+    }
+
+    .testi-bottom-cta {
+        padding: 2.5rem 5%;
+    }
+
+    .form-row-2col {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 420px) {
+    .testi-categories {
+        gap: 0.35rem;
+    }
+
+    .testi-cat-btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.62rem;
+    }
+
+    .testi-title {
+        font-size: 1.75rem;
+    }
+
+    .testi-cta-heading {
+        font-size: 21px;
     }
 }
