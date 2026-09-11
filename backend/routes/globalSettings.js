@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
         if (!settings) {
             settings = await GlobalSettings.create({});
         }
-        res.json(settings);
+        res.json({ settings });
     } catch (err) {
         console.error('Error fetching global settings:', err);
         res.status(500).json({ message: 'Server error fetching global settings' });

@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
         if (!branding) {
             branding = await AuthBranding.create({});
         }
-        res.json(branding);
+        res.json({ branding });
     } catch (err) {
         console.error('Error fetching auth branding settings:', err);
         res.status(500).json({ message: 'Server error fetching auth branding settings' });

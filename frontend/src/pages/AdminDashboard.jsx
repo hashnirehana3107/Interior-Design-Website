@@ -523,8 +523,9 @@ const AdminDashboard = () => {
         try {
             const res = await fetch(`${API_BASE}/api/auth-branding`);
             const data = await res.json();
-            if (res.ok && data) {
-                setAuthBrandingData(data);
+            if (res.ok) {
+                const brandingObj = data.branding || data;
+                if (brandingObj) setAuthBrandingData(brandingObj);
             }
         } catch (err) {
             console.error('Error fetching auth branding:', err);
@@ -623,7 +624,10 @@ const AdminDashboard = () => {
         try {
             const res = await fetch(`${API_BASE}/api/global-settings`);
             const data = await res.json();
-            if (res.ok && data.settings) setGlobalSettings(data.settings);
+            if (res.ok) {
+                const settingsObj = data.settings || data;
+                if (settingsObj) setGlobalSettings(settingsObj);
+            }
         } catch (err) {
             console.error('Error fetching global settings:', err);
         }
@@ -2034,6 +2038,7 @@ const AdminDashboard = () => {
     const totalConsultationsCount = consultations.length;
     const totalContactCount = contactMessages.length;
     const unreadContactCount = contactMessages.filter(m => (!m.status || m.status.toLowerCase() === 'new' || m.status.toLowerCase() === 'pending') && !m.replyMessage).length;
+    const pendingTestimonialsCount = testimonials.filter(t => !t.isApproved).length;
 
     // Filtered Consultations
     const filteredConsultations = consultations.filter(c => {
@@ -2391,6 +2396,9 @@ const AdminDashboard = () => {
                         onClick={() => setActiveTab('testimonials')}
                     >
                         <TbStar className="tab-icon" /> Client Testimonials ({testimonials.length})
+                        {pendingTestimonialsCount > 0 && (
+                            <span className="tab-badge-counter">{pendingTestimonialsCount}</span>
+                        )}
                     </button>
                     <button
                         className={`tab-btn ${activeTab === 'about' ? 'active' : ''}`}
@@ -4517,6 +4525,9 @@ const AdminDashboard = () => {
                                     }}
                                 >
                                     <TbStar style={{ fontSize: '1rem' }} /> Client Reviews ({testimonials.length})
+                                    {pendingTestimonialsCount > 0 && (
+                                        <span className="tab-badge-counter" style={{ marginLeft: '4px' }}>{pendingTestimonialsCount}</span>
+                                    )}
                                 </button>
                                 <button
                                     onClick={() => setTestiSubTab('hero')}
