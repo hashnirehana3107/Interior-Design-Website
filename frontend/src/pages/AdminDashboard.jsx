@@ -157,7 +157,7 @@ const InteractiveMapPicker = ({ lat, lng, onLocationSelect }) => {
             <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
                 <input
                     type="text"
-                    placeholder="� Search place name or city (e.g. Colombo 07, Kandy)..."
+                    placeholder="Search place name or city (e.g. Colombo 07, Kandy)..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(e); }}
@@ -173,7 +173,7 @@ const InteractiveMapPicker = ({ lat, lng, onLocationSelect }) => {
                 </button>
             </div>
             <div style={{ background: '#0f172a', padding: '8px 14px', borderRadius: '6px 6px 0 0', border: '1px solid #334155', borderBottom: 'none', fontSize: '0.78rem', color: '#38bdf8', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span>� <strong>Click anywhere on the map or drag the pin:</strong> Latitude & Longitude update automatically!</span>
+                <span><strong>Click anywhere on the map or drag the pin:</strong> Latitude & Longitude update automatically!</span>
             </div>
             <div ref={mapRef} style={{ height: '240px', width: '100%', borderRadius: '0 0 8px 8px', border: '1px solid #334155', zIndex: 1 }} />
         </div>
@@ -1960,7 +1960,7 @@ const AdminDashboard = () => {
                 })
             });
             if (res.ok) {
-                if (showToast) showToast('�Map location updated!', 'success');
+                if (showToast) showToast('Map location updated!', 'success');
                 setContactMapModalOpen(false);
                 fetchContactPageSettings();
             }
@@ -2224,7 +2224,7 @@ const AdminDashboard = () => {
                     <div className="admin-brand">
                         <img src={globalSettings?.logoUrl || logo} alt="Good Interior" className="admin-brand-logo" />
                         <div className="admin-brand-text">
-                            <span className="brand-title">GOOD INTERIOR</span>
+                            <span className="brand-title">{globalSettings?.siteTitle || 'GOOD INTERIOR'}</span>
                             <span className="brand-sub">EXECUTIVE CONTROL SUITE</span>
                         </div>
                     </div>
@@ -5599,14 +5599,14 @@ const AdminDashboard = () => {
                                             value={serviceForm.iconName}
                                             onChange={(e) => setServiceForm({ ...serviceForm, iconName: e.target.value })}
                                         >
-                                            <option value="sofa">�Sofa (Residential / Furniture)</option>
-                                            <option value="macbook">� Laptop / Office (Commercial)</option>
-                                            <option value="kitchen">� Kitchen (Culinary Spaces)</option>
-                                            <option value="bed">�Bed (Bedroom Design)</option>
-                                            <option value="restaurant">�Dining Table (Living & Dining)</option>
-                                            <option value="layout">� Layout Grid (Space Planning)</option>
+                                            <option value="sofa">Sofa (Residential / Furniture)</option>
+                                            <option value="macbook">Laptop / Office (Commercial)</option>
+                                            <option value="kitchen">Kitchen (Culinary Spaces)</option>
+                                            <option value="bed">Bed (Bedroom Design)</option>
+                                            <option value="restaurant">Dining Table (Living & Dining)</option>
+                                            <option value="layout">Layout Grid (Space Planning)</option>
                                             <option value="stack"> Materials & Finishes</option>
-                                            <option value="lamp">� Lamp / Styling & Decor</option>
+                                            <option value="lamp">Lamp / Styling & Decor</option>
                                         </select>
                                     </div>
                                     <div className="form-group">
@@ -5664,7 +5664,7 @@ const AdminDashboard = () => {
                                 {/* Modal Slider Gallery Images (Up to 5 images) */}
                                 <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px', marginTop: '16px' }}>
                                     <h4 style={{ color: '#c48b59', fontSize: '0.95rem', marginBottom: '12px' }}>
-                                        � Modal Slider Images (5 Gallery Photos)
+                                        Modal Slider Images (5 Gallery Photos)
                                     </h4>
                                     {[0, 1, 2, 3, 4].map((idx) => (
                                         <div key={idx} style={{ marginBottom: '12px', background: '#0b0d11', padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
@@ -6000,12 +6000,12 @@ const AdminDashboard = () => {
                                             value={processForm.iconName}
                                             onChange={(e) => setProcessForm({ ...processForm, iconName: e.target.value })}
                                         >
-                                            <option value="chat">� Chat / Consultation (BiMessageRoundedDots)</option>
-                                            <option value="bulb">� Bulb / Concept (BiBulb)</option>
-                                            <option value="file">� File / Selection (BiFile)</option>
+                                            <option value="chat">Chat / Consultation (BiMessageRoundedDots)</option>
+                                            <option value="bulb">Bulb / Concept (BiBulb)</option>
+                                            <option value="file">File / Selection (BiFile)</option>
                                             <option value="cog">Cog / Execution (BiCog)</option>
                                             <option value="check"> Check / Reveal (BiCheck)</option>
-                                            <option value="diamond">� Diamond / Luxury (BiDiamond)</option>
+                                            <option value="diamond">Diamond / Luxury (BiDiamond)</option>
                                             <option value="star"> Star / Award (BiStar)</option>
                                         </select>
                                     </div>
@@ -6080,11 +6080,11 @@ const AdminDashboard = () => {
                                             value={whyFeatureForm.iconName}
                                             onChange={(e) => setWhyFeatureForm({ ...whyFeatureForm, iconName: e.target.value })}
                                         >
-                                            <option value="diamond">� Diamond / Creative (BiDiamond)</option>
+                                            <option value="diamond">Diamond / Creative (BiDiamond)</option>
                                             <option value="star"> Star / Expert (BiStar)</option>
-                                            <option value="badge">�Badge / Quality Assurance (BiBadgeCheck)</option>
+                                            <option value="badge">Badge / Quality Assurance (BiBadgeCheck)</option>
                                             <option value="time"> Time / On-Time Delivery (BiTimeFive)</option>
-                                            <option value="bulb">� Bulb / Concept (BiBulb)</option>
+                                            <option value="bulb">Bulb / Concept (BiBulb)</option>
                                             <option value="check"> Check / Verify (BiCheck)</option>
                                             <option value="cog">Cog / Solution (BiCog)</option>
                                         </select>

@@ -441,10 +441,17 @@
 .panel-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    gap: 24px;
     padding-bottom: 24px;
     margin-bottom: 28px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    flex-wrap: wrap;
+}
+
+.panel-header>div:first-child {
+    flex: 1;
+    min-width: 250px;
 }
 
 .panel-header h2 {
@@ -458,11 +465,13 @@
     color: #94a3b8;
     font-size: 0.9rem;
     margin: 0;
+    line-height: 1.5;
 }
 
 .btn-primary-gold {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     background: linear-gradient(135deg, #b38058 0%, #9c6c47 100%);
     color: #ffffff;
@@ -470,12 +479,14 @@
     font-weight: 600;
     font-size: 0.85rem;
     letter-spacing: 1px;
-    padding: 12px 24px;
+    padding: 12px 22px;
     border: none;
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.25s ease;
     box-shadow: 0 4px 14px rgba(179, 128, 88, 0.25);
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .btn-primary-gold:hover {
@@ -1427,6 +1438,79 @@
     font-size: 3.5rem;
     color: #64748b;
     margin-bottom: 14px;
+}
+
+/* ── LUXURY UNIFIED IMAGE UPLOAD STYLING ── */
+.form-group input[type="file"],
+.modal-form-luxury input[type="file"],
+.panel-section input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 10px 14px;
+    background: #0b0f19;
+    border: 1px dashed rgba(196, 139, 89, 0.4);
+    border-radius: 10px;
+    color: #94a3b8;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-sizing: border-box;
+    margin-bottom: 6px;
+}
+
+.form-group input[type="file"]:hover,
+.modal-form-luxury input[type="file"]:hover,
+.panel-section input[type="file"]:hover {
+    border-color: #c48b59;
+    background: rgba(196, 139, 89, 0.06);
+    box-shadow: 0 0 15px rgba(196, 139, 89, 0.15);
+}
+
+.form-group input[type="file"]::file-selector-button,
+.modal-form-luxury input[type="file"]::file-selector-button,
+.panel-section input[type="file"]::file-selector-button {
+    background: linear-gradient(135deg, #c48b59 0%, #a66e3f 100%);
+    color: #ffffff;
+    border: none;
+    padding: 7px 16px;
+    border-radius: 7px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    margin-right: 14px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.form-group input[type="file"]::file-selector-button:hover,
+.modal-form-luxury input[type="file"]::file-selector-button:hover,
+.panel-section input[type="file"]::file-selector-button:hover {
+    background: linear-gradient(135deg, #d49b69 0%, #b67e4f 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(196, 139, 89, 0.3);
+}
+
+/* OR Text Divider Styling */
+.or-text {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #8a99ad;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin: 12px 0 8px 0;
+    width: 100%;
+}
+
+.or-text::before,
+.or-text::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
 }
 
 @media (max-width: 1150px) {}

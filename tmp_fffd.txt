@@ -1,0 +1,18 @@
+160: placeholder="� Search place name or city (e.g. Colombo 07, Kandy)..."
+176: <span>� <strong>Click anywhere on the map or drag the pin:</strong> Latitude & Longitude update automatically!</span>
+1963: if (showToast) showToast('�Map location updated!', 'success');
+5602: <option value="sofa">�Sofa (Residential / Furniture)</option>
+5603: <option value="macbook">� Laptop / Office (Commercial)</option>
+5604: <option value="kitchen">� Kitchen (Culinary Spaces)</option>
+5605: <option value="bed">�Bed (Bedroom Design)</option>
+5606: <option value="restaurant">�Dining Table (Living & Dining)</option>
+5607: <option value="layout">� Layout Grid (Space Planning)</option>
+5609: <option value="lamp">� Lamp / Styling & Decor</option>
+5667: � Modal Slider Images (5 Gallery Photos)
+6003: <option value="chat">� Chat / Consultation (BiMessageRoundedDots)</option>
+6004: <option value="bulb">� Bulb / Concept (BiBulb)</option>
+6005: <option value="file">� File / Selection (BiFile)</option>
+6008: <option value="diamond">� Diamond / Luxury (BiDiamond)</option>
+6083: <option value="diamond">� Diamond / Creative (BiDiamond)</option>
+6085: <option value="badge">�Badge / Quality Assurance (BiBadgeCheck)</option>
+6087: <option value="bulb">� Bulb / Concept (BiBulb)</option>
