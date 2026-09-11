@@ -442,11 +442,58 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 24px;
+    gap: 16px;
     padding-bottom: 24px;
     margin-bottom: 28px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     flex-wrap: wrap;
+}
+
+.filter-search-group {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+}
+
+.search-input-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 10px 16px;
+    min-width: 200px;
+}
+
+.search-input-box input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #e2e8f0;
+    font-size: 0.88rem;
+    font-family: 'Outfit', sans-serif;
+    width: 100%;
+}
+
+.search-input-box svg {
+    color: #64748b;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.filter-select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 10px 16px;
+    color: #e2e8f0;
+    font-size: 0.88rem;
+    font-family: 'Outfit', sans-serif;
+    outline: none;
+    cursor: pointer;
 }
 
 .panel-header>div:first-child {
@@ -1879,6 +1926,56 @@
     /* Hide the custom scrollbar on mobile */
     .admin-tab-nav::-webkit-scrollbar {
         display: none;
+    }
+
+    /* Consultations & Messages panel header on mobile */
+    .panel-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-search-group {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .search-input-box {
+        width: 100%;
+        min-width: unset;
+        box-sizing: border-box;
+    }
+
+    .filter-select {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Consultations enquiry card on mobile */
+    .enquiry-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .enquiry-header-right {
+        text-align: left !important;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .status-dropdown-select {
+        margin-bottom: 0 !important;
+    }
+
+    .enquiry-footer-actions {
+        flex-direction: column;
+    }
+
+    .enquiry-footer-actions button {
+        width: 100%;
+        justify-content: center;
     }
 }
 

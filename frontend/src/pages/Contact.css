@@ -806,6 +806,20 @@
 
     .features-grid {
         grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .contact-features-sec .feature-item {
+        padding: 0 12px;
+        gap: 16px;
+    }
+
+    .contact-features-sec .feature-item:not(:last-child)::after {
+        display: none;
+    }
+
+    .contact-features-sec .feature-text h4 {
+        font-size: 13.5px;
     }
 
     .journey-right-grid {
