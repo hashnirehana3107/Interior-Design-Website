@@ -211,8 +211,12 @@ const Home = () => {
                         <button className="hero-arrow-btn hero-arrow-right" onClick={goNext} aria-label="Next slide">
                             <FaChevronRight />
                         </button>
+                    </>
+                )}
 
-                        {/* Dot indicators */}
+                <div className="hero-features-bar">
+                    {/* Dot indicators anchored relative to features bar */}
+                    {slides.length > 1 && (
                         <div className="hero-dots">
                             {slides.map((_, i) => (
                                 <button
@@ -223,17 +227,15 @@ const Home = () => {
                                 />
                             ))}
                         </div>
-                    </>
-                )}
+                    )}
 
-                <div className="hero-features-bar">
                     <div className="feature-item">
                         <span className="feature-icon-svg">
                             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#B38058" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="rgba(179,128,88,0.15)" />
                             </svg>
                         </span>
-                        <span>Creative Designs</span>
+                        <span className="feature-text">Creative Designs</span>
                     </div>
                     <div className="feature-item">
                         <span className="feature-icon-svg">
@@ -245,7 +247,7 @@ const Home = () => {
                                 <path d="M12 3V10" stroke="#B38058" strokeWidth="1.5" />
                             </svg>
                         </span>
-                        <span>Quality Materials</span>
+                        <span className="feature-text">Quality Materials</span>
                     </div>
                     <div className="feature-item">
                         <span className="feature-icon-svg">
@@ -254,7 +256,7 @@ const Home = () => {
                                 <path d="M12 6V12L16 14" stroke="#B38058" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </span>
-                        <span>On-time Delivery</span>
+                        <span className="feature-text">On-time Delivery</span>
                     </div>
                     <div className="feature-item">
                         <span className="feature-icon-svg">
@@ -265,7 +267,7 @@ const Home = () => {
                                 <path d="M21 21V19C21 17.14 19.79 15.57 18 15.13" stroke="#B38058" strokeWidth="2" strokeLinecap="round" />
                             </svg>
                         </span>
-                        <span>Client Focused</span>
+                        <span className="feature-text">Client Focused</span>
                     </div>
                 </div>
             </section>
@@ -274,7 +276,7 @@ const Home = () => {
             <section className="about-section">
                 <div className="about-text-col">
                     <p className="section-kicker">{homeSettings?.about?.kicker || 'WHO WE ARE'}</p>
-                    <h2 className="section-title" dangerouslySetInnerHTML={{ __html: (homeSettings?.about?.title || 'We are a passionate\ninterior design studio.').replace(/\n/g, '<br />') }}></h2>
+                    <h2 className="section-title" dangerouslySetInnerHTML={{ __html: (homeSettings?.about?.title || 'We are a passionate\ninterior design studio.').replace(/\n/g, ' <br />') }}></h2>
                     <div className="about-desc">
                         <p>{homeSettings?.about?.desc1 || 'At Good Interior, we believe that great design improves the way people live and work.'}</p>
                         <p>{homeSettings?.about?.desc2 || 'We blend creativity, functionality and detail to deliver spaces that are beautiful, comfortable and uniquely yours.'}</p>
