@@ -185,10 +185,10 @@ const JOB_DETAILS_DATA = {
     }
 };
 
-const JobDetailModal = ({ isOpen, onClose, jobTitle, onApplyClick }) => {
-    if (!isOpen || !jobTitle) return null;
+const JobDetailModal = ({ isOpen, onClose, jobTitle, jobData, onApplyClick }) => {
+    if (!isOpen) return null;
 
-    const job = JOB_DETAILS_DATA[jobTitle] || JOB_DETAILS_DATA['Interior Designer'];
+    const job = jobData || JOB_DETAILS_DATA[jobTitle] || JOB_DETAILS_DATA['Interior Designer'];
 
     return (
         <div className="jdm-backdrop" onClick={onClose}>

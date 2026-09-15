@@ -600,7 +600,7 @@
         margin-top: 15px;
         flex-direction: row;
         gap: 10px;
-        font-size: 24px;
+        font-size: 28px;
     }
 
     .job-cards-grid {
@@ -610,7 +610,11 @@
     .why-sec-grid {
         flex-direction: column;
         align-items: flex-start;
-        gap: 40px;
+        gap: 32px;
+    }
+
+    .why-sec-left {
+        max-width: 100%;
     }
 
     .why-sec-divider {
@@ -620,34 +624,87 @@
     .why-sec-right {
         grid-template-columns: repeat(2, 1fr);
         width: 100%;
+        gap: 28px 20px;
     }
 
     .careers-cta-grid {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 32px;
+    }
+
+    .cta-quote-col {
+        border-left: none;
+        border-top: 1px solid #e2e8f0;
+        padding-left: 0;
+        padding-top: 28px;
     }
 }
 
 @media (max-width: 640px) {
+    .careers-hero {
+        height: auto;
+        min-height: 340px;
+        padding: 50px 0;
+    }
+
+    .careers-hero-overlay {
+        padding: 0 20px;
+    }
+
     .careers-hero-title {
-        font-size: 36px;
+        font-size: 32px;
+        line-height: 1.22;
+    }
+
+    .careers-hero-desc {
+        font-size: 13.5px;
+    }
+
+    .careers-about-sec {
+        padding: 40px 0 25px;
+    }
+
+    .team-collab-img {
+        height: 250px;
+    }
+
+    .cursive-accent-text {
+        font-size: 26px;
+        justify-content: center;
     }
 
     .careers-team-features {
         grid-template-columns: repeat(2, 1fr);
     }
 
+    .careers-open-positions {
+        padding: 35px 0 45px;
+    }
+
     .positions-header-bar {
         flex-direction: column;
         align-items: flex-start;
-        gap: 20px;
+        gap: 16px;
     }
 
     .job-cards-grid {
         grid-template-columns: 1fr;
     }
 
+    .careers-why-overlay {
+        padding: 45px 0;
+    }
+
     .why-sec-right {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px 16px;
+    }
+
+    .careers-cta-sec {
+        padding: 45px 0;
+    }
+
+    .cta-living-img {
+        height: 210px;
     }
 }

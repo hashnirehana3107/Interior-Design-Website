@@ -8,10 +8,15 @@ import {
     TbRefresh, TbPhoto, TbUserCheck, TbShieldCheck, TbSearch,
     TbArrowLeft, TbHome, TbTrendingUp, TbCircleCheck, TbClock,
     TbPhoneCall, TbMailForward, TbExternalLink, TbFilter, TbFolder,
-    TbLogout, TbMapPin, TbAddressBook, TbStar, TbInfoCircle, TbUsers, TbShield, TbLock, TbPackage, TbQuote, TbLayoutBoard
+    TbLogout, TbMapPin, TbAddressBook, TbStar, TbInfoCircle, TbUsers, TbShield, TbLock, TbPackage, TbQuote, TbLayoutBoard, TbHeart,
+    TbFileText, TbSend, TbDownload, TbBulb
 } from 'react-icons/tb';
 import logo from '../assets/logo.svg';
 import aboutImg from '../assets/about_img.png';
+import careersHeroBg from '../assets/careers_hero_bg.png';
+import careersWhyBg from '../assets/careers_why_bg.png';
+import careersCtaLivingRoom from '../assets/careers_cta_livingroom.png';
+import teamCollabImg from '../assets/careers_team_collab.png';
 import './AdminDashboard.css';
 
 import API_BASE from '../config/api';
@@ -519,6 +524,386 @@ const AdminDashboard = () => {
         signupFeatures: []
     });
 
+    // ── Careers Management States ──
+    const [careersSubTab, setCareersSubTab] = useState('jobs'); // 'jobs' | 'hero' | 'about' | 'why' | 'cta' | 'applications'
+    const [jobOpenings, setJobOpenings] = useState([]);
+    const [jobApplications, setJobApplications] = useState([]);
+    const [careersHero, setCareersHero] = useState({
+        kicker: 'JOIN OUR TEAM',
+        title: 'Build Your Career in Interior Design',
+        description: "We're always looking for passionate, creative and talented individuals to join our team. If you love design and want to make a difference, we'd love to hear from you.",
+        bgImage: '',
+        aboutKicker: 'ABOUT OUR TEAM',
+        aboutTitle: 'Great People Build Great Spaces',
+        aboutDesc: 'At Good Interior, we believe that a strong team creates extraordinary results. We foster a collaborative, creative and supportive work environment where your ideas matter and your growth is our priority.',
+        aboutImage: '',
+        aboutF1: 'Creative Environment',
+        aboutF2: 'Professional Growth',
+        aboutF3: 'Collaborative Team',
+        aboutF4: 'Meaningful Impact',
+        whyKicker: 'WHY WORK WITH US',
+        whyTitle: 'More Than a Job',
+        whySubtitle: "It's a Place to Grow",
+        whyBgImage: '',
+        whyB1Title: 'Competitive Salary & Benefits',
+        whyB2Title: 'Learning & Development',
+        whyB3Title: 'Supportive Team Culture',
+        whyB4Title: 'Work-Life Balance',
+        ctaKicker: 'READY TO JOIN?',
+        ctaTitle: "Let's Build Something Beautiful Together",
+        ctaDescription: "If you're passionate about interior design and want to be part of a creative team, we'd love to hear from you.",
+        ctaImage: '',
+        ctaButtonText: 'APPLY NOW',
+        ctaQuote: `"At Good Interior, we don't just design spaces — we create experiences. And we're always looking for great people to help us do it."`,
+        ctaQuoteAuthor: 'OUR TEAM'
+    });
+
+    const [careersAboutModalOpen, setCareersAboutModalOpen] = useState(false);
+    const [careersAboutForm, setCareersAboutForm] = useState({
+        aboutKicker: '', aboutTitle: '', aboutDesc: '', aboutImage: '',
+        aboutF1: '', aboutF2: '', aboutF3: '', aboutF4: ''
+    });
+
+    const [careersWhyModalOpen, setCareersWhyModalOpen] = useState(false);
+    const [careersWhyForm, setCareersWhyForm] = useState({
+        whyKicker: '', whyTitle: '', whySubtitle: '', whyBgImage: '',
+        whyB1Title: '', whyB2Title: '', whyB3Title: '', whyB4Title: ''
+    });
+
+    const [careersCtaModalOpen, setCareersCtaModalOpen] = useState(false);
+    const [careersCtaForm, setCareersCtaForm] = useState({
+        ctaKicker: '', ctaTitle: '', ctaDescription: '', ctaImage: '',
+        ctaButtonText: '', ctaQuote: '', ctaQuoteAuthor: ''
+    });
+    const [jobModalOpen, setJobModalOpen] = useState(false);
+    const [editingJob, setEditingJob] = useState(null);
+    const [jobForm, setJobForm] = useState({
+        title: '',
+        department: 'Design Studio',
+        type: 'Full-time',
+        location: 'Colombo, Sri Lanka',
+        experience: '2 - 4 Years Experience',
+        salaryRange: 'Negotiable',
+        overview: '',
+        responsibilities: '',
+        requirements: '',
+        benefits: '',
+        icon: 'design',
+        order: 1,
+        isActive: true
+    });
+    const [careersHeroModalOpen, setCareersHeroModalOpen] = useState(false);
+    const [careersHeroForm, setCareersHeroForm] = useState({
+        kicker: '', title: '', description: '', bgImage: ''
+    });
+
+    // ── Candidate Email Response Modal States ──
+    const [candidateEmailModalOpen, setCandidateEmailModalOpen] = useState(false);
+    const [selectedAppForEmail, setSelectedAppForEmail] = useState(null);
+    const [emailForm, setEmailForm] = useState({
+        subject: '',
+        bodyMessage: '',
+        statusTag: 'Pending',
+        isSending: false
+    });
+
+    const handleOpenEmailModal = (app) => {
+        setSelectedAppForEmail(app);
+        setEmailForm({
+            subject: `Update regarding your application for ${app.position} - Good Interior Studio`,
+            bodyMessage: `Dear ${app.fullName},\n\nThank you for applying for the ${app.position} position at Good Interior Studio.\n\nOur HR & Lead Architecture team has evaluated your profile and CV. We would like to connect with you regarding the next steps in our hiring process.\n\nPlease let us know your availability for a brief discussion or interview.\n\nBest regards,\nRecruitment & Talent Team\nGood Interior Studio, Colombo`,
+            statusTag: app.status || 'Pending',
+            isSending: false
+        });
+        setCandidateEmailModalOpen(true);
+    };
+
+    const handleApplyEmailTemplate = (templateType) => {
+        if (!selectedAppForEmail) return;
+        const name = selectedAppForEmail.fullName;
+        const pos = selectedAppForEmail.position;
+
+        if (templateType === 'select') {
+            setEmailForm(prev => ({
+                ...prev,
+                subject: `🎉 Interview Invitation - ${pos} | Good Interior Studio`,
+                bodyMessage: `Dear ${name},\n\nWe are pleased to inform you that after reviewing your CV and portfolio for the ${pos} position, you have been SHORTLISTED for an interview with our lead architectural team!\n\nPlease reply to this email or call us at +94 77 123 4567 to confirm your availability for an interview at our Colombo Studio or via Google Meet.\n\nWe look forward to meeting you!\n\nBest regards,\nRecruitment & Talent Team\nGood Interior Studio`,
+                statusTag: 'Contacted'
+            }));
+        } else if (templateType === 'review') {
+            setEmailForm(prev => ({
+                ...prev,
+                subject: `Application Under Review - ${pos} | Good Interior Studio`,
+                bodyMessage: `Dear ${name},\n\nThank you for submitting your application for the ${pos} position at Good Interior Studio.\n\nYour application and CV are currently under active evaluation by our Studio Directors. We will update you as soon as the review process concludes.\n\nThank you for your patience.\n\nBest regards,\nGood Interior Studio HR Team`,
+                statusTag: 'Reviewed'
+            }));
+        } else if (templateType === 'reject') {
+            setEmailForm(prev => ({
+                ...prev,
+                subject: `Update regarding your application for ${pos} - Good Interior Studio`,
+                bodyMessage: `Dear ${name},\n\nThank you for your interest in joining Good Interior Studio and taking the time to share your application for the ${pos} role.\n\nAfter careful review, we regret to inform you that we have decided to proceed with candidates whose experience more closely matches our immediate project requirements.\n\nWe wish you every success in your career and will keep your profile in our database for future opportunities.\n\nWarm regards,\nGood Interior Studio HR Team`,
+                statusTag: 'Rejected'
+            }));
+        }
+    };
+
+    const handleSendCandidateEmail = async (e) => {
+        if (e) e.preventDefault();
+        if (!selectedAppForEmail || !emailForm.subject || !emailForm.bodyMessage) return;
+
+        setEmailForm(prev => ({ ...prev, isSending: true }));
+        try {
+            const res = await fetch(`${API_BASE}/api/careers/send-candidate-email`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    applicationId: selectedAppForEmail._id,
+                    recipientEmail: selectedAppForEmail.email,
+                    recipientName: selectedAppForEmail.fullName,
+                    position: selectedAppForEmail.position,
+                    subject: emailForm.subject,
+                    bodyMessage: emailForm.bodyMessage,
+                    statusTag: emailForm.statusTag
+                })
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                if (showToast) showToast(`Email successfully sent to ${selectedAppForEmail.email}!`, 'success');
+                setCandidateEmailModalOpen(false);
+                fetchJobApplications();
+            } else {
+                if (showToast) showToast(data.message || 'Failed to send email', 'error');
+            }
+        } catch (err) {
+            if (showToast) showToast('An error occurred while sending email', 'error');
+        } finally {
+            setEmailForm(prev => ({ ...prev, isSending: false }));
+        }
+    };
+
+    const fetchCareersHero = async () => {
+        try {
+            const res = await fetch(`${API_BASE}/api/careers/hero`);
+            const data = await res.json();
+            if (res.ok && data.hero) setCareersHero(data.hero);
+        } catch (err) {
+            console.error('Error fetching careers hero:', err);
+        }
+    };
+
+    const fetchJobOpenings = async () => {
+        try {
+            const res = await fetch(`${API_BASE}/api/careers/jobs`);
+            const data = await res.json();
+            if (res.ok && data.jobs) setJobOpenings(data.jobs);
+        } catch (err) {
+            console.error('Error fetching job openings:', err);
+        }
+    };
+
+    const fetchJobApplications = async () => {
+        try {
+            const res = await fetch(`${API_BASE}/api/careers/applications`);
+            const data = await res.json();
+            if (res.ok && data.applications) setJobApplications(data.applications);
+        } catch (err) {
+            console.error('Error fetching job applications:', err);
+        }
+    };
+
+    const handleOpenAddJob = () => {
+        setEditingJob(null);
+        setJobForm({
+            title: '',
+            department: 'Design Studio',
+            type: 'Full-time',
+            location: 'Colombo, Sri Lanka',
+            experience: '2 - 4 Years Experience',
+            salaryRange: 'Negotiable',
+            overview: '',
+            responsibilities: '',
+            requirements: '',
+            benefits: '',
+            icon: 'design',
+            order: jobOpenings.length + 1,
+            isActive: true
+        });
+        setJobModalOpen(true);
+    };
+
+    const handleOpenEditJob = (job) => {
+        setEditingJob(job);
+        setJobForm({
+            title: job.title || '',
+            department: job.department || 'Design Studio',
+            type: job.type || 'Full-time',
+            location: job.location || 'Colombo, Sri Lanka',
+            experience: job.experience || '2 - 4 Years Experience',
+            salaryRange: job.salaryRange || 'Negotiable',
+            overview: job.overview || '',
+            responsibilities: Array.isArray(job.responsibilities) ? job.responsibilities.join('\n') : (job.responsibilities || ''),
+            requirements: Array.isArray(job.requirements) ? job.requirements.join('\n') : (job.requirements || ''),
+            benefits: Array.isArray(job.benefits) ? job.benefits.join('\n') : (job.benefits || ''),
+            icon: job.icon || 'design',
+            order: job.order || 1,
+            isActive: job.isActive !== undefined ? job.isActive : true
+        });
+        setJobModalOpen(true);
+    };
+
+    const handleSaveJob = async (e) => {
+        if (e) e.preventDefault();
+        try {
+            const method = editingJob ? 'PUT' : 'POST';
+            const url = editingJob ? `${API_BASE}/api/careers/jobs/${editingJob._id}` : `${API_BASE}/api/careers/jobs`;
+            const payload = {
+                ...jobForm,
+                responsibilities: jobForm.responsibilities ? jobForm.responsibilities.split('\n').filter(Boolean) : [],
+                requirements: jobForm.requirements ? jobForm.requirements.split('\n').filter(Boolean) : [],
+                benefits: jobForm.benefits ? jobForm.benefits.split('\n').filter(Boolean) : []
+            };
+
+            const res = await fetch(url, {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            if (res.ok) {
+                if (showToast) showToast(`Job opening ${editingJob ? 'updated' : 'created'} successfully!`, 'success');
+                setJobModalOpen(false);
+                fetchJobOpenings();
+            } else {
+                if (showToast) showToast(data.message || 'Failed to save job opening', 'error');
+            }
+        } catch (err) {
+            if (showToast) showToast('An error occurred while saving job opening', 'error');
+        }
+    };
+
+    const handleDeleteJob = async (id) => {
+        if (!(await confirmAction('Are you sure you want to delete this job opening?'))) return;
+        try {
+            const res = await fetch(`${API_BASE}/api/careers/jobs/${id}`, { method: 'DELETE' });
+            if (res.ok) {
+                if (showToast) showToast('Job opening deleted successfully!', 'success');
+                fetchJobOpenings();
+            }
+        } catch (err) {
+            if (showToast) showToast('Failed to delete job opening', 'error');
+        }
+    };
+
+    const handleDeleteJobApplication = async (id) => {
+        if (!(await confirmAction('Are you sure you want to delete this candidate application?'))) return;
+        try {
+            const res = await fetch(`${API_BASE}/api/careers/applications/${id}`, { method: 'DELETE' });
+            if (res.ok) {
+                if (showToast) showToast('Candidate application deleted successfully!', 'success');
+                fetchJobApplications();
+            }
+        } catch (err) {
+            if (showToast) showToast('Failed to delete candidate application', 'error');
+        }
+    };
+
+    const handleUpdateJobAppStatus = async (id, newStatus) => {
+        try {
+            const res = await fetch(`${API_BASE}/api/careers/applications/${id}/status`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: newStatus })
+            });
+            if (res.ok) {
+                if (showToast) showToast(`Application status updated to "${newStatus}"`, 'success');
+                fetchJobApplications();
+            }
+        } catch (err) {
+            if (showToast) showToast('Failed to update status', 'error');
+        }
+    };
+
+    const handleSaveCareersHero = async (e) => {
+        if (e) e.preventDefault();
+        try {
+            const res = await fetch(`${API_BASE}/api/careers/hero`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(careersHeroForm)
+            });
+            if (res.ok) {
+                if (showToast) showToast('Careers Hero updated successfully!', 'success');
+                setCareersHeroModalOpen(false);
+                fetchCareersHero();
+            } else {
+                if (showToast) showToast('Failed to update Careers Hero', 'error');
+            }
+        } catch (err) {
+            if (showToast) showToast('An error occurred while saving Careers Hero', 'error');
+        }
+    };
+
+    const handleSaveCareersAbout = async (e) => {
+        if (e) e.preventDefault();
+        try {
+            const res = await fetch(`${API_BASE}/api/careers/hero`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(careersAboutForm)
+            });
+            if (res.ok) {
+                if (showToast) showToast('"About Our Team" section updated successfully!', 'success');
+                setCareersAboutModalOpen(false);
+                fetchCareersHero();
+            } else {
+                if (showToast) showToast('Failed to update section', 'error');
+            }
+        } catch (err) {
+            if (showToast) showToast('An error occurred while saving section', 'error');
+        }
+    };
+
+    const handleSaveCareersWhy = async (e) => {
+        if (e) e.preventDefault();
+        try {
+            const res = await fetch(`${API_BASE}/api/careers/hero`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(careersWhyForm)
+            });
+            if (res.ok) {
+                if (showToast) showToast('"Why Work With Us" section updated successfully!', 'success');
+                setCareersWhyModalOpen(false);
+                fetchCareersHero();
+            } else {
+                if (showToast) showToast('Failed to update section', 'error');
+            }
+        } catch (err) {
+            if (showToast) showToast('An error occurred while saving section', 'error');
+        }
+    };
+
+    const handleSaveCareersCta = async (e) => {
+        if (e) e.preventDefault();
+        try {
+            const res = await fetch(`${API_BASE}/api/careers/hero`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(careersCtaForm)
+            });
+            if (res.ok) {
+                if (showToast) showToast('"Ready To Join" CTA section updated successfully!', 'success');
+                setCareersCtaModalOpen(false);
+                fetchCareersHero();
+            } else {
+                if (showToast) showToast('Failed to update CTA section', 'error');
+            }
+        } catch (err) {
+            if (showToast) showToast('An error occurred while saving CTA section', 'error');
+        }
+    };
+
     const fetchAuthBranding = async () => {
         try {
             const res = await fetch(`${API_BASE}/api/auth-branding`);
@@ -611,7 +996,10 @@ const AdminDashboard = () => {
                 fetchAboutData(),
                 fetchUsers(),
                 fetchGlobalSettings(),
-                fetchAuthBranding()
+                fetchAuthBranding(),
+                fetchCareersHero(),
+                fetchJobOpenings(),
+                fetchJobApplications()
             ]);
         } catch (err) {
             console.error('Error fetching admin data:', err);
@@ -2365,12 +2753,6 @@ const AdminDashboard = () => {
                         )}
                     </button>
                     <button
-                        className={`tab-btn ${activeTab === 'gallery' ? 'active' : ''}`}
-                        onClick={() => setActiveTab('gallery')}
-                    >
-                        <TbPhoto className="tab-icon" /> Galleries Page ({galleryItems.length})
-                    </button>
-                    <button
                         className={`tab-btn ${activeTab === 'contact' ? 'active' : ''}`}
                         onClick={() => setActiveTab('contact')}
                     >
@@ -2405,6 +2787,15 @@ const AdminDashboard = () => {
                         onClick={() => setActiveTab('about')}
                     >
                         <TbInfoCircle className="tab-icon" /> About Page Settings
+                    </button>
+                    <button
+                        className={`tab-btn ${activeTab === 'careers' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('careers')}
+                    >
+                        <TbBriefcase className="tab-icon" /> Careers Manage ({jobOpenings.length})
+                        {jobApplications.length > 0 && (
+                            <span className="tab-badge-counter">{jobApplications.length}</span>
+                        )}
                     </button>
 
                 </nav>
@@ -5171,9 +5562,616 @@ const AdminDashboard = () => {
                         </div>
                     )}
 
+                    {/* ── TAB: CAREERS MANAGEMENT ── */}
+                    {!loading && activeTab === 'careers' && (
+                        <div className="panel-section">
+                            <div className="panel-header">
+                                <div>
+                                    <h2>Careers & Recruitment Management</h2>
+                                    <p>Manage job openings, customize the Careers Page hero header, and review candidate resume applications.</p>
+                                </div>
+                                {careersSubTab === 'jobs' && (
+                                    <button className="btn-primary-gold" onClick={handleOpenAddJob}>
+                                        <TbPlus /> ADD NEW JOB OPENING
+                                    </button>
+                                )}
+                                {careersSubTab === 'hero' && (
+                                    <button className="btn-primary-gold" onClick={() => {
+                                        setCareersHeroForm({
+                                            kicker: careersHero.kicker || 'JOIN OUR TEAM',
+                                            title: careersHero.title || 'Build Your Career in Interior Design',
+                                            description: careersHero.description || '',
+                                            bgImage: careersHero.bgImage || ''
+                                        });
+                                        setCareersHeroModalOpen(true);
+                                    }}>
+                                        <TbEdit /> EDIT CAREERS HERO
+                                    </button>
+                                )}
+                            </div>
+
+                            {/* Sub-tab Switcher Bar */}
+                            <div className="admin-subtab-bar" style={{ display: 'flex', gap: '10px', marginBottom: '24px', flexWrap: 'wrap' }}>
+                                <button
+                                    onClick={() => setCareersSubTab('jobs')}
+                                    style={{
+                                        background: careersSubTab === 'jobs' ? '#c48b59' : 'transparent',
+                                        color: careersSubTab === 'jobs' ? '#fff' : '#94a3b8',
+                                        border: careersSubTab === 'jobs' ? 'none' : '1px solid rgba(255,255,255,0.1)',
+                                        borderRadius: '6px',
+                                        padding: '8px 16px',
+                                        fontSize: '0.85rem',
+                                        fontWeight: '600',
+                                        cursor: 'pointer',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '6px'
+                                    }}
+                                >
+                                    <TbBriefcase /> Job Openings ({jobOpenings.length})
+                                </button>
+                                <button
+                                    onClick={() => setCareersSubTab('hero')}
+                                    style={{
+                                        background: careersSubTab === 'hero' ? '#c48b59' : 'transparent',
+                                        color: careersSubTab === 'hero' ? '#fff' : '#94a3b8',
+                                        border: careersSubTab === 'hero' ? 'none' : '1px solid rgba(255,255,255,0.1)',
+                                        borderRadius: '6px',
+                                        padding: '8px 16px',
+                                        fontSize: '0.85rem',
+                                        fontWeight: '600',
+                                        cursor: 'pointer',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '6px'
+                                    }}
+                                >
+                                    <TbSlideshow /> Hero Header
+                                </button>
+                                <button
+                                    onClick={() => setCareersSubTab('about')}
+                                    style={{
+                                        background: careersSubTab === 'about' ? '#c48b59' : 'transparent',
+                                        color: careersSubTab === 'about' ? '#fff' : '#94a3b8',
+                                        border: careersSubTab === 'about' ? 'none' : '1px solid rgba(255,255,255,0.1)',
+                                        borderRadius: '6px',
+                                        padding: '8px 16px',
+                                        fontSize: '0.85rem',
+                                        fontWeight: '600',
+                                        cursor: 'pointer',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '6px'
+                                    }}
+                                >
+                                    <TbUsers /> About Our Team
+                                </button>
+                                <button
+                                    onClick={() => setCareersSubTab('why')}
+                                    style={{
+                                        background: careersSubTab === 'why' ? '#c48b59' : 'transparent',
+                                        color: careersSubTab === 'why' ? '#fff' : '#94a3b8',
+                                        border: careersSubTab === 'why' ? 'none' : '1px solid rgba(255,255,255,0.1)',
+                                        borderRadius: '6px',
+                                        padding: '8px 16px',
+                                        fontSize: '0.85rem',
+                                        fontWeight: '600',
+                                        cursor: 'pointer',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '6px'
+                                    }}
+                                >
+                                    <TbHeart /> Why Work With Us
+                                </button>
+                                <button
+                                    onClick={() => setCareersSubTab('cta')}
+                                    style={{
+                                        background: careersSubTab === 'cta' ? '#c48b59' : 'transparent',
+                                        color: careersSubTab === 'cta' ? '#fff' : '#94a3b8',
+                                        border: careersSubTab === 'cta' ? 'none' : '1px solid rgba(255,255,255,0.1)',
+                                        borderRadius: '6px',
+                                        padding: '8px 16px',
+                                        fontSize: '0.85rem',
+                                        fontWeight: '600',
+                                        cursor: 'pointer',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '6px'
+                                    }}
+                                >
+                                    <TbQuote /> Ready To Join (CTA)
+                                </button>
+                                <button
+                                    onClick={() => setCareersSubTab('applications')}
+                                    style={{
+                                        background: careersSubTab === 'applications' ? '#c48b59' : 'transparent',
+                                        color: careersSubTab === 'applications' ? '#fff' : '#94a3b8',
+                                        border: careersSubTab === 'applications' ? 'none' : '1px solid rgba(255,255,255,0.1)',
+                                        borderRadius: '6px',
+                                        padding: '8px 16px',
+                                        fontSize: '0.85rem',
+                                        fontWeight: '600',
+                                        cursor: 'pointer',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '6px'
+                                    }}
+                                >
+                                    <TbUserCheck /> Applications ({jobApplications.length})
+                                </button>
+                            </div>
+
+                            {/* Subtab 1: Job Openings */}
+                            {careersSubTab === 'jobs' && (
+                                <div className="admin-table-container">
+                                    <table className="admin-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Icon</th>
+                                                <th>Title & Department</th>
+                                                <th>Type & Location</th>
+                                                <th>Experience</th>
+                                                <th>Status</th>
+                                                <th style={{ textAlign: 'right' }}>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {jobOpenings.length === 0 ? (
+                                                <tr>
+                                                    <td colSpan="6" style={{ textAlign: 'center', padding: '30px', color: '#94a3b8' }}>
+                                                        No job openings created yet. Click "Add New Job Opening" to list a position.
+                                                    </td>
+                                                </tr>
+                                            ) : (
+                                                jobOpenings.map(job => (
+                                                    <tr key={job._id}>
+                                                        <td>
+                                                            <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#faf2ea', color: '#c48b59', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', fontWeight: 'bold' }}>
+                                                                {job.title ? job.title.charAt(0) : 'J'}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <strong style={{ color: '#fff', fontSize: '0.95rem' }}>{job.title}</strong>
+                                                            <div style={{ fontSize: '0.78rem', color: '#c48b59', marginTop: '2px' }}>{job.department || 'Design Studio'}</div>
+                                                        </td>
+                                                        <td>
+                                                            <span style={{ color: '#cbd5e1', fontSize: '0.85rem' }}>{job.type || 'Full-time'}</span>
+                                                            <div style={{ fontSize: '0.78rem', color: '#64748b' }}>{job.location || 'Colombo, Sri Lanka'}</div>
+                                                        </td>
+                                                        <td>
+                                                            <span style={{ color: '#cbd5e1', fontSize: '0.85rem' }}>{job.experience || '2-4 Years'}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span className={`status-tag ${job.isActive !== false ? 'approved' : 'pending'}`}>
+                                                                {job.isActive !== false ? 'Active' : 'Draft'}
+                                                            </span>
+                                                        </td>
+                                                        <td style={{ textAlign: 'right' }}>
+                                                            <button className="btn-action edit" title="Edit Job Opening" onClick={() => handleOpenEditJob(job)}>
+                                                                <TbEdit />
+                                                            </button>
+                                                            <button className="btn-action delete" title="Delete Job Opening" onClick={() => handleDeleteJob(job._id)}>
+                                                                <TbTrash />
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            )}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
+
+                            {/* Subtab 2: Hero Header Settings Preview */}
+                            {careersSubTab === 'hero' && (
+                                <div className="overview-card" style={{ padding: '24px' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                                        <h3 style={{ margin: 0, color: '#c48b59', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                            <TbSlideshow /> Current Careers Page Hero Header
+                                        </h3>
+                                        <button className="btn-primary-gold" onClick={() => {
+                                            setCareersHeroForm({
+                                                kicker: careersHero.kicker || 'JOIN OUR TEAM',
+                                                title: careersHero.title || 'Build Your Career in Interior Design',
+                                                description: careersHero.description || '',
+                                                bgImage: careersHero.bgImage || ''
+                                            });
+                                            setCareersHeroModalOpen(true);
+                                        }}>
+                                            <TbEdit /> Edit Hero Header Text & Image
+                                        </button>
+                                    </div>
+
+                                    {/* Live Hero Header Banner Preview */}
+                                    <div style={{
+                                        position: 'relative',
+                                        borderRadius: '16px',
+                                        overflow: 'hidden',
+                                        padding: '40px 36px',
+                                        border: '1px solid rgba(212, 175, 55, 0.25)',
+                                        backgroundImage: `linear-gradient(rgba(11, 13, 17, 0.8), rgba(11, 13, 17, 0.88)), url(${careersHero.bgImage || careersHeroBg})`,
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center',
+                                        boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+                                        minHeight: '220px',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        justifyContent: 'center'
+                                    }}>
+                                        <span style={{ color: '#c48b59', fontSize: '0.75rem', fontWeight: '700', letterSpacing: '2.5px', textTransform: 'uppercase' }}>
+                                            {careersHero.kicker || 'JOIN OUR TEAM'}
+                                        </span>
+                                        <h1 style={{ color: '#ffffff', fontSize: '2rem', margin: '12px 0 16px', fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: '600' }}>
+                                            {careersHero.title || 'Build Your Career in Interior Design'}
+                                        </h1>
+                                        <p style={{ color: '#cbd5e1', fontSize: '0.92rem', maxWidth: '650px', lineHeight: '1.6', margin: 0 }}>
+                                            {careersHero.description || "We're always looking for passionate, creative and talented individuals to join our team."}
+                                        </p>
+                                    </div>
+
+                                    {/* Image Status & Thumbnail Row */}
+                                    <div style={{ marginTop: '24px', background: '#0f1219', borderRadius: '12px', padding: '16px 20px', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+                                        <div style={{ width: '120px', height: '70px', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(196,139,89,0.4)', flexShrink: 0, position: 'relative' }}>
+                                            <img src={careersHero.bgImage || careersHeroBg} alt="Careers Hero Thumbnail" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        </div>
+                                        <div style={{ flex: 1, minWidth: '200px' }}>
+                                            <h4 style={{ color: '#ffffff', margin: '0 0 4px 0', fontSize: '0.95rem' }}>Hero Background Image</h4>
+                                            <p style={{ color: '#94a3b8', fontSize: '0.8rem', margin: 0 }}>
+                                                {careersHero.bgImage ? 'Custom uploaded background image active' : 'Default luxury background image active'}
+                                            </p>
+                                        </div>
+                                        <button className="btn-action edit" onClick={() => {
+                                            setCareersHeroForm({
+                                                kicker: careersHero.kicker || 'JOIN OUR TEAM',
+                                                title: careersHero.title || 'Build Your Career in Interior Design',
+                                                description: careersHero.description || '',
+                                                bgImage: careersHero.bgImage || ''
+                                            });
+                                            setCareersHeroModalOpen(true);
+                                        }}>
+                                            <TbPhoto /> Change Image
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Subtab: About Our Team Section */}
+                            {careersSubTab === 'about' && (
+                                <div className="overview-card" style={{ padding: '24px' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                                        <h3 style={{ margin: 0, color: '#c48b59', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                            <TbUsers /> About Our Team Section
+                                        </h3>
+                                        <button className="btn-primary-gold" onClick={() => {
+                                            setCareersAboutForm({
+                                                aboutKicker: careersHero.aboutKicker || 'ABOUT OUR TEAM',
+                                                aboutTitle: careersHero.aboutTitle || 'Great People Build Great Spaces',
+                                                aboutDesc: careersHero.aboutDesc || 'At Good Interior, we believe that a strong team creates extraordinary results...',
+                                                aboutImage: careersHero.aboutImage || '',
+                                                aboutF1: careersHero.aboutF1 || 'Creative Environment',
+                                                aboutF2: careersHero.aboutF2 || 'Professional Growth',
+                                                aboutF3: careersHero.aboutF3 || 'Collaborative Team',
+                                                aboutF4: careersHero.aboutF4 || 'Meaningful Impact'
+                                            });
+                                            setCareersAboutModalOpen(true);
+                                        }}>
+                                            <TbEdit /> Edit Section Details & Team Image
+                                        </button>
+                                    </div>
+
+                                    {/* Live Banner Preview */}
+                                    <div style={{
+                                        position: 'relative',
+                                        borderRadius: '16px',
+                                        overflow: 'hidden',
+                                        padding: '30px',
+                                        background: '#0f1219',
+                                        border: '1px solid rgba(212, 175, 55, 0.25)',
+                                        display: 'grid',
+                                        gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+                                        gap: '24px',
+                                        alignItems: 'center'
+                                    }}>
+                                        <div>
+                                            <span style={{ color: '#c48b59', fontSize: '0.75rem', fontWeight: '700', letterSpacing: '2.5px', textTransform: 'uppercase' }}>
+                                                {careersHero.aboutKicker || 'ABOUT OUR TEAM'}
+                                            </span>
+                                            <h2 style={{ color: '#ffffff', fontSize: '1.8rem', margin: '10px 0 10px', fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
+                                                {careersHero.aboutTitle || 'Great People Build Great Spaces'}
+                                            </h2>
+                                            <p style={{ color: '#cbd5e1', fontSize: '0.88rem', lineHeight: '1.6', margin: '0 0 20px 0' }}>
+                                                {careersHero.aboutDesc || 'At Good Interior, we believe that a strong team creates extraordinary results...'}
+                                            </p>
+
+                                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
+                                                <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '8px', padding: '10px 14px', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    <TbBulb style={{ color: '#c48b59', fontSize: '1.2rem' }} />
+                                                    <span style={{ color: '#fff', fontSize: '0.85rem', fontWeight: '600' }}>{careersHero.aboutF1 || 'Creative Environment'}</span>
+                                                </div>
+                                                <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '8px', padding: '10px 14px', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    <TbTrendingUp style={{ color: '#c48b59', fontSize: '1.2rem' }} />
+                                                    <span style={{ color: '#fff', fontSize: '0.85rem', fontWeight: '600' }}>{careersHero.aboutF2 || 'Professional Growth'}</span>
+                                                </div>
+                                                <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '8px', padding: '10px 14px', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    <TbUsers style={{ color: '#c48b59', fontSize: '1.2rem' }} />
+                                                    <span style={{ color: '#fff', fontSize: '0.85rem', fontWeight: '600' }}>{careersHero.aboutF3 || 'Collaborative Team'}</span>
+                                                </div>
+                                                <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '8px', padding: '10px 14px', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    <TbHeart style={{ color: '#c48b59', fontSize: '1.2rem' }} />
+                                                    <span style={{ color: '#fff', fontSize: '0.85rem', fontWeight: '600' }}>{careersHero.aboutF4 || 'Meaningful Impact'}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div style={{ borderRadius: '12px', overflow: 'hidden', height: '220px', border: '1px solid rgba(196,139,89,0.3)' }}>
+                                            <img src={careersHero.aboutImage || teamCollabImg} alt="About Team Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Subtab 3: Why Work With Us Section */}
+                            {careersSubTab === 'why' && (
+                                <div className="overview-card" style={{ padding: '24px' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                                        <h3 style={{ margin: 0, color: '#c48b59', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                            <TbHeart /> Why Work With Us Section
+                                        </h3>
+                                        <button className="btn-primary-gold" onClick={() => {
+                                            setCareersWhyForm({
+                                                whyKicker: careersHero.whyKicker || 'WHY WORK WITH US',
+                                                whyTitle: careersHero.whyTitle || 'More Than a Job',
+                                                whySubtitle: careersHero.whySubtitle || "It's a Place to Grow",
+                                                whyBgImage: careersHero.whyBgImage || '',
+                                                whyB1Title: careersHero.whyB1Title || 'Competitive Salary & Benefits',
+                                                whyB2Title: careersHero.whyB2Title || 'Learning & Development',
+                                                whyB3Title: careersHero.whyB3Title || 'Supportive Team Culture',
+                                                whyB4Title: careersHero.whyB4Title || 'Work-Life Balance'
+                                            });
+                                            setCareersWhyModalOpen(true);
+                                        }}>
+                                            <TbEdit /> Edit Section Details & Background
+                                        </button>
+                                    </div>
+
+                                    {/* Live Banner Preview */}
+                                    <div style={{
+                                        position: 'relative',
+                                        borderRadius: '16px',
+                                        overflow: 'hidden',
+                                        padding: '40px 36px',
+                                        border: '1px solid rgba(212, 175, 55, 0.25)',
+                                        backgroundImage: `linear-gradient(rgba(11, 13, 17, 0.85), rgba(11, 13, 17, 0.9)), url(${careersHero.whyBgImage || careersWhyBg})`,
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center',
+                                        boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
+                                    }}>
+                                        <span style={{ color: '#c48b59', fontSize: '0.75rem', fontWeight: '700', letterSpacing: '2.5px', textTransform: 'uppercase' }}>
+                                            {careersHero.whyKicker || 'WHY WORK WITH US'}
+                                        </span>
+                                        <h2 style={{ color: '#ffffff', fontSize: '1.8rem', margin: '10px 0 6px', fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
+                                            {careersHero.whyTitle || 'More Than a Job'}
+                                        </h2>
+                                        <h3 style={{ color: '#c48b59', fontSize: '1.4rem', fontStyle: 'italic', margin: '0 0 24px 0', fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
+                                            {careersHero.whySubtitle || "It's a Place to Grow"}
+                                        </h3>
+
+                                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px', marginTop: '20px', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '20px' }}>
+                                            <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '14px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                                                <span style={{ color: '#c48b59', fontSize: '0.75rem', fontWeight: '700', display: 'block', marginBottom: '4px' }}>BENEFIT 1</span>
+                                                <strong style={{ color: '#fff', fontSize: '0.9rem' }}>{careersHero.whyB1Title || 'Competitive Salary & Benefits'}</strong>
+                                            </div>
+                                            <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '14px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                                                <span style={{ color: '#c48b59', fontSize: '0.75rem', fontWeight: '700', display: 'block', marginBottom: '4px' }}>BENEFIT 2</span>
+                                                <strong style={{ color: '#fff', fontSize: '0.9rem' }}>{careersHero.whyB2Title || 'Learning & Development'}</strong>
+                                            </div>
+                                            <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '14px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                                                <span style={{ color: '#c48b59', fontSize: '0.75rem', fontWeight: '700', display: 'block', marginBottom: '4px' }}>BENEFIT 3</span>
+                                                <strong style={{ color: '#fff', fontSize: '0.9rem' }}>{careersHero.whyB3Title || 'Supportive Team Culture'}</strong>
+                                            </div>
+                                            <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '14px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                                                <span style={{ color: '#c48b59', fontSize: '0.75rem', fontWeight: '700', display: 'block', marginBottom: '4px' }}>BENEFIT 4</span>
+                                                <strong style={{ color: '#fff', fontSize: '0.9rem' }}>{careersHero.whyB4Title || 'Work-Life Balance'}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Subtab 4: Ready To Join CTA Section */}
+                            {careersSubTab === 'cta' && (
+                                <div className="overview-card" style={{ padding: '24px' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                                        <h3 style={{ margin: 0, color: '#c48b59', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                            <TbQuote /> Ready To Join (CTA Section)
+                                        </h3>
+                                        <button className="btn-primary-gold" onClick={() => {
+                                            setCareersCtaForm({
+                                                ctaKicker: careersHero.ctaKicker || 'READY TO JOIN?',
+                                                ctaTitle: careersHero.ctaTitle || "Let's Build Something Beautiful Together",
+                                                ctaDescription: careersHero.ctaDescription || "If you're passionate about interior design and want to be part of a creative team, we'd love to hear from you.",
+                                                ctaImage: careersHero.ctaImage || '',
+                                                ctaButtonText: careersHero.ctaButtonText || 'APPLY NOW',
+                                                ctaQuote: careersHero.ctaQuote || `"At Good Interior, we don't just design spaces — we create experiences. And we're always looking for great people to help us do it."`,
+                                                ctaQuoteAuthor: careersHero.ctaQuoteAuthor || 'OUR TEAM'
+                                            });
+                                            setCareersCtaModalOpen(true);
+                                        }}>
+                                            <TbEdit /> Edit CTA Text, Image & Quote
+                                        </button>
+                                    </div>
+
+                                    {/* Live CTA Section Preview */}
+                                    <div style={{ background: '#0f1219', borderRadius: '16px', padding: '30px', border: '1px solid rgba(255,255,255,0.08)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '24px', alignItems: 'center' }}>
+                                        <div style={{ borderRadius: '12px', overflow: 'hidden', height: '180px', border: '1px solid rgba(196,139,89,0.3)' }}>
+                                            <img src={careersHero.ctaImage || careersCtaLivingRoom} alt="CTA Feature Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        </div>
+                                        <div>
+                                            <span style={{ color: '#c48b59', fontSize: '0.75rem', fontWeight: '700', letterSpacing: '2px', textTransform: 'uppercase' }}>
+                                                {careersHero.ctaKicker || 'READY TO JOIN?'}
+                                            </span>
+                                            <h3 style={{ color: '#ffffff', fontSize: '1.4rem', margin: '8px 0 10px', fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
+                                                {careersHero.ctaTitle || "Let's Build Something Beautiful Together"}
+                                            </h3>
+                                            <p style={{ color: '#94a3b8', fontSize: '0.85rem', lineHeight: '1.5', margin: '0 0 14px 0' }}>
+                                                {careersHero.ctaDescription || "If you're passionate about interior design and want to be part of a creative team..."}
+                                            </p>
+                                            <span style={{ background: '#c48b59', color: '#fff', padding: '6px 14px', borderRadius: '4px', fontSize: '0.78rem', fontWeight: '700', display: 'inline-block' }}>
+                                                {careersHero.ctaButtonText || 'APPLY NOW'} →
+                                            </span>
+                                        </div>
+                                        <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '10px', padding: '16px', borderLeft: '3px solid #c48b59' }}>
+                                            <p style={{ color: '#cbd5e1', fontSize: '0.82rem', fontStyle: 'italic', margin: '0 0 8px 0', lineHeight: '1.5' }}>
+                                                {careersHero.ctaQuote || `"At Good Interior, we don't just design spaces — we create experiences..."`}
+                                            </p>
+                                            <span style={{ color: '#c48b59', fontSize: '0.75rem', fontWeight: '700' }}>
+                                                — {careersHero.ctaQuoteAuthor || 'OUR TEAM'}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Subtab 3: Candidate Applications */}
+                            {careersSubTab === 'applications' && (
+                                <div className="admin-table-container">
+                                    <table className="admin-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Date Received</th>
+                                                <th>Candidate Name</th>
+                                                <th>Position Applied</th>
+                                                <th>Contact Details</th>
+                                                <th>CV / Portfolio</th>
+                                                <th>Status</th>
+                                                <th style={{ textAlign: 'right' }}>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {jobApplications.length === 0 ? (
+                                                <tr>
+                                                    <td colSpan="7" style={{ textAlign: 'center', padding: '30px', color: '#94a3b8' }}>
+                                                        No candidate resume submissions received yet.
+                                                    </td>
+                                                </tr>
+                                            ) : (
+                                                jobApplications.map(app => (
+                                                    <tr key={app._id}>
+                                                        <td>
+                                                            <span style={{ color: '#64748b', fontSize: '0.8rem' }}>
+                                                                {new Date(app.createdAt).toLocaleDateString()}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <strong style={{ color: '#fff' }}>{app.fullName}</strong>
+                                                            {app.experience && (
+                                                                <div style={{ fontSize: '0.78rem', color: '#c48b59', fontWeight: '600', marginTop: '2px' }}>
+                                                                    Exp: {app.experience}
+                                                                </div>
+                                                            )}
+                                                        </td>
+                                                        <td>
+                                                            <span style={{ color: '#c48b59', fontWeight: '600' }}>{app.position}</span>
+                                                        </td>
+                                                        <td>
+                                                            <div style={{ color: '#cbd5e1', fontSize: '0.85rem' }}>{app.email}</div>
+                                                            <div style={{ color: '#64748b', fontSize: '0.8rem' }}>{app.phone}</div>
+                                                        </td>
+                                                        <td>
+                                                            {app.cvFile ? (
+                                                                <a
+                                                                    href={app.cvFile}
+                                                                    download={app.cvFileName || `${app.fullName.replace(/\s+/g, '_')}_CV.pdf`}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    style={{
+                                                                        background: 'rgba(37, 99, 235, 0.15)',
+                                                                        color: '#60a5fa',
+                                                                        border: '1px solid rgba(96, 165, 250, 0.3)',
+                                                                        borderRadius: '6px',
+                                                                        padding: '6px 12px',
+                                                                        fontSize: '0.8rem',
+                                                                        fontWeight: '600',
+                                                                        textDecoration: 'none',
+                                                                        display: 'inline-flex',
+                                                                        alignItems: 'center',
+                                                                        gap: '6px',
+                                                                        marginBottom: '4px',
+                                                                        boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
+                                                                    }}
+                                                                    title={`Click to Download CV: ${app.cvFileName || 'Candidate Resume'}`}
+                                                                >
+                                                                    <TbFileText style={{ fontSize: '0.95rem' }} />
+                                                                    <span>{app.cvFileName ? (app.cvFileName.length > 18 ? app.cvFileName.substring(0, 16) + '...' : app.cvFileName) : 'Download CV'}</span>
+                                                                </a>
+                                                            ) : app.portfolioUrl ? (
+                                                                <a href={app.portfolioUrl} target="_blank" rel="noreferrer" style={{ color: '#38bdf8', fontSize: '0.82rem', textDecoration: 'underline', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                                                                    <TbExternalLink /> View Portfolio Link
+                                                                </a>
+                                                            ) : (
+                                                                <span style={{ color: '#64748b', fontSize: '0.8rem' }}>No Attachment</span>
+                                                            )}
+                                                            {app.message && (
+                                                                <div style={{ fontSize: '0.78rem', color: '#94a3b8', fontStyle: 'italic', marginTop: '4px', maxWidth: '240px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                                                    "{app.message}"
+                                                                </div>
+                                                            )}
+                                                        </td>
+                                                        <td>
+                                                            <select
+                                                                value={app.status || 'Pending'}
+                                                                onChange={(e) => handleUpdateJobAppStatus(app._id, e.target.value)}
+                                                                style={{
+                                                                    background: app.status === 'Contacted' ? 'rgba(34, 197, 94, 0.15)' : app.status === 'Reviewed' ? 'rgba(59, 130, 246, 0.15)' : app.status === 'Rejected' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(234, 179, 8, 0.15)',
+                                                                    color: app.status === 'Contacted' ? '#4ade80' : app.status === 'Reviewed' ? '#60a5fa' : app.status === 'Rejected' ? '#f87171' : '#facc15',
+                                                                    border: '1px solid rgba(255,255,255,0.1)',
+                                                                    borderRadius: '6px',
+                                                                    padding: '4px 8px',
+                                                                    fontSize: '0.78rem',
+                                                                    fontWeight: '600',
+                                                                    cursor: 'pointer'
+                                                                }}
+                                                            >
+                                                                <option value="Pending" style={{ background: '#1e293b', color: '#facc15' }}>Pending</option>
+                                                                <option value="Reviewed" style={{ background: '#1e293b', color: '#60a5fa' }}>Reviewed</option>
+                                                                <option value="Contacted" style={{ background: '#1e293b', color: '#4ade80' }}>Contacted</option>
+                                                                <option value="Rejected" style={{ background: '#1e293b', color: '#f87171' }}>Rejected</option>
+                                                            </select>
+                                                        </td>
+                                                        <td style={{ textAlign: 'right' }}>
+                                                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '8px' }}>
+                                                                <button
+                                                                    className="btn-action edit"
+                                                                    title="Send Custom / Template Email to Candidate"
+                                                                    onClick={() => handleOpenEmailModal(app)}
+                                                                    style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+                                                                >
+                                                                    <TbMail />
+                                                                </button>
+                                                                <button
+                                                                    className="btn-action delete"
+                                                                    title="Delete Candidate Application"
+                                                                    onClick={() => handleDeleteJobApplication(app._id)}
+                                                                    style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+                                                                >
+                                                                    <TbTrash />
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            )}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
 
                 </main>
-            </div >
+            </div>
 
             {/* ── MODAL: HERO SLIDE FORM ── */}
             {
@@ -7290,6 +8288,651 @@ const AdminDashboard = () => {
                     </div>
                 )
             }
+
+            {/* Job Opening Add/Edit Modal */}
+            {jobModalOpen && (
+                <div className="modal-overlay-luxury">
+                    <div className="modal-box-luxury" style={{ maxWidth: '650px' }}>
+                        <div className="modal-header-luxury">
+                            <h3>{editingJob ? 'Edit Job Opening' : 'Add New Job Opening'}</h3>
+                            <button className="btn-close-modal" onClick={() => setJobModalOpen(false)}>×</button>
+                        </div>
+                        <form onSubmit={handleSaveJob} className="modal-form-luxury">
+                            <div className="form-row-2col">
+                                <div className="form-group">
+                                    <label>Job Title *</label>
+                                    <input type="text" required value={jobForm.title} onChange={e => setJobForm({ ...jobForm, title: e.target.value })} placeholder="e.g. Interior Designer" />
+                                </div>
+                                <div className="form-group">
+                                    <label>Department</label>
+                                    <input type="text" value={jobForm.department} onChange={e => setJobForm({ ...jobForm, department: e.target.value })} placeholder="Design & Architecture" />
+                                </div>
+                            </div>
+                            <div className="form-row-2col">
+                                <div className="form-group">
+                                    <label>Job Type</label>
+                                    <input type="text" value={jobForm.type} onChange={e => setJobForm({ ...jobForm, type: e.target.value })} placeholder="Full-time" />
+                                </div>
+                                <div className="form-group">
+                                    <label>Location</label>
+                                    <input type="text" value={jobForm.location} onChange={e => setJobForm({ ...jobForm, location: e.target.value })} placeholder="Colombo, Sri Lanka" />
+                                </div>
+                            </div>
+                            <div className="form-row-2col">
+                                <div className="form-group">
+                                    <label>Experience Needed</label>
+                                    <input type="text" value={jobForm.experience} onChange={e => setJobForm({ ...jobForm, experience: e.target.value })} placeholder="2 - 4 Years Experience" />
+                                </div>
+                                <div className="form-group">
+                                    <label>Icon Style</label>
+                                    <select value={jobForm.icon} onChange={e => setJobForm({ ...jobForm, icon: e.target.value })} style={{ width: '100%', padding: '10px 14px', background: '#0b0d11', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}>
+                                        <option value="design">Pencil / Designer</option>
+                                        <option value="architecture">Architect / Building</option>
+                                        <option value="3d">3D Box / Render</option>
+                                        <option value="marketing">Speakerphone / Marketing</option>
+                                        <option value="project">Settings / Project Manager</option>
+                                        <option value="office">File Text / Admin</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label>Role Overview</label>
+                                <textarea rows="2" value={jobForm.overview} onChange={e => setJobForm({ ...jobForm, overview: e.target.value })} placeholder="Brief summary of the role..." />
+                            </div>
+                            <div className="form-group">
+                                <label>Key Responsibilities (One item per line)</label>
+                                <textarea rows="3" value={jobForm.responsibilities} onChange={e => setJobForm({ ...jobForm, responsibilities: e.target.value })} placeholder="Develop luxury interior concepts&#10;Create detailed presentation boards" />
+                            </div>
+                            <div className="form-group">
+                                <label>Requirements & Qualifications (One item per line)</label>
+                                <textarea rows="3" value={jobForm.requirements} onChange={e => setJobForm({ ...jobForm, requirements: e.target.value })} placeholder="Bachelor's Degree in Interior Design&#10;Proficiency in AutoCAD" />
+                            </div>
+                            <div className="form-group">
+                                <label>What We Offer / Benefits (One item per line)</label>
+                                <textarea rows="3" value={jobForm.benefits} onChange={e => setJobForm({ ...jobForm, benefits: e.target.value })} placeholder="Competitive salary package&#10;Professional growth opportunities" />
+                            </div>
+                            <div className="modal-actions-luxury">
+                                <button type="button" className="btn-cancel-modal" onClick={() => setJobModalOpen(false)}>Cancel</button>
+                                <button type="submit" className="btn-save-modal">SAVE JOB POSITION</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Careers Hero Edit Modal */}
+            {careersHeroModalOpen && (
+                <div className="modal-overlay-luxury">
+                    <div className="modal-box-luxury" style={{ maxWidth: '550px' }}>
+                        <div className="modal-header-luxury">
+                            <h3>Edit Careers Hero Header</h3>
+                            <button className="btn-close-modal" onClick={() => setCareersHeroModalOpen(false)}>×</button>
+                        </div>
+                        <form onSubmit={handleSaveCareersHero} className="modal-form-luxury">
+                            <div className="form-group">
+                                <label>Top Kicker Tag Text</label>
+                                <input type="text" value={careersHeroForm.kicker} onChange={e => setCareersHeroForm({ ...careersHeroForm, kicker: e.target.value })} placeholder="JOIN OUR TEAM" />
+                            </div>
+                            <div className="form-group">
+                                <label>Hero Main Title</label>
+                                <input type="text" value={careersHeroForm.title} onChange={e => setCareersHeroForm({ ...careersHeroForm, title: e.target.value })} placeholder="Build Your Career in Interior Design" />
+                            </div>
+                            <div className="form-group">
+                                <label>Hero Description Paragraph</label>
+                                <textarea rows="3" value={careersHeroForm.description} onChange={e => setCareersHeroForm({ ...careersHeroForm, description: e.target.value })} placeholder="We're always looking for passionate..." />
+                            </div>
+                            <div className="form-group">
+                                <label>Hero Background Image</label>
+                                <input type="file" accept="image/*" onChange={(e) => handleImageFileUpload(e, (b64) => setCareersHeroForm({ ...careersHeroForm, bgImage: b64 }))} />
+                                <span className="or-text" style={{ marginTop: '5px' }}>OR Image URL</span>
+                                <input type="text" value={careersHeroForm.bgImage} onChange={e => setCareersHeroForm({ ...careersHeroForm, bgImage: e.target.value })} placeholder="Paste Image URL or Leave empty for default background" />
+
+                                {/* Live Image Preview Box */}
+                                <div style={{ marginTop: '12px', background: '#0b0d11', borderRadius: '10px', padding: '12px', border: '1px dashed rgba(212,175,55,0.3)' }}>
+                                    <span style={{ fontSize: '0.72rem', color: '#c48b59', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>
+                                        Live Image Preview
+                                    </span>
+                                    <div style={{ position: 'relative', width: '100%', height: '120px', borderRadius: '6px', overflow: 'hidden' }}>
+                                        <img
+                                            src={careersHeroForm.bgImage || careersHeroBg}
+                                            alt="Hero Live Preview"
+                                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                        />
+                                        {careersHeroForm.bgImage && (
+                                            <button
+                                                type="button"
+                                                onClick={() => setCareersHeroForm({ ...careersHeroForm, bgImage: '' })}
+                                                style={{ position: 'absolute', top: '8px', right: '8px', background: 'rgba(239,68,68,0.9)', color: '#ffffff', border: 'none', borderRadius: '4px', padding: '4px 10px', fontSize: '0.75rem', fontWeight: '700', cursor: 'pointer' }}
+                                            >
+                                                Reset to Default Image
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal-actions-luxury">
+                                <button type="button" className="btn-cancel-modal" onClick={() => setCareersHeroModalOpen(false)}>Cancel</button>
+                                <button type="submit" className="btn-save-modal">SAVE CAREERS HERO</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
+            {/* About Our Team Edit Modal */}
+            {careersAboutModalOpen && (
+                <div className="modal-overlay-luxury">
+                    <div className="modal-box-luxury" style={{ maxWidth: '650px' }}>
+                        <div className="modal-header-luxury">
+                            <h3>Edit "About Our Team" Section</h3>
+                            <button className="btn-close-modal" onClick={() => setCareersAboutModalOpen(false)}>×</button>
+                        </div>
+                        <form onSubmit={handleSaveCareersAbout} className="modal-form-luxury">
+                            <div className="form-group">
+                                <label>Section Kicker</label>
+                                <input
+                                    type="text"
+                                    value={careersAboutForm.aboutKicker}
+                                    onChange={e => setCareersAboutForm({ ...careersAboutForm, aboutKicker: e.target.value })}
+                                    placeholder="e.g. ABOUT OUR TEAM"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Main Title</label>
+                                <input
+                                    type="text"
+                                    value={careersAboutForm.aboutTitle}
+                                    onChange={e => setCareersAboutForm({ ...careersAboutForm, aboutTitle: e.target.value })}
+                                    placeholder="Great People Build Great Spaces"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Description Paragraph</label>
+                                <textarea
+                                    rows="3"
+                                    value={careersAboutForm.aboutDesc}
+                                    onChange={e => setCareersAboutForm({ ...careersAboutForm, aboutDesc: e.target.value })}
+                                    placeholder="At Good Interior, we believe that a strong team..."
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Team Section Image Upload / URL</label>
+                                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                                    <input
+                                        type="text"
+                                        value={careersAboutForm.aboutImage}
+                                        onChange={e => setCareersAboutForm({ ...careersAboutForm, aboutImage: e.target.value })}
+                                        placeholder="https://... or upload below"
+                                    />
+                                    <label className="btn-upload-label" style={{ flexShrink: 0, padding: '10px 14px', background: '#c48b59', color: '#fff', borderRadius: '8px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: '600' }}>
+                                        Upload Image
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            style={{ display: 'none' }}
+                                            onChange={e => handleImageFileUpload(e, (url) => setCareersAboutForm(prev => ({ ...prev, aboutImage: url })))}
+                                        />
+                                    </label>
+                                </div>
+                                <div style={{ marginTop: '10px', background: '#0b0d11', borderRadius: '8px', padding: '12px', border: '1px dashed rgba(196,139,89,0.4)' }}>
+                                    <span style={{ fontSize: '0.72rem', color: '#c48b59', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>
+                                        Image Live Preview
+                                    </span>
+                                    <div style={{ position: 'relative', width: '100%', height: '120px', borderRadius: '6px', overflow: 'hidden' }}>
+                                        <img
+                                            src={careersAboutForm.aboutImage || teamCollabImg}
+                                            alt="Team Section Preview"
+                                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                        />
+                                        {careersAboutForm.aboutImage && (
+                                            <button
+                                                type="button"
+                                                onClick={() => setCareersAboutForm({ ...careersAboutForm, aboutImage: '' })}
+                                                style={{ position: 'absolute', top: '8px', right: '8px', background: 'rgba(239,68,68,0.9)', color: '#ffffff', border: 'none', borderRadius: '4px', padding: '4px 10px', fontSize: '0.75rem', fontWeight: '700', cursor: 'pointer' }}
+                                            >
+                                                Reset to Default Image
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-row-2col">
+                                <div className="form-group">
+                                    <label>Feature 1 Title</label>
+                                    <input
+                                        type="text"
+                                        value={careersAboutForm.aboutF1}
+                                        onChange={e => setCareersAboutForm({ ...careersAboutForm, aboutF1: e.target.value })}
+                                        placeholder="Creative Environment"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label>Feature 2 Title</label>
+                                    <input
+                                        type="text"
+                                        value={careersAboutForm.aboutF2}
+                                        onChange={e => setCareersAboutForm({ ...careersAboutForm, aboutF2: e.target.value })}
+                                        placeholder="Professional Growth"
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-row-2col">
+                                <div className="form-group">
+                                    <label>Feature 3 Title</label>
+                                    <input
+                                        type="text"
+                                        value={careersAboutForm.aboutF3}
+                                        onChange={e => setCareersAboutForm({ ...careersAboutForm, aboutF3: e.target.value })}
+                                        placeholder="Collaborative Team"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label>Feature 4 Title</label>
+                                    <input
+                                        type="text"
+                                        value={careersAboutForm.aboutF4}
+                                        onChange={e => setCareersAboutForm({ ...careersAboutForm, aboutF4: e.target.value })}
+                                        placeholder="Meaningful Impact"
+                                    />
+                                </div>
+                            </div>
+                            <div className="modal-actions-luxury">
+                                <button type="button" className="btn-cancel-modal" onClick={() => setCareersAboutModalOpen(false)}>Cancel</button>
+                                <button type="submit" className="btn-save-modal">SAVE ABOUT SECTION</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Why Work With Us Edit Modal */}
+            {careersWhyModalOpen && (
+                <div className="modal-overlay-luxury">
+                    <div className="modal-box-luxury" style={{ maxWidth: '650px' }}>
+                        <div className="modal-header-luxury">
+                            <h3>Edit "Why Work With Us" Section</h3>
+                            <button className="btn-close-modal" onClick={() => setCareersWhyModalOpen(false)}>×</button>
+                        </div>
+                        <form onSubmit={handleSaveCareersWhy} className="modal-form-luxury">
+                            <div className="form-group">
+                                <label>Section Kicker</label>
+                                <input
+                                    type="text"
+                                    value={careersWhyForm.whyKicker}
+                                    onChange={e => setCareersWhyForm({ ...careersWhyForm, whyKicker: e.target.value })}
+                                    placeholder="e.g. WHY WORK WITH US"
+                                />
+                            </div>
+                            <div className="form-row-2col">
+                                <div className="form-group">
+                                    <label>Main Title</label>
+                                    <input
+                                        type="text"
+                                        value={careersWhyForm.whyTitle}
+                                        onChange={e => setCareersWhyForm({ ...careersWhyForm, whyTitle: e.target.value })}
+                                        placeholder="More Than a Job"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label>Gold Subtitle</label>
+                                    <input
+                                        type="text"
+                                        value={careersWhyForm.whySubtitle}
+                                        onChange={e => setCareersWhyForm({ ...careersWhyForm, whySubtitle: e.target.value })}
+                                        placeholder="It's a Place to Grow"
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label>Background Image Upload / URL</label>
+                                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                                    <input
+                                        type="text"
+                                        value={careersWhyForm.whyBgImage}
+                                        onChange={e => setCareersWhyForm({ ...careersWhyForm, whyBgImage: e.target.value })}
+                                        placeholder="https://... or upload below"
+                                    />
+                                    <label className="btn-upload-label" style={{ flexShrink: 0, padding: '10px 14px', background: '#c48b59', color: '#fff', borderRadius: '8px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: '600' }}>
+                                        Upload Image
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            style={{ display: 'none' }}
+                                            onChange={e => handleImageFileUpload(e, (url) => setCareersWhyForm(prev => ({ ...prev, whyBgImage: url })))}
+                                        />
+                                    </label>
+                                </div>
+                                <div style={{ marginTop: '10px', background: '#0b0d11', borderRadius: '8px', padding: '12px', border: '1px dashed rgba(196,139,89,0.4)' }}>
+                                    <span style={{ fontSize: '0.72rem', color: '#c48b59', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>
+                                        Background Image Live Preview
+                                    </span>
+                                    <div style={{ position: 'relative', width: '100%', height: '120px', borderRadius: '6px', overflow: 'hidden' }}>
+                                        <img
+                                            src={careersWhyForm.whyBgImage || careersWhyBg}
+                                            alt="Why Section Background Preview"
+                                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                        />
+                                        {careersWhyForm.whyBgImage && (
+                                            <button
+                                                type="button"
+                                                onClick={() => setCareersWhyForm({ ...careersWhyForm, whyBgImage: '' })}
+                                                style={{ position: 'absolute', top: '8px', right: '8px', background: 'rgba(239,68,68,0.9)', color: '#ffffff', border: 'none', borderRadius: '4px', padding: '4px 10px', fontSize: '0.75rem', fontWeight: '700', cursor: 'pointer' }}
+                                            >
+                                                Reset to Default Image
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-row-2col">
+                                <div className="form-group">
+                                    <label>Benefit 1 Title</label>
+                                    <input
+                                        type="text"
+                                        value={careersWhyForm.whyB1Title}
+                                        onChange={e => setCareersWhyForm({ ...careersWhyForm, whyB1Title: e.target.value })}
+                                        placeholder="Competitive Salary & Benefits"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label>Benefit 2 Title</label>
+                                    <input
+                                        type="text"
+                                        value={careersWhyForm.whyB2Title}
+                                        onChange={e => setCareersWhyForm({ ...careersWhyForm, whyB2Title: e.target.value })}
+                                        placeholder="Learning & Development"
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-row-2col">
+                                <div className="form-group">
+                                    <label>Benefit 3 Title</label>
+                                    <input
+                                        type="text"
+                                        value={careersWhyForm.whyB3Title}
+                                        onChange={e => setCareersWhyForm({ ...careersWhyForm, whyB3Title: e.target.value })}
+                                        placeholder="Supportive Team Culture"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label>Benefit 4 Title</label>
+                                    <input
+                                        type="text"
+                                        value={careersWhyForm.whyB4Title}
+                                        onChange={e => setCareersWhyForm({ ...careersWhyForm, whyB4Title: e.target.value })}
+                                        placeholder="Work-Life Balance"
+                                    />
+                                </div>
+                            </div>
+                            <div className="modal-actions-luxury">
+                                <button type="button" className="btn-cancel-modal" onClick={() => setCareersWhyModalOpen(false)}>Cancel</button>
+                                <button type="submit" className="btn-save-modal">SAVE WHY SECTION</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Ready To Join (CTA) Edit Modal */}
+            {careersCtaModalOpen && (
+                <div className="modal-overlay-luxury">
+                    <div className="modal-box-luxury" style={{ maxWidth: '650px' }}>
+                        <div className="modal-header-luxury">
+                            <h3>Edit "Ready To Join" CTA Section</h3>
+                            <button className="btn-close-modal" onClick={() => setCareersCtaModalOpen(false)}>×</button>
+                        </div>
+                        <form onSubmit={handleSaveCareersCta} className="modal-form-luxury">
+                            <div className="form-row-2col">
+                                <div className="form-group">
+                                    <label>Section Kicker</label>
+                                    <input
+                                        type="text"
+                                        value={careersCtaForm.ctaKicker}
+                                        onChange={e => setCareersCtaForm({ ...careersCtaForm, ctaKicker: e.target.value })}
+                                        placeholder="READY TO JOIN?"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label>Button Text</label>
+                                    <input
+                                        type="text"
+                                        value={careersCtaForm.ctaButtonText}
+                                        onChange={e => setCareersCtaForm({ ...careersCtaForm, ctaButtonText: e.target.value })}
+                                        placeholder="APPLY NOW"
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label>Main Heading</label>
+                                <input
+                                    type="text"
+                                    value={careersCtaForm.ctaTitle}
+                                    onChange={e => setCareersCtaForm({ ...careersCtaForm, ctaTitle: e.target.value })}
+                                    placeholder="Let's Build Something Beautiful Together"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Description Paragraph</label>
+                                <textarea
+                                    rows="2"
+                                    value={careersCtaForm.ctaDescription}
+                                    onChange={e => setCareersCtaForm({ ...careersCtaForm, ctaDescription: e.target.value })}
+                                    placeholder="If you're passionate about interior design..."
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Feature Image Upload / URL</label>
+                                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                                    <input
+                                        type="text"
+                                        value={careersCtaForm.ctaImage}
+                                        onChange={e => setCareersCtaForm({ ...careersCtaForm, ctaImage: e.target.value })}
+                                        placeholder="https://... or upload image"
+                                    />
+                                    <label className="btn-upload-label" style={{ flexShrink: 0, padding: '10px 14px', background: '#c48b59', color: '#fff', borderRadius: '8px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: '600' }}>
+                                        Upload Image
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            style={{ display: 'none' }}
+                                            onChange={e => handleImageFileUpload(e, (url) => setCareersCtaForm(prev => ({ ...prev, ctaImage: url })))}
+                                        />
+                                    </label>
+                                </div>
+                                <div style={{ marginTop: '10px', background: '#0b0d11', borderRadius: '8px', padding: '12px', border: '1px dashed rgba(196,139,89,0.4)' }}>
+                                    <span style={{ fontSize: '0.72rem', color: '#c48b59', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>
+                                        Feature Image Live Preview
+                                    </span>
+                                    <div style={{ position: 'relative', width: '100%', height: '140px', borderRadius: '6px', overflow: 'hidden' }}>
+                                        <img
+                                            src={careersCtaForm.ctaImage || careersCtaLivingRoom}
+                                            alt="CTA Image Preview"
+                                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                        />
+                                        {careersCtaForm.ctaImage && (
+                                            <button
+                                                type="button"
+                                                onClick={() => setCareersCtaForm({ ...careersCtaForm, ctaImage: '' })}
+                                                style={{ position: 'absolute', top: '8px', right: '8px', background: 'rgba(239,68,68,0.9)', color: '#ffffff', border: 'none', borderRadius: '4px', padding: '4px 10px', fontSize: '0.75rem', fontWeight: '700', cursor: 'pointer' }}
+                                            >
+                                                Reset to Default Image
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label>Quote Box Text</label>
+                                <textarea
+                                    rows="2"
+                                    value={careersCtaForm.ctaQuote}
+                                    onChange={e => setCareersCtaForm({ ...careersCtaForm, ctaQuote: e.target.value })}
+                                    placeholder="At Good Interior, we don't just design spaces..."
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Quote Author</label>
+                                <input
+                                    type="text"
+                                    value={careersCtaForm.ctaQuoteAuthor}
+                                    onChange={e => setCareersCtaForm({ ...careersCtaForm, ctaQuoteAuthor: e.target.value })}
+                                    placeholder="OUR TEAM"
+                                />
+                            </div>
+                            <div className="modal-actions-luxury">
+                                <button type="button" className="btn-cancel-modal" onClick={() => setCareersCtaModalOpen(false)}>Cancel</button>
+                                <button type="submit" className="btn-save-modal">SAVE CTA SECTION</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Candidate Email Response Modal */}
+            {candidateEmailModalOpen && selectedAppForEmail && (
+                <div className="modal-overlay-luxury" style={{ zIndex: 9990 }}>
+                    <div className="modal-box-luxury" style={{ maxWidth: '650px' }}>
+                        <div className="modal-header-luxury">
+                            <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <TbMail style={{ color: '#c48b59' }} /> Send Email to Candidate
+                            </h3>
+                            <button className="btn-close-modal" onClick={() => setCandidateEmailModalOpen(false)}>×</button>
+                        </div>
+                        <form onSubmit={handleSendCandidateEmail} className="modal-form-luxury modal-body-luxury">
+                            <div style={{ background: '#0b0d11', border: '1px solid rgba(196,139,89,0.25)', borderRadius: '10px', padding: '14px 18px', marginBottom: '20px' }}>
+                                <div style={{ fontSize: '0.75rem', color: '#c48b59', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>
+                                    Candidate Details
+                                </div>
+                                <div style={{ fontSize: '1.05rem', color: '#ffffff', fontWeight: '700' }}>
+                                    {selectedAppForEmail.fullName}
+                                </div>
+                                <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
+                                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                                        <TbMail style={{ color: '#60a5fa' }} /> {selectedAppForEmail.email}
+                                    </span>
+                                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                                        <TbBriefcase style={{ color: '#c48b59' }} /> {selectedAppForEmail.position}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Quick Template Presets */}
+                            <div className="form-group" style={{ marginBottom: '20px' }}>
+                                <label style={{ fontSize: '0.78rem', color: '#c48b59', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '10px' }}>
+                                    <TbSend /> Quick Email Templates (Click to Apply)
+                                </label>
+                                <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleApplyEmailTemplate('select')}
+                                        style={{
+                                            background: 'rgba(34, 197, 94, 0.15)',
+                                            color: '#4ade80',
+                                            border: '1px solid rgba(34, 197, 94, 0.3)',
+                                            borderRadius: '8px',
+                                            padding: '8px 14px',
+                                            fontSize: '0.82rem',
+                                            fontWeight: '600',
+                                            cursor: 'pointer',
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            gap: '6px',
+                                            transition: 'all 0.2s ease'
+                                        }}
+                                    >
+                                        <TbUserCheck style={{ fontSize: '1rem' }} /> Shortlisted / Select for Interview
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleApplyEmailTemplate('review')}
+                                        style={{
+                                            background: 'rgba(59, 130, 246, 0.15)',
+                                            color: '#60a5fa',
+                                            border: '1px solid rgba(59, 130, 246, 0.3)',
+                                            borderRadius: '8px',
+                                            padding: '8px 14px',
+                                            fontSize: '0.82rem',
+                                            fontWeight: '600',
+                                            cursor: 'pointer',
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            gap: '6px',
+                                            transition: 'all 0.2s ease'
+                                        }}
+                                    >
+                                        <TbEye style={{ fontSize: '1rem' }} /> Application Under Review
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleApplyEmailTemplate('reject')}
+                                        style={{
+                                            background: 'rgba(239, 68, 68, 0.15)',
+                                            color: '#f87171',
+                                            border: '1px solid rgba(239, 68, 68, 0.3)',
+                                            borderRadius: '8px',
+                                            padding: '8px 14px',
+                                            fontSize: '0.82rem',
+                                            fontWeight: '600',
+                                            cursor: 'pointer',
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            gap: '6px',
+                                            transition: 'all 0.2s ease'
+                                        }}
+                                    >
+                                        <TbX style={{ fontSize: '1rem' }} /> Rejection Notice
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="form-group" style={{ marginBottom: '18px' }}>
+                                <label>Email Subject Line *</label>
+                                <input
+                                    type="text"
+                                    required
+                                    value={emailForm.subject}
+                                    onChange={e => setEmailForm({ ...emailForm, subject: e.target.value })}
+                                    placeholder="Enter email subject..."
+                                />
+                            </div>
+
+                            <div className="form-group" style={{ marginBottom: '18px' }}>
+                                <label>Email Message Body * (Fully Editable)</label>
+                                <textarea
+                                    rows="7"
+                                    required
+                                    value={emailForm.bodyMessage}
+                                    onChange={e => setEmailForm({ ...emailForm, bodyMessage: e.target.value })}
+                                    placeholder="Write your email response here..."
+                                    style={{ fontFamily: 'inherit', lineHeight: '1.5' }}
+                                />
+                            </div>
+
+                            <div className="form-group" style={{ marginBottom: '18px' }}>
+                                <label>Update Candidate Status Upon Sending</label>
+                                <select
+                                    value={emailForm.statusTag}
+                                    onChange={e => setEmailForm({ ...emailForm, statusTag: e.target.value })}
+                                >
+                                    <option value="Pending">Pending</option>
+                                    <option value="Reviewed">Reviewed</option>
+                                    <option value="Contacted">Contacted (Selected / Shortlisted)</option>
+                                    <option value="Rejected">Rejected</option>
+                                </select>
+                            </div>
+
+                            <div className="modal-actions-luxury">
+                                <button type="button" className="btn-cancel-modal" onClick={() => setCandidateEmailModalOpen(false)}>
+                                    Cancel
+                                </button>
+                                <button type="submit" className="btn-save-modal" disabled={emailForm.isSending} style={{ background: '#c48b59', color: '#fff', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                                    {emailForm.isSending ? 'Sending Email...' : <>SEND EMAIL TO CANDIDATE <TbSend /></>}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
 
             {/* Custom Confirm Modal JSX */}
             {
