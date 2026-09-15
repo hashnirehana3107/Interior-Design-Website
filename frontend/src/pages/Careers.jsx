@@ -19,6 +19,7 @@ import './Careers.css';
 import heroBg from '../assets/careers_hero_bg.png';
 import teamCollabImg from '../assets/careers_team_collab.png';
 import livingRoomImg from '../assets/careers_cta_livingroom.png';
+import whyBg from '../assets/careers_why_bg.png';
 import JobApplyModal from '../components/JobApplyModal';
 import JobDetailModal from '../components/JobDetailModal';
 
@@ -232,46 +233,51 @@ const Careers = () => {
             </section>
 
             {/* 4. WHY WORK WITH US SECTION */}
-            <section className="careers-why-sec">
-                <div className="careers-container">
-                    <div className="why-sec-grid">
-                        <div className="why-sec-left">
-                            <span className="section-kicker gold-kicker">WHY WORK WITH US</span>
-                            <h2 className="section-heading white-heading">
-                                More Than a Job<br />
-                                <span className="gold-text-italic">It's a Place to Grow</span>
-                            </h2>
-                        </div>
-
-                        <div className="why-sec-divider"></div>
-
-                        <div className="why-sec-right">
-                            <div className="why-benefit-item">
-                                <div className="why-icon-wrap">
-                                    <TbPlant />
-                                </div>
-                                <h4>Competitive<br />Salary & Benefits</h4>
+            <section
+                className="careers-why-sec"
+                style={{ backgroundImage: `url(${whyBg})` }}
+            >
+                <div className="careers-why-overlay">
+                    <div className="careers-container">
+                        <div className="why-sec-grid">
+                            <div className="why-sec-left">
+                                <span className="section-kicker gold-kicker">WHY WORK WITH US</span>
+                                <h2 className="section-heading white-heading">
+                                    More Than a Job<br />
+                                    <span className="gold-text-italic">It's a Place to Grow</span>
+                                </h2>
                             </div>
 
-                            <div className="why-benefit-item">
-                                <div className="why-icon-wrap">
-                                    <TbSchool />
-                                </div>
-                                <h4>Learning &<br />Development</h4>
-                            </div>
+                            <div className="why-sec-divider"></div>
 
-                            <div className="why-benefit-item">
-                                <div className="why-icon-wrap">
-                                    <TbUsers />
+                            <div className="why-sec-right">
+                                <div className="why-benefit-item">
+                                    <div className="why-icon-wrap">
+                                        <TbPlant />
+                                    </div>
+                                    <h4>Competitive<br />Salary & Benefits</h4>
                                 </div>
-                                <h4>Supportive<br />Team Culture</h4>
-                            </div>
 
-                            <div className="why-benefit-item">
-                                <div className="why-icon-wrap">
-                                    <TbHeart />
+                                <div className="why-benefit-item">
+                                    <div className="why-icon-wrap">
+                                        <TbSchool />
+                                    </div>
+                                    <h4>Learning &<br />Development</h4>
                                 </div>
-                                <h4>Work-Life<br />Balance</h4>
+
+                                <div className="why-benefit-item">
+                                    <div className="why-icon-wrap">
+                                        <TbUsers />
+                                    </div>
+                                    <h4>Supportive<br />Team Culture</h4>
+                                </div>
+
+                                <div className="why-benefit-item">
+                                    <div className="why-icon-wrap">
+                                        <TbHeart />
+                                    </div>
+                                    <h4>Work-Life<br />Balance</h4>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -304,8 +310,8 @@ const Careers = () => {
 
                         {/* Right Quote Box */}
                         <div className="cta-quote-col">
-                            <div className="quote-card">
-                                <div className="quote-mark">“</div>
+                            <div className="quote-content-wrap">
+                                <div className="quote-mark-gold">“</div>
                                 <p className="quote-text">
                                     "At Good Interior, we don't just design spaces — we create experiences. And we're always looking for great people to help us do it."
                                 </p>

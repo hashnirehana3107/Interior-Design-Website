@@ -156,7 +156,7 @@
 
 /* ── 2. ABOUT OUR TEAM SECTION (100% Exact Match to Image) ── */
 .careers-about-sec {
-    padding: 90px 0;
+    padding: 60px 0 35px;
     background-color: #ffffff;
 }
 
@@ -249,7 +249,7 @@
 
 /* ── 3. OPEN POSITIONS SECTION ── */
 .careers-open-positions {
-    padding: 100px 0;
+    padding: 45px 0 65px;
     background-color: #faf9f6;
 }
 
@@ -257,7 +257,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 48px;
+    margin-bottom: 30px;
 }
 
 .pos-header-right {
@@ -423,50 +423,80 @@
     transform: translateX(4px);
 }
 
-/* ── 4. WHY WORK WITH US SECTION ── */
+/* ── 4. WHY WORK WITH US SECTION (100% Exact Match to Reference Image) ── */
 .careers-why-sec {
-    background: #181716;
-    padding: 90px 0;
-    color: #ffffff;
     position: relative;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #ffffff;
+}
+
+.careers-why-overlay {
+    width: 100%;
+    background: linear-gradient(90deg, rgba(16, 14, 13, 0.94) 0%, rgba(16, 14, 13, 0.88) 100%);
+    padding: 65px 0;
 }
 
 .why-sec-grid {
     display: flex;
     align-items: center;
-    gap: 60px;
+    justify-content: space-between;
+    gap: 40px;
 }
 
 .why-sec-left {
-    flex: 1;
-    max-width: 380px;
+    flex: 1.1;
+    max-width: 360px;
+}
+
+.why-sec-left .section-kicker {
+    margin-bottom: 10px;
+}
+
+.why-sec-left .section-heading {
+    font-size: 32px;
+    margin-bottom: 0;
 }
 
 .why-sec-divider {
     width: 1px;
-    height: 140px;
-    background: rgba(179, 128, 88, 0.4);
+    height: 105px;
+    background: rgba(196, 139, 89, 0.4);
+    margin: 0 10px;
 }
 
 .why-sec-right {
-    flex: 2;
+    flex: 2.2;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    gap: 20px;
 }
 
 .why-benefit-item {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
 }
 
 .why-icon-wrap {
-    width: 44px;
-    height: 44px;
+    font-size: 34px;
     color: #c48b59;
-    font-size: 26px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.why-benefit-item h4 {
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    line-height: 1.35;
+    color: #f1f5f9;
+    margin: 0;
 }
 
 .why-benefit-item h4 {
@@ -477,66 +507,81 @@
     margin: 0;
 }
 
-/* ── 5. READY TO JOIN / APPLY CTA SECTION ── */
+/* ── 5. READY TO JOIN / APPLY CTA SECTION (100% Exact Match to Reference Image) ── */
 .careers-cta-sec {
-    padding: 100px 0;
-    background-color: #ffffff;
+    padding: 75px 0;
+    background-color: #faf9f6;
 }
 
 .careers-cta-grid {
     display: grid;
-    grid-template-columns: 1fr 1.2fr 1fr;
+    grid-template-columns: 1.35fr 1.2fr 1fr;
     gap: 40px;
     align-items: center;
 }
 
 .cta-living-img {
     width: 100%;
-    height: 360px;
+    height: 250px;
     object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+}
+
+.cta-text-col .section-kicker {
+    margin-bottom: 8px;
+}
+
+.cta-text-col .section-heading {
+    font-size: 32px;
+    line-height: 1.2;
+    margin-bottom: 14px;
 }
 
 .cta-desc {
-    font-size: 14px;
-    line-height: 1.65;
+    font-size: 13.5px;
+    line-height: 1.6;
     color: #64748b;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
+    max-width: 360px;
 }
 
-/* Quote Card Right */
-.quote-card {
-    background: #fdfbf7;
-    border: 1px solid #f3ede2;
-    border-radius: 8px;
-    padding: 36px 30px;
-    position: relative;
+/* Quote Right Column */
+.cta-quote-col {
+    border-left: 1px solid #e2e8f0;
+    padding-left: 36px;
+    display: flex;
+    align-items: center;
 }
 
-.quote-mark {
-    font-family: 'Playfair Display', serif;
-    font-size: 60px;
+.quote-content-wrap {
+    display: flex;
+    flex-direction: column;
+}
+
+.quote-mark-gold {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 42px;
     line-height: 1;
-    color: #b38058;
-    margin-bottom: 10px;
+    color: #c48b59;
+    margin-bottom: 4px;
 }
 
 .quote-text {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Cormorant Garamond', Georgia, serif;
     font-style: italic;
-    font-size: 15px;
-    line-height: 1.7;
+    font-size: 15.5px;
+    line-height: 1.6;
     color: #334155;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
 }
 
 .quote-author {
     display: block;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    color: #64748b;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    color: #94a3b8;
     text-transform: uppercase;
 }
 
