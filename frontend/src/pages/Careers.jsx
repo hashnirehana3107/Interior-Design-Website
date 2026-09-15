@@ -117,6 +117,7 @@ const Careers = () => {
                         {/* Left Side Info */}
                         <div className="careers-about-left">
                             <span className="section-kicker">ABOUT OUR TEAM</span>
+                            <div className="kicker-line-sep"></div>
                             <h2 className="section-heading">
                                 Great People Build<br />
                                 Great Spaces
@@ -130,42 +131,44 @@ const Careers = () => {
                                     <div className="tf-icon-box">
                                         <TbBulb />
                                     </div>
-                                    <span className="tf-label">Creative Environment</span>
+                                    <span className="tf-label">Creative<br />Environment</span>
                                 </div>
 
                                 <div className="team-feature-item">
                                     <div className="tf-icon-box">
                                         <TbTrendingUp />
                                     </div>
-                                    <span className="tf-label">Professional Growth</span>
+                                    <span className="tf-label">Professional<br />Growth</span>
                                 </div>
 
                                 <div className="team-feature-item">
                                     <div className="tf-icon-box">
                                         <TbUsers />
                                     </div>
-                                    <span className="tf-label">Collaborative Team</span>
+                                    <span className="tf-label">Collaborative<br />Team</span>
                                 </div>
 
                                 <div className="team-feature-item">
                                     <div className="tf-icon-box">
                                         <TbHeart />
                                     </div>
-                                    <span className="tf-label">Meaningful Impact</span>
+                                    <span className="tf-label">Meaningful<br />Impact</span>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Right Side Image with Cursive Accent */}
-                        <div className="careers-about-right">
-                            <div className="team-img-wrapper">
-                                <img src={teamCollabImg} alt="Good Interior Team Collaborating" className="team-collab-img" />
-                                <div className="cursive-accent-text">
-                                    <span>Design</span>
-                                    <span>Together</span>
-                                    <span>Grow</span>
-                                    <span>Together</span>
-                                </div>
+                        {/* Center Image */}
+                        <div className="careers-about-center-img">
+                            <img src={teamCollabImg} alt="Good Interior Team Collaborating" className="team-collab-img" />
+                        </div>
+
+                        {/* Right Side Cursive Accent */}
+                        <div className="careers-about-right-script">
+                            <div className="cursive-accent-text">
+                                <span>Design</span>
+                                <span>Together</span>
+                                <span>Grow</span>
+                                <span>Together</span>
                             </div>
                         </div>
                     </div>
