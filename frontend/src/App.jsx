@@ -9,7 +9,6 @@ import About from './pages/About';
 import Services from './pages/Services';
 import Portfolio from './pages/Portfolio';
 import ProjectDetails from './pages/ProjectDetails';
-import Galleries from './pages/Galleries';
 import Testimonials from './pages/Testimonials';
 import Blog from './pages/Blog';
 import BlogDetail from './pages/BlogDetail';
@@ -44,7 +43,6 @@ function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/services" element={<Services />} />
                 <Route path="/portfolio" element={<Portfolio />} />
-                <Route path="/galleries" element={<Galleries />} />
                 <Route path="/testimonials" element={<Testimonials />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:id" element={<BlogDetail />} />

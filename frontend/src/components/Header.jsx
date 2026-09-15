@@ -102,7 +102,6 @@ const Header = () => {
                         <li><NavLink to="/about" onClick={closeMobileMenu}>ABOUT</NavLink></li>
                         <li><NavLink to="/services" onClick={closeMobileMenu}>SERVICES</NavLink></li>
                         <li><NavLink to="/portfolio" onClick={closeMobileMenu}>PORTFOLIO</NavLink></li>
-                        <li><NavLink to="/galleries" onClick={closeMobileMenu}>GALLERIES</NavLink></li>
                         <li><NavLink to="/testimonials" onClick={closeMobileMenu}>TESTIMONIALS</NavLink></li>
                         <li><NavLink to="/blog" onClick={closeMobileMenu}>BLOG</NavLink></li>
                         <li><NavLink to="/contact" onClick={closeMobileMenu}>CONTACT</NavLink></li>
