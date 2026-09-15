@@ -20,10 +20,13 @@ import heroBg from '../assets/careers_hero_bg.png';
 import teamCollabImg from '../assets/careers_team_collab.png';
 import livingRoomImg from '../assets/careers_cta_livingroom.png';
 import JobApplyModal from '../components/JobApplyModal';
+import JobDetailModal from '../components/JobDetailModal';
 
 const Careers = () => {
     const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
     const [selectedPosition, setSelectedPosition] = useState('');
+    const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+    const [detailJobTitle, setDetailJobTitle] = useState('');
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -32,6 +35,11 @@ const Careers = () => {
     const handleApplyClick = (positionTitle = 'General Resume Submission') => {
         setSelectedPosition(positionTitle);
         setIsApplyModalOpen(true);
+    };
+
+    const handleViewDetails = (positionTitle) => {
+        setDetailJobTitle(positionTitle);
+        setIsDetailModalOpen(true);
     };
 
     const scrollToPositions = () => {
@@ -209,9 +217,14 @@ const Careers = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <button className="btn-apply-link" onClick={() => handleApplyClick(job.title)}>
-                                    APPLY NOW <TbArrowRight className="link-arrow" />
-                                </button>
+                                <div className="job-card-actions">
+                                    <button className="btn-view-details" onClick={() => handleViewDetails(job.title)}>
+                                        VIEW DETAILS
+                                    </button>
+                                    <button className="btn-apply-link" onClick={() => handleApplyClick(job.title)}>
+                                        APPLY NOW <TbArrowRight className="link-arrow" />
+                                    </button>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -302,6 +315,13 @@ const Careers = () => {
                     </div>
                 </div>
             </section>
+
+            <JobDetailModal
+                isOpen={isDetailModalOpen}
+                onClose={() => setIsDetailModalOpen(false)}
+                jobTitle={detailJobTitle}
+                onApplyClick={handleApplyClick}
+            />
 
             <JobApplyModal
                 isOpen={isApplyModalOpen}
