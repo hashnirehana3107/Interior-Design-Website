@@ -162,7 +162,7 @@ const ConsultationModal = ({ isOpen, onClose, initialService = '' }) => {
 
             setIsSubmitted(true);
             if (showToast) {
-                showToast('Consultation booked successfully and saved to DB!', 'success', 5000);
+                showToast('Consultation booked successfully!', 'success', 5000);
             }
         } catch (error) {
             console.error('Consultation booking error:', error);
