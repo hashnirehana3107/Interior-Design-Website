@@ -6,6 +6,21 @@ const Consultation = require('../models/Consultation');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'interior_design_studio_jwt_secret_key_2026';
 
+const EMAIL_USER = process.env.EMAIL_USER || 'unicstationary39a@gmail.com';
+const EMAIL_PASS = process.env.EMAIL_PASS || 'afdhtikubzqyrlzs';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || EMAIL_USER;
+
+// Transporter configuration for Nodemailer
+const createTransporter = () => {
+    return nodemailer.createTransport({
+        service: process.env.EMAIL_SERVICE || 'gmail',
+        auth: {
+            user: EMAIL_USER,
+            pass: EMAIL_PASS
+        }
+    });
+};
+
 // Helper to extract optional user ID from authorization header
 const getUserIdFromHeader = (req) => {
     try {
@@ -50,66 +65,56 @@ router.post('/', async (req, res) => {
         await newConsultation.save();
         console.log(`✅ [DB WRITE SUCCESS] New Consultation saved in MongoDB Atlas! ID: "${newConsultation._id}", Client: "${newConsultation.fullName}", Service: "${newConsultation.service}"`);
 
-        // Send Email Notification to Admin
-        const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
-        if (adminEmail && process.env.EMAIL_PASS) {
-            try {
-                const transporter = nodemailer.createTransport({
-                    service: process.env.EMAIL_SERVICE || 'gmail',
-                    auth: {
-                        user: process.env.EMAIL_USER,
-                        pass: process.env.EMAIL_PASS
-                    }
-                });
+        // Send Instant Email Notification to Admin
+        try {
+            const transporter = createTransporter();
+            const mailOptions = {
+                from: `"Good Interior Studio" <${EMAIL_USER}>`,
+                to: ADMIN_EMAIL,
+                replyTo: `"${fullName.trim()}" <${email.trim()}>`,
+                subject: `[NEW CONSULTATION BOOKING] ${service || 'Interior Design'} - ${fullName.trim()}`,
+                html: `
+                    <div style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; padding: 30px; color: #1e293b;">
+                        <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; padding: 30px; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                            <div style="text-align: center; padding-bottom: 20px; border-bottom: 2px solid #b38058;">
+                                <h2 style="color: #b38058; margin: 0; font-size: 22px; letter-spacing: 1px;">GOOD INTERIOR DESIGN STUDIO</h2>
+                                <p style="font-size: 12px; color: #64748b; margin: 5px 0 0 0; letter-spacing: 2px;">NEW CONSULTATION BOOKING</p>
+                            </div>
+                            
+                            <div style="padding: 24px 0;">
+                                <p style="font-size: 15px; color: #0f172a; margin-bottom: 15px;">A client has booked a new consultation on the website:</p>
+                                <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                                    <tr><td style="padding: 8px 0; color: #64748b; width: 140px;"><strong>Client Name:</strong></td><td style="color: #0f172a; font-weight: 600;">${fullName.trim()}</td></tr>
+                                    <tr><td style="padding: 8px 0; color: #64748b;"><strong>Email:</strong></td><td style="color: #0f172a;"><a href="mailto:${email.trim()}">${email.trim()}</a></td></tr>
+                                    <tr><td style="padding: 8px 0; color: #64748b;"><strong>Phone:</strong></td><td style="color: #0f172a;">${phone.trim()}</td></tr>
+                                    <tr><td style="padding: 8px 0; color: #64748b;"><strong>Service Required:</strong></td><td style="color: #b38058; font-weight: 600;">${service || 'Residential Interior Design'}</td></tr>
+                                    <tr><td style="padding: 8px 0; color: #64748b;"><strong>Estimated Budget:</strong></td><td style="color: #0f172a;">${budget || 'N/A'}</td></tr>
+                                    <tr><td style="padding: 8px 0; color: #64748b;"><strong>Preferred Date:</strong></td><td style="color: #0f172a;">${date || 'Not specified'}</td></tr>
+                                </table>
 
-                const mailOptions = {
-                    from: `"Good Interior Studio Alerts" <${process.env.EMAIL_USER}>`,
-                    to: adminEmail,
-                    replyTo: `"${fullName.trim()}" <${email.trim()}>`,
-                    subject: `[NEW CONSULTATION BOOKING] ${service || 'Interior Design'} - ${fullName.trim()}`,
-                    html: `
-                        <div style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; padding: 30px; color: #1e293b;">
-                            <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; padding: 30px; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-                                <div style="text-align: center; padding-bottom: 20px; border-bottom: 2px solid #b38058;">
-                                    <h2 style="color: #b38058; margin: 0; font-size: 22px; letter-spacing: 1px;">GOOD INTERIOR DESIGN STUDIO</h2>
-                                    <p style="font-size: 12px; color: #64748b; margin: 5px 0 0 0; letter-spacing: 2px;">NEW CONSULTATION BOOKING</p>
+                                ${notes ? `
+                                <div style="background-color: #f1f5f9; border-left: 4px solid #b38058; padding: 15px; border-radius: 4px; margin: 20px 0;">
+                                    <p style="font-size: 12px; font-weight: 600; color: #475569; margin: 0 0 5px 0;">Additional Notes:</p>
+                                    <p style="font-size: 14px; color: #1e293b; margin: 0; white-space: pre-line;">${notes.trim()}</p>
                                 </div>
-                                
-                                <div style="padding: 24px 0;">
-                                    <p style="font-size: 15px; color: #0f172a; margin-bottom: 15px;">A client has booked a new consultation on the website:</p>
-                                    <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-                                        <tr><td style="padding: 8px 0; color: #64748b; width: 140px;"><strong>Client Name:</strong></td><td style="color: #0f172a; font-weight: 600;">${fullName.trim()}</td></tr>
-                                        <tr><td style="padding: 8px 0; color: #64748b;"><strong>Email:</strong></td><td style="color: #0f172a;"><a href="mailto:${email.trim()}">${email.trim()}</a></td></tr>
-                                        <tr><td style="padding: 8px 0; color: #64748b;"><strong>Phone:</strong></td><td style="color: #0f172a;">${phone.trim()}</td></tr>
-                                        <tr><td style="padding: 8px 0; color: #64748b;"><strong>Service Required:</strong></td><td style="color: #b38058; font-weight: 600;">${service || 'Residential Interior Design'}</td></tr>
-                                        <tr><td style="padding: 8px 0; color: #64748b;"><strong>Estimated Budget:</strong></td><td style="color: #0f172a;">${budget || 'N/A'}</td></tr>
-                                        <tr><td style="padding: 8px 0; color: #64748b;"><strong>Preferred Date:</strong></td><td style="color: #0f172a;">${date || 'Not specified'}</td></tr>
-                                    </table>
+                                ` : ''}
 
-                                    ${notes ? `
-                                    <div style="background-color: #f1f5f9; border-left: 4px solid #b38058; padding: 15px; border-radius: 4px; margin: 20px 0;">
-                                        <p style="font-size: 12px; font-weight: 600; color: #475569; margin: 0 0 5px 0;">Additional Notes:</p>
-                                        <p style="font-size: 14px; color: #1e293b; margin: 0; white-space: pre-line;">${notes.trim()}</p>
-                                    </div>
-                                    ` : ''}
+                                <p style="font-size: 13px; color: #64748b; font-style: italic; margin-top: 20px;">
+                                    💡 <strong>Tip:</strong> You can hit <strong>"Reply"</strong> directly in your email inbox to reply straight to ${fullName.trim()} (${email.trim()}), or manage via Admin Dashboard!
+                                </p>
+                            </div>
 
-                                    <p style="font-size: 13px; color: #64748b; font-style: italic; margin-top: 20px;">
-                                        💡 <strong>Tip:</strong> You can hit <strong>"Reply"</strong> directly in your email inbox to reply straight to ${fullName.trim()} (${email.trim()}), or manage via Admin Dashboard!
-                                    </p>
-                                </div>
-
-                                <div style="border-top: 1px solid #e2e8f0; padding-top: 15px; text-align: center; font-size: 12px; color: #94a3b8;">
-                                    <p style="margin: 0;">Good Interior Studio Automated Notification System</p>
-                                </div>
+                            <div style="border-top: 1px solid #e2e8f0; padding-top: 15px; text-align: center; font-size: 12px; color: #94a3b8;">
+                                <p style="margin: 0;">Good Interior Studio Automated Notification System</p>
                             </div>
                         </div>
-                    `
-                };
-                await transporter.sendMail(mailOptions);
-                console.log(`✅ [ADMIN NOTIFIED] Instant email alert sent to admin (${adminEmail}) for consultation booking.`);
-            } catch (notifyErr) {
-                console.warn(`⚠️ [ADMIN NOTIFY WARNING] Could not send notification email to admin:`, notifyErr.message);
-            }
+                    </div>
+                `
+            };
+            await transporter.sendMail(mailOptions);
+            console.log(`✅ [ADMIN NOTIFIED] Instant email alert sent to admin (${ADMIN_EMAIL}) for consultation booking.`);
+        } catch (notifyErr) {
+            console.warn(`⚠️ [ADMIN NOTIFY WARNING] Could not send notification email to admin:`, notifyErr.message);
         }
 
         res.status(201).json({
@@ -170,17 +175,7 @@ router.post('/:id/reply', async (req, res) => {
         const cons = await Consultation.findById(req.params.id);
         if (!cons) return res.status(404).json({ message: 'Consultation not found' });
 
-        // Set up Nodemailer transporter
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS
-            }
-        });
-
         const subjectLine = replySubject ? replySubject.trim() : `Re: ${cons.service || cons.serviceType || 'Interior Design Consultation'} - Good Interior Studio`;
-
         const hasSalutation = replyMessage.trim().startsWith('Dear');
 
         const htmlEmailConfig = `
@@ -214,24 +209,18 @@ router.post('/:id/reply', async (req, res) => {
             </div>
         `;
 
-        if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-            try {
-                await transporter.sendMail({
-                    from: `"Good Interior Studio" <${process.env.EMAIL_USER}>`,
-                    to: cons.email,
-                    subject: subjectLine,
-                    html: htmlEmailConfig,
-                });
-                console.log(`[EMAIL SENT] Consultation reply dispatched to ${cons.email}`);
-            } catch (mailErr) {
-                console.warn(`[EMAIL WARNING] SMTP transport issue:`, mailErr.message);
-            }
-        } else {
-            console.log(`\n========================================`);
-            console.log(`SIMULATED EMAIL SENT (Because EMAIL_USER / EMAIL_PASS are missing)`);
-            console.log(`To: ${cons.email} (${cons.fullName})`);
-            console.log(`Message:\n${replyMessage}`);
-            console.log(`========================================\n`);
+        // Send Email via Nodemailer
+        try {
+            const transporter = createTransporter();
+            await transporter.sendMail({
+                from: `"Good Interior Studio" <${EMAIL_USER}>`,
+                to: cons.email,
+                subject: subjectLine,
+                html: htmlEmailConfig,
+            });
+            console.log(`[EMAIL SENT] Consultation reply dispatched to ${cons.email}`);
+        } catch (mailErr) {
+            console.warn(`[EMAIL WARNING] SMTP transport issue:`, mailErr.message);
         }
 
         cons.replyMessage = replyMessage;

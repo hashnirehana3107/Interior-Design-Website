@@ -23,24 +23,17 @@ const getUserFromHeader = async (req) => {
     return null;
 };
 
+const EMAIL_USER = process.env.EMAIL_USER || 'unicstationary39a@gmail.com';
+const EMAIL_PASS = process.env.EMAIL_PASS || 'afdhtikubzqyrlzs';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || EMAIL_USER;
+
 // Transporter configuration for Nodemailer
 const createTransporter = () => {
-    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-        return nodemailer.createTransport({
-            service: process.env.EMAIL_SERVICE || 'gmail',
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS
-            }
-        });
-    }
-    // Fallback Ethereal SMTP / JSON transport for development testing if SMTP credentials not configured
     return nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
+        service: process.env.EMAIL_SERVICE || 'gmail',
         auth: {
-            user: 'ethereal.user@ethereal.email',
-            pass: 'ethereal.pass'
+            user: EMAIL_USER,
+            pass: EMAIL_PASS
         }
     });
 };
@@ -72,55 +65,52 @@ router.post('/', async (req, res) => {
         await newMessage.save();
         console.log(`✅ [DB WRITE SUCCESS] New Contact Message saved in MongoDB Atlas! ID: "${newMessage._id}", Sender: "${newMessage.fullName}", Subject: "${newMessage.subject}"`);
 
-        // Send Email Notification to Admin
-        const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
-        if (adminEmail && process.env.EMAIL_PASS) {
-            try {
-                const transporter = createTransporter();
-                const mailOptions = {
-                    from: `"Good Interior Studio Alerts" <${process.env.EMAIL_USER}>`,
-                    to: adminEmail,
-                    replyTo: `"${fullName.trim()}" <${email.trim()}>`,
-                    subject: `[NEW CONTACT ENQUIRY] ${subject.trim()} - from ${fullName.trim()}`,
-                    html: `
-                        <div style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; padding: 30px; color: #1e293b;">
-                            <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; padding: 30px; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-                                <div style="text-align: center; padding-bottom: 20px; border-bottom: 2px solid #b38058;">
-                                    <h2 style="color: #b38058; margin: 0; font-size: 22px; letter-spacing: 1px;">GOOD INTERIOR DESIGN STUDIO</h2>
-                                    <p style="font-size: 12px; color: #64748b; margin: 5px 0 0 0; letter-spacing: 2px;">NEW WEBSITE CONTACT ENQUIRY</p>
-                                </div>
-                                
-                                <div style="padding: 24px 0;">
-                                    <p style="font-size: 15px; color: #0f172a; margin-bottom: 15px;">You have received a new contact enquiry from the website:</p>
-                                    <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-                                        <tr><td style="padding: 8px 0; color: #64748b; width: 120px;"><strong>Client Name:</strong></td><td style="color: #0f172a; font-weight: 600;">${fullName.trim()}</td></tr>
-                                        <tr><td style="padding: 8px 0; color: #64748b;"><strong>Email:</strong></td><td style="color: #0f172a;"><a href="mailto:${email.trim()}">${email.trim()}</a></td></tr>
-                                        <tr><td style="padding: 8px 0; color: #64748b;"><strong>Phone:</strong></td><td style="color: #0f172a;">${phone.trim()}</td></tr>
-                                        <tr><td style="padding: 8px 0; color: #64748b;"><strong>Subject:</strong></td><td style="color: #0f172a; font-weight: 600;">${subject.trim()}</td></tr>
-                                    </table>
+        // Send Instant Email Notification to Admin
+        try {
+            const transporter = createTransporter();
+            const mailOptions = {
+                from: `"Good Interior Studio" <${EMAIL_USER}>`,
+                to: ADMIN_EMAIL,
+                replyTo: `"${fullName.trim()}" <${email.trim()}>`,
+                subject: `[NEW CONTACT ENQUIRY] ${subject.trim()} - from ${fullName.trim()}`,
+                html: `
+                    <div style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; padding: 30px; color: #1e293b;">
+                        <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; padding: 30px; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                            <div style="text-align: center; padding-bottom: 20px; border-bottom: 2px solid #b38058;">
+                                <h2 style="color: #b38058; margin: 0; font-size: 22px; letter-spacing: 1px;">GOOD INTERIOR DESIGN STUDIO</h2>
+                                <p style="font-size: 12px; color: #64748b; margin: 5px 0 0 0; letter-spacing: 2px;">NEW WEBSITE CONTACT ENQUIRY</p>
+                            </div>
+                            
+                            <div style="padding: 24px 0;">
+                                <p style="font-size: 15px; color: #0f172a; margin-bottom: 15px;">You have received a new contact enquiry from the website:</p>
+                                <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                                    <tr><td style="padding: 8px 0; color: #64748b; width: 120px;"><strong>Client Name:</strong></td><td style="color: #0f172a; font-weight: 600;">${fullName.trim()}</td></tr>
+                                    <tr><td style="padding: 8px 0; color: #64748b;"><strong>Email:</strong></td><td style="color: #0f172a;"><a href="mailto:${email.trim()}">${email.trim()}</a></td></tr>
+                                    <tr><td style="padding: 8px 0; color: #64748b;"><strong>Phone:</strong></td><td style="color: #0f172a;">${phone.trim()}</td></tr>
+                                    <tr><td style="padding: 8px 0; color: #64748b;"><strong>Subject:</strong></td><td style="color: #0f172a; font-weight: 600;">${subject.trim()}</td></tr>
+                                </table>
 
-                                    <div style="background-color: #f1f5f9; border-left: 4px solid #b38058; padding: 15px; border-radius: 4px; margin: 20px 0;">
-                                        <p style="font-size: 12px; font-weight: 600; color: #475569; margin: 0 0 5px 0;">Message Body:</p>
-                                        <p style="font-size: 14px; color: #1e293b; margin: 0; white-space: pre-line;">${message.trim()}</p>
-                                    </div>
-
-                                    <p style="font-size: 13px; color: #64748b; font-style: italic; margin-top: 20px;">
-                                        💡 <strong>Tip:</strong> You can hit <strong>"Reply"</strong> directly in your email app to reply straight to ${fullName.trim()} (${email.trim()}), or use your Admin Dashboard!
-                                    </p>
+                                <div style="background-color: #f1f5f9; border-left: 4px solid #b38058; padding: 15px; border-radius: 4px; margin: 20px 0;">
+                                    <p style="font-size: 12px; font-weight: 600; color: #475569; margin: 0 0 5px 0;">Message Body:</p>
+                                    <p style="font-size: 14px; color: #1e293b; margin: 0; white-space: pre-line;">${message.trim()}</p>
                                 </div>
 
-                                <div style="border-top: 1px solid #e2e8f0; padding-top: 15px; text-align: center; font-size: 12px; color: #94a3b8;">
-                                    <p style="margin: 0;">Good Interior Studio Automated Notification System</p>
-                                </div>
+                                <p style="font-size: 13px; color: #64748b; font-style: italic; margin-top: 20px;">
+                                    💡 <strong>Tip:</strong> You can hit <strong>"Reply"</strong> directly in your email app to reply straight to ${fullName.trim()} (${email.trim()}), or use your Admin Dashboard!
+                                </p>
+                            </div>
+
+                            <div style="border-top: 1px solid #e2e8f0; padding-top: 15px; text-align: center; font-size: 12px; color: #94a3b8;">
+                                <p style="margin: 0;">Good Interior Studio Automated Notification System</p>
                             </div>
                         </div>
-                    `
-                };
-                await transporter.sendMail(mailOptions);
-                console.log(`✅ [ADMIN NOTIFIED] Instant email alert sent to admin (${adminEmail}) for contact submission.`);
-            } catch (notifyErr) {
-                console.warn(`⚠️ [ADMIN NOTIFY WARNING] Could not send notification email to admin:`, notifyErr.message);
-            }
+                    </div>
+                `
+            };
+            await transporter.sendMail(mailOptions);
+            console.log(`✅ [ADMIN NOTIFIED] Instant email alert sent to admin (${ADMIN_EMAIL}) for contact submission.`);
+        } catch (notifyErr) {
+            console.warn(`⚠️ [ADMIN NOTIFY WARNING] Could not send notification email to admin:`, notifyErr.message);
         }
 
         res.status(201).json({
