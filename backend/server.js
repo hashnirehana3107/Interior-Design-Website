@@ -46,6 +46,7 @@ app.use('/api/users', require('./routes/users'));
 app.use('/api/home-settings', require('./routes/homePageSettings'));
 app.use('/api/global-settings', require('./routes/globalSettings'));
 app.use('/api/auth-branding', require('./routes/authBranding'));
+app.use('/api/careers', require('./routes/careers'));
 
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Backend is running correctly on Vercel' });

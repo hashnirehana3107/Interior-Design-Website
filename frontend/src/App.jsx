@@ -13,6 +13,7 @@ import Testimonials from './pages/Testimonials';
 import Blog from './pages/Blog';
 import BlogDetail from './pages/BlogDetail';
 import Contact from './pages/Contact';
+import Careers from './pages/Careers';
 import Profile from './pages/Profile';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminRoute from './components/AdminRoute';
@@ -46,6 +47,7 @@ function App() {
                 <Route path="/testimonials" element={<Testimonials />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:id" element={<BlogDetail />} />
+                <Route path="/careers" element={<Careers />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/projects/:id" element={<ProjectDetails />} />
                 <Route path="/privacy" element={<PrivacyPolicy />} />

@@ -104,6 +104,7 @@ const Header = () => {
                         <li><NavLink to="/portfolio" onClick={closeMobileMenu}>PORTFOLIO</NavLink></li>
                         <li><NavLink to="/testimonials" onClick={closeMobileMenu}>TESTIMONIALS</NavLink></li>
                         <li><NavLink to="/blog" onClick={closeMobileMenu}>BLOG</NavLink></li>
+                        <li><NavLink to="/careers" onClick={closeMobileMenu}>CAREERS</NavLink></li>
                         <li><NavLink to="/contact" onClick={closeMobileMenu}>CONTACT</NavLink></li>
 
                         {/* Mobile Only Auth Links */}
