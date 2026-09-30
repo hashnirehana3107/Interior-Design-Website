@@ -24,9 +24,12 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 let isConnected = false;
 const connectDB = async () => {
   if (mongoose.connection.readyState === 1 || mongoose.connection.readyState === 2) return;
+  if (!process.env.MONGODB_URI) {
+    console.error('CRITICAL: MONGODB_URI is not defined in environment variables!');
+    return;
+  }
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI, {
-      family: 4,                     // Force IPv4 (bypasses IPv6 ISP lookup delays)
+    const opts = {
       serverSelectionTimeoutMS: 15000,
       connectTimeoutMS: 15000,
       socketTimeoutMS: 45000,
@@ -34,7 +37,13 @@ const connectDB = async () => {
       maxIdleTimeMS: 300000,
       maxPoolSize: 50,
       minPoolSize: 10,
-    });
+    };
+    // Only force IPv4 in local development, avoid on Vercel serverless
+    if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+      opts.family = 4;
+    }
+
+    const conn = await mongoose.connect(process.env.MONGODB_URI, opts);
     isConnected = true;
     console.log(`Connected to MongoDB Atlas! Database: "${conn.connection.db.databaseName}"`);
 
@@ -52,7 +61,7 @@ const connectDB = async () => {
     });
 
   } catch (err) {
-    console.error('MongoDB connection error:', err);
+    console.error('MongoDB connection error:', err.message);
   }
 };
 
@@ -108,10 +117,12 @@ const prewarmCache = () => {
 
 // Per-request fallback: reconnect if connection dropped
 app.use(async (req, res, next) => {
-  if (mongoose.connection.readyState === 0) {
-    console.log('Connection lost, reconnecting...');
-    isConnected = false;
-    await connectDB();
+  try {
+    if (mongoose.connection.readyState === 0) {
+      await connectDB();
+    }
+  } catch (err) {
+    console.error('Database middleware error:', err.message);
   }
   next();
 });

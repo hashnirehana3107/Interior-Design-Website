@@ -54,7 +54,21 @@ export const AuthProvider = ({ children }) => {
     const closeConsultation = useCallback(() => {
         setIsConsultationOpen(false);
     }, []);
-
+    const safeFetchJson = async (url, options) => {
+        try {
+            const response = await fetch(url, options);
+            const text = await response.text();
+            let data = {};
+            try {
+                data = text ? JSON.parse(text) : {};
+            } catch (pErr) {
+                data = { message: 'Server connection error. Please try again.' };
+            }
+            return { response, data };
+        } catch (err) {
+            return { response: { ok: false, status: 500 }, data: { message: err.message || 'Network connection failed.' } };
+        }
+    };
 
     // Verify token on mount
     useEffect(() => {
@@ -65,14 +79,13 @@ export const AuthProvider = ({ children }) => {
             }
 
             try {
-                const response = await fetch(`${API_BASE_URL}/me`, {
+                const { response, data } = await safeFetchJson(`${API_BASE_URL}/me`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
                 });
 
                 if (response.ok) {
-                    const data = await response.json();
                     const cleanUser = sanitizeUserData(data.user);
                     setUser(cleanUser);
                     localStorage.setItem('user', JSON.stringify(cleanUser));
@@ -93,15 +106,13 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (userData) => {
         try {
-            const response = await fetch(`${API_BASE_URL}/register`, {
+            const { response, data } = await safeFetchJson(`${API_BASE_URL}/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(userData)
             });
-
-            const data = await response.json();
 
             if (!response.ok) {
                 const errorMessage = data.message || 'Registration failed.';
@@ -126,15 +137,13 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const response = await fetch(`${API_BASE_URL}/login`, {
+            const { response, data } = await safeFetchJson(`${API_BASE_URL}/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ email, password })
             });
-
-            const data = await response.json();
 
             if (!response.ok) {
                 const errorMessage = data.message || 'Login failed. Invalid credentials.';
@@ -166,15 +175,13 @@ export const AuthProvider = ({ children }) => {
                 googleId: googleData.googleId || ''
             };
 
-            const response = await fetch(`${API_BASE_URL}/google`, {
+            const { response, data } = await safeFetchJson(`${API_BASE_URL}/google`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(payload)
             });
-
-            const data = await response.json();
 
             if (!response.ok) {
                 const errorMessage = data.message || 'Google authentication failed.';
@@ -200,7 +207,7 @@ export const AuthProvider = ({ children }) => {
 
     const updateProfile = async (updatedData) => {
         try {
-            const response = await fetch(`${API_BASE_URL}/profile`, {
+            const { response, data } = await safeFetchJson(`${API_BASE_URL}/profile`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -208,8 +215,6 @@ export const AuthProvider = ({ children }) => {
                 },
                 body: JSON.stringify(updatedData)
             });
-
-            const data = await response.json();
 
             if (!response.ok) {
                 const errorMessage = data.message || 'Profile update failed.';
@@ -222,7 +227,7 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('user', JSON.stringify(cleanUser));
             setUser(cleanUser);
 
-            showToast(`!`, 'success', 4000);
+            showToast(`Profile updated successfully!`, 'success', 4000);
 
             return data;
         } catch (error) {
