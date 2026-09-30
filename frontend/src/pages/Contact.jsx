@@ -157,6 +157,14 @@ const Contact = () => {
         }
     };
 
+    if (loading) {
+        return (
+            <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#0b0d11' }}>
+                <div style={{ color: '#9ca3af', fontSize: '1.2rem', letterSpacing: '2px' }}>LOADING CONTACT...</div>
+            </div>
+        );
+    }
+
     const hero = pageSettings?.hero || {};
     const contactInfo = pageSettings?.contactInfo || {};
     const map = pageSettings?.map || {};

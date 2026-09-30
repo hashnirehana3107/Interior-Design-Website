@@ -27,31 +27,28 @@ const Portfolio = () => {
     const [activeTab, setActiveTab] = useState('all');
     const [visibleCount, setVisibleCount] = useState(6);
     const [projects, setProjects] = useState([]);
-    const [heroData, setHeroData] = useState({
-        kicker: 'OUR PORTFOLIO',
-        title: 'Spaces We\'ve Designed<br /><span class="gold-text">Stories We\'re Proud Of.</span>',
-        subtitle: 'Explore a selection of our completed projects that<br />reflect creativity, functionality and timeless design.',
-        bgImage: ''
-    });
+    const [heroData, setHeroData] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Fetch hero
-                const heroRes = await fetch(`${API_BASE}/api/projects/hero`);
+                const [heroRes, projRes] = await Promise.all([
+                    fetch(`${API_BASE}/api/projects/hero`),
+                    fetch(`${API_BASE}/api/projects`)
+                ]);
                 if (heroRes.ok) {
                     const heroJson = await heroRes.json();
                     if (heroJson) setHeroData(heroJson);
                 }
-
-                // Fetch projects
-                const projRes = await fetch(`${API_BASE}/api/projects`);
                 if (projRes.ok) {
                     const projJson = await projRes.json();
                     setProjects(Array.isArray(projJson) ? projJson : (projJson.projects || []));
                 }
             } catch (err) {
-                console.error("Failed to load portfolio data", err);
+                console.error('Failed to load portfolio data', err);
+            } finally {
+                setLoading(false);
             }
         };
         fetchData();
@@ -65,15 +62,27 @@ const Portfolio = () => {
             (item.category && item.category.toLowerCase() === activeTab.toLowerCase())
         );
 
+    if (loading) {
+        return (
+            <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#0b0d11' }}>
+                <div style={{ color: '#9ca3af', fontSize: '1.2rem', letterSpacing: '2px' }}>LOADING PORTFOLIO...</div>
+            </div>
+        );
+    }
+
+    const heroTitle = heroData?.title || 'Spaces We\'ve Designed<br /><span class="gold-text">Stories We\'re Proud Of.</span>';
+    const heroSubtitle = heroData?.subtitle || 'Explore a selection of our completed projects that<br />reflect creativity, functionality and timeless design.';
+    const heroBgImage = heroData?.bgImage || heroBg;
+
     return (
         <div className="portfolio-page">
             {/* 1. Hero Section */}
-            <section className="portfolio-hero" style={{ backgroundImage: `url(${heroData.bgImage || heroBg})` }}>
+            <section className="portfolio-hero" style={{ backgroundImage: `url(${heroBgImage})` }}>
                 <div className="portfolio-hero-overlay">
                     <div className="portfolio-hero-content">
-                        <span className="portfolio-kicker">{heroData.kicker}</span>
-                        <h1 dangerouslySetInnerHTML={{ __html: heroData.title }}></h1>
-                        <p dangerouslySetInnerHTML={{ __html: heroData.subtitle }}></p>
+                        <span className="portfolio-kicker">{heroData?.kicker || 'OUR PORTFOLIO'}</span>
+                        <h1 dangerouslySetInnerHTML={{ __html: heroTitle }}></h1>
+                        <p dangerouslySetInnerHTML={{ __html: heroSubtitle }}></p>
                     </div>
                 </div>
             </section>

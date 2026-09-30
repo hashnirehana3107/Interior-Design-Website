@@ -9,55 +9,7 @@ import './Blog.css';
 import heroBg from '../assets/hero_bg.png';
 import API_BASE from '../config/api';
 
-const popularPosts = [
-    { id: 1, title: 'How to Make Small Spaces Look Bigger', date: 'May 10, 2025', img: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=200&q=80' },
-    { id: 2, title: 'Best Color Palettes for a Modern Home', date: 'April 28, 2025', img: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=200&q=80' },
-    { id: 3, title: 'Lighting Ideas to Elevate Your Interiors', date: 'April 15, 2025', img: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=200&q=80' }
-];
 
-const tags = [
-    'Minimalist', 'Living Room', 'Modern Home', 'Kitchen', 'Bedroom', 'Decor',
-    'Renovation', 'Lighting', 'Sustainable', 'Luxury', 'Small Space', 'Materials'
-];
-
-const allArticles = [
-    {
-        id: 1, badge: 'DESIGN TIPS', date: 'MAY 18, 2025', readTime: '5 MIN READ',
-        title: '10 Tips for a Timeless Dining Room Design',
-        desc: 'Simple tips to create a dining room that stays stylish and inviting for years to come.',
-        img: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=600&q=80'
-    },
-    {
-        id: 2, badge: 'ROOM IDEAS', date: 'MAY 05, 2025', readTime: '6 MIN READ',
-        title: 'Modern Bedroom Ideas for Maximum Comfort',
-        desc: 'Explore modern bedroom ideas that blend comfort, style and functionality.',
-        img: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=600&q=80'
-    },
-    {
-        id: 3, badge: 'MATERIALS', date: 'APRIL 25, 2025', readTime: '4 MIN READ',
-        title: 'Best Materials for Luxury Interiors',
-        desc: 'A guide to the best materials that add luxury, durability and sophistication.',
-        img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=80'
-    },
-    {
-        id: 4, badge: 'INTERIOR TRENDS', date: 'APRIL 15, 2025', readTime: '5 MIN READ',
-        title: 'Neutral Tones in Interior Design: Why They Work',
-        desc: 'Understanding the power of neutral tones and how to use them beautifully.',
-        img: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=600&q=80'
-    },
-    {
-        id: 5, badge: 'LIGHTING', date: 'APRIL 02, 2025', readTime: '5 MIN READ',
-        title: 'Lighting Ideas to Elevate Every Room',
-        desc: 'Creative lighting ideas to enhance ambiance and bring your space to life.',
-        img: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80'
-    },
-    {
-        id: 6, badge: 'HOME IMPROVEMENT', date: 'MAR 20, 2025', readTime: '7 MIN READ',
-        title: 'How to Plan a Successful Home Renovation',
-        desc: 'A step-by-step guide to planning your renovation with confidence and clarity.',
-        img: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80'
-    }
-];
 
 const Blog = () => {
     const { openConsultation, showToast } = useAuth();
@@ -154,13 +106,18 @@ const Blog = () => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    // Derived articles data
-    const displayPosts = posts.length > 0 ? posts : allArticles;
+    if (loading) {
+        return (
+            <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#0b0d11' }}>
+                <div style={{ color: '#9ca3af', fontSize: '1.2rem', letterSpacing: '2px' }}>LOADING BLOG...</div>
+            </div>
+        );
+    }
 
     // Tag filter
     const tagFilteredPosts = selectedTag
-        ? displayPosts.filter(p => Array.isArray(p.tags) && p.tags.some(t => t.toLowerCase() === selectedTag.toLowerCase()))
-        : displayPosts;
+        ? posts.filter(p => Array.isArray(p.tags) && p.tags.some(t => t.toLowerCase() === selectedTag.toLowerCase()))
+        : posts;
 
     // Sort logic
     let sortedPosts = [...tagFilteredPosts];
@@ -173,12 +130,11 @@ const Blog = () => {
     const featuredPost = sortedPosts.find(p => p.isFeatured) || sortedPosts[0];
     const gridArticles = sortedPosts.filter(p => (p._id || p.id) !== (featuredPost?._id || featuredPost?.id));
 
-    const popularArticles = displayPosts.filter(p => p.isPopular);
-    const sidebarPopular = popularArticles.length > 0 ? popularArticles.slice(0, 3) : displayPosts.slice(0, 3);
+    const popularArticles = posts.filter(p => p.isPopular);
+    const sidebarPopular = popularArticles.length > 0 ? popularArticles.slice(0, 3) : posts.slice(0, 3);
 
-    // Extract tags dynamically
-    const dynamicTags = Array.from(new Set(displayPosts.flatMap(p => p.tags || [])));
-    const sidebarTags = dynamicTags.length > 0 ? dynamicTags : tags;
+    // Extract tags dynamically from backend posts only
+    const sidebarTags = Array.from(new Set(posts.flatMap(p => p.tags || [])));
 
     const handleTagClick = (tag) => {
         setSelectedTag(prev => prev === tag ? null : tag);

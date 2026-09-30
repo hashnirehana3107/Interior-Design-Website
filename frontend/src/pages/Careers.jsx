@@ -43,50 +43,7 @@ const getIconComponent = (iconName) => {
     }
 };
 
-const defaultJobs = [
-    {
-        _id: 'job-1',
-        title: 'Interior Designer',
-        type: 'Full-time',
-        location: 'Colombo, Sri Lanka',
-        icon: 'design'
-    },
-    {
-        _id: 'job-2',
-        title: 'Interior Architect',
-        type: 'Full-time',
-        location: 'Colombo, Sri Lanka',
-        icon: 'architecture'
-    },
-    {
-        _id: 'job-3',
-        title: '3D Visualizer',
-        type: 'Full-time',
-        location: 'Colombo, Sri Lanka',
-        icon: '3d'
-    },
-    {
-        _id: 'job-4',
-        title: 'Marketing Executive',
-        type: 'Full-time',
-        location: 'Colombo, Sri Lanka',
-        icon: 'marketing'
-    },
-    {
-        _id: 'job-5',
-        title: 'Project Manager',
-        type: 'Full-time',
-        location: 'Colombo, Sri Lanka',
-        icon: 'project'
-    },
-    {
-        _id: 'job-6',
-        title: 'Office Administrator',
-        type: 'Full-time',
-        location: 'Colombo, Sri Lanka',
-        icon: 'office'
-    }
-];
+
 
 const Careers = () => {
     const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
@@ -95,47 +52,34 @@ const Careers = () => {
     const [selectedJobObj, setSelectedJobObj] = useState(null);
     const [detailJobTitle, setDetailJobTitle] = useState('');
 
-    const [jobOpenings, setJobOpenings] = useState(defaultJobs);
-    const [heroData, setHeroData] = useState({
-        kicker: 'JOIN OUR TEAM',
-        title: 'Build Your Career in Interior Design',
-        description: "We're always looking for passionate, creative and talented individuals to join our team. If you love design and want to make a difference, we'd love to hear from you.",
-        bgImage: ''
-    });
+    const [jobOpenings, setJobOpenings] = useState([]);
+    const [heroData, setHeroData] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        fetchHeroData();
-        fetchJobsData();
+        const fetchCareersData = async () => {
+            try {
+                const [heroRes, jobsRes] = await Promise.all([
+                    fetch(`${API_BASE_URL}/api/careers/hero`),
+                    fetch(`${API_BASE_URL}/api/careers/jobs`)
+                ]);
+                if (heroRes.ok) {
+                    const data = await heroRes.json();
+                    if (data.hero) setHeroData(data.hero);
+                }
+                if (jobsRes.ok) {
+                    const data = await jobsRes.json();
+                    if (data.jobs && data.jobs.length > 0) setJobOpenings(data.jobs);
+                }
+            } catch (err) {
+                console.error('Failed to fetch careers data:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchCareersData();
     }, []);
-
-    const fetchHeroData = async () => {
-        try {
-            const res = await fetch(`${API_BASE_URL}/api/careers/hero`);
-            if (res.ok) {
-                const data = await res.json();
-                if (data.hero) {
-                    setHeroData(data.hero);
-                }
-            }
-        } catch (err) {
-            console.error('Failed to fetch careers hero data:', err);
-        }
-    };
-
-    const fetchJobsData = async () => {
-        try {
-            const res = await fetch(`${API_BASE_URL}/api/careers/jobs`);
-            if (res.ok) {
-                const data = await res.json();
-                if (data.jobs && data.jobs.length > 0) {
-                    setJobOpenings(data.jobs);
-                }
-            }
-        } catch (err) {
-            console.error('Failed to fetch careers jobs data:', err);
-        }
-    };
 
     const handleApplyClick = (positionTitle = 'General Resume Submission') => {
         setSelectedPosition(positionTitle);
@@ -160,35 +104,36 @@ const Careers = () => {
         }
     };
 
+    if (loading) {
+        return (
+            <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#0b0d11' }}>
+                <div style={{ color: '#9ca3af', fontSize: '1.2rem', letterSpacing: '2px' }}>LOADING CAREERS...</div>
+            </div>
+        );
+    }
+
     return (
         <div className="careers-page">
             {/* 1. HERO SECTION */}
             <section
                 className="careers-hero"
-                style={{ backgroundImage: `url(${heroData.bgImage || heroBg})` }}
+                style={{ backgroundImage: `url(${heroData?.bgImage || heroBg})` }}
             >
                 <div className="careers-hero-overlay">
                     <div className="careers-hero-content">
-                        <span className="careers-kicker">{heroData.kicker || 'JOIN OUR TEAM'}</span>
+                        <span className="careers-kicker">{heroData?.kicker || 'JOIN OUR TEAM'}</span>
                         <h1 className="careers-hero-title">
-                            {heroData.title ? (
-                                heroData.title.includes('Interior Design') ? (
-                                    <>
-                                        Build Your Career<br />
-                                        in <span className="gold-text-italic">Interior Design</span>
-                                    </>
-                                ) : (
-                                    heroData.title
-                                )
-                            ) : (
+                            {heroData?.title?.includes('Interior Design') ? (
                                 <>
                                     Build Your Career<br />
                                     in <span className="gold-text-italic">Interior Design</span>
                                 </>
+                            ) : (
+                                heroData?.title || <><span>Build Your Career</span><br /><span className="gold-text-italic">in Interior Design</span></>
                             )}
                         </h1>
                         <p className="careers-hero-desc">
-                            {heroData.description || "We're always looking for passionate, creative and talented individuals to join our team. If you love design and want to make a difference, we'd love to hear from you."}
+                            {heroData?.description || "We're always looking for passionate, creative and talented individuals to join our team."}
                         </p>
                         <button className="btn-solid-gold btn-careers-hero" onClick={scrollToPositions}>
                             EXPLORE OPEN POSITIONS <TbArrowRight className="btn-arrow-icon" />

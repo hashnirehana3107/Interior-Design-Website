@@ -19,12 +19,7 @@ const Testimonials = () => {
     const [visibleCount, setVisibleCount] = useState(8);
 
     // Dynamic Backend Data States
-    const [heroSettings, setHeroSettings] = useState({
-        kicker: 'TESTIMONIALS',
-        title: 'Trusted By Clients.<br /><span class="gold-text-italic">Loved</span> For Our Work.',
-        subtitle: 'We take pride in creating spaces that inspire<br />and relationships that last.',
-        bgImage: ''
-    });
+    const [heroSettings, setHeroSettings] = useState(null);
     const [testimonials, setTestimonials] = useState([]);
     const [loading, setLoading] = useState(true);
     const [projectCount, setProjectCount] = useState(0);
@@ -129,16 +124,27 @@ const Testimonials = () => {
         : 0;
     const dynamicClientSatisfaction = loading ? '–' : `${satisfactionPercentage}%`;
 
+    if (loading) {
+        return (
+            <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#0b0d11' }}>
+                <div style={{ color: '#9ca3af', fontSize: '1.2rem', letterSpacing: '2px' }}>LOADING TESTIMONIALS...</div>
+            </div>
+        );
+    }
+
+    const heroTitle = heroSettings?.title || 'Trusted By Clients.<br /><span class="gold-text-italic">Loved</span> For Our Work.';
+    const heroSubtitle = heroSettings?.subtitle || 'We take pride in creating spaces that inspire<br />and relationships that last.';
+
     return (
         <div className="testimonials-page">
             {/* 1. Hero Section */}
-            <section className="testi-hero" style={{ backgroundImage: `url(${heroSettings.bgImage || heroBg})` }}>
+            <section className="testi-hero" style={{ backgroundImage: `url(${heroSettings?.bgImage || heroBg})` }}>
                 <div className="testi-hero-overlay">
                     <div className="testi-hero-content">
-                        <span className="testi-kicker">{heroSettings.kicker}</span>
-                        <h1 className="testi-title" dangerouslySetInnerHTML={{ __html: heroSettings.title }}></h1>
+                        <span className="testi-kicker">{heroSettings?.kicker || 'TESTIMONIALS'}</span>
+                        <h1 className="testi-title" dangerouslySetInnerHTML={{ __html: heroTitle }}></h1>
                         <div className="hero-gold-line"></div>
-                        <p className="testi-desc" dangerouslySetInnerHTML={{ __html: heroSettings.subtitle }}></p>
+                        <p className="testi-desc" dangerouslySetInnerHTML={{ __html: heroSubtitle }}></p>
                     </div>
                 </div>
             </section>
@@ -265,11 +271,11 @@ const Testimonials = () => {
                             <FaQuoteLeft />
                         </div>
                         <div className="big-quote-text">
-                            <h3 dangerouslySetInnerHTML={{ __html: heroSettings.quoteText || 'Design is not just what it looks like and feels like.<br />Design is how it works.' }}></h3>
-                            <p className="quote-author">{heroSettings.quoteAuthor || '– Steve Jobs'}</p>
+                            <h3 dangerouslySetInnerHTML={{ __html: heroSettings?.quoteText || 'Design is not just what it looks like and feels like.<br />Design is how it works.' }}></h3>
+                            <p className="quote-author">{heroSettings?.quoteAuthor || '– Steve Jobs'}</p>
                         </div>
                     </div>
-                    <div className="testi-quote-right" style={{ backgroundImage: `url(${heroSettings.quoteImage || aboutImg})` }}>
+                    <div className="testi-quote-right" style={{ backgroundImage: `url(${heroSettings?.quoteImage || aboutImg})` }}>
                     </div>
                 </div>
             </section>
