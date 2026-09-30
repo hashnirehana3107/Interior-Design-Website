@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }) => {
             try {
                 data = text ? JSON.parse(text) : {};
             } catch (pErr) {
-                data = { message: 'Server connection error. Please try again.' };
+                data = { message: response.ok ? 'Invalid response format from server.' : 'Server connection delay. Please try logging in again in 2 seconds.' };
             }
             return { response, data };
         } catch (err) {

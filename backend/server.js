@@ -20,50 +20,50 @@ app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-// Database Connection Handler
+// Database Connection Handler with Promise Caching for Vercel Serverless
 let isConnected = false;
+let cachedPromise = null;
+
 const connectDB = async () => {
-  if (mongoose.connection.readyState === 1 || mongoose.connection.readyState === 2) return;
+  if (mongoose.connection.readyState === 1) return mongoose.connection;
+  if (mongoose.connection.readyState === 2 && cachedPromise) return cachedPromise;
   if (!process.env.MONGODB_URI) {
     console.error('CRITICAL: MONGODB_URI is not defined in environment variables!');
-    return;
+    throw new Error('MONGODB_URI environment variable is missing.');
   }
-  try {
+
+  if (!cachedPromise) {
     const opts = {
-      serverSelectionTimeoutMS: 15000,
-      connectTimeoutMS: 15000,
-      socketTimeoutMS: 45000,
-      heartbeatFrequencyMS: 10000,
-      maxIdleTimeMS: 300000,
-      maxPoolSize: 50,
-      minPoolSize: 10,
+      serverSelectionTimeoutMS: 8000,
+      connectTimeoutMS: 8000,
+      socketTimeoutMS: 30000,
+      maxPoolSize: 10,
     };
-    // Only force IPv4 in local development, avoid on Vercel serverless
     if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
       opts.family = 4;
     }
 
-    const conn = await mongoose.connect(process.env.MONGODB_URI, opts);
-    isConnected = true;
-    console.log(`Connected to MongoDB Atlas! Database: "${conn.connection.db.databaseName}"`);
-
-    mongoose.connection.on('disconnected', () => {
-      console.warn('WARNING: MongoDB disconnected. Attempting to reconnect...');
-      isConnected = false;
-    });
-    mongoose.connection.on('reconnected', () => {
-      console.log('MongoDB reconnected successfully.');
-      isConnected = true;
-    });
-    mongoose.connection.on('error', (err) => {
-      console.error('MongoDB connection error:', err.message);
-      isConnected = false;
-    });
-
-  } catch (err) {
-    console.error('MongoDB connection error:', err.message);
+    cachedPromise = mongoose.connect(process.env.MONGODB_URI, opts)
+      .then((conn) => {
+        isConnected = true;
+        console.log(`Connected to MongoDB Atlas! Database: "${conn.connection.db.databaseName}"`);
+        return conn;
+      })
+      .catch((err) => {
+        cachedPromise = null;
+        isConnected = false;
+        console.error('MongoDB connection error:', err.message);
+        throw err;
+      });
   }
+
+  return cachedPromise;
 };
+
+// Instantly start connecting on serverless cold start
+if (process.env.MONGODB_URI) {
+  connectDB().catch(() => { });
+}
 
 // ── Startup Cache Pre-Warmer ──
 // Fires internal HTTP requests right after server starts so
@@ -115,16 +115,17 @@ const prewarmCache = () => {
   setTimeout(() => warmNext(0), 800);
 };
 
-// Per-request fallback: reconnect if connection dropped
+// Per-request fallback: ensure DB is connected before handling routes
 app.use(async (req, res, next) => {
   try {
-    if (mongoose.connection.readyState === 0) {
+    if (mongoose.connection.readyState !== 1) {
       await connectDB();
     }
+    next();
   } catch (err) {
-    console.error('Database middleware error:', err.message);
+    console.error('Database middleware connection failure:', err.message);
+    return res.status(503).json({ message: 'Server is starting up. Please try again in a few seconds.' });
   }
-  next();
 });
 
 // Routes
