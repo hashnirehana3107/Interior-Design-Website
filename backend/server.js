@@ -21,29 +21,26 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Database Connection Handler with Promise Caching for Vercel Serverless
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://admin:Admin%40123@cluster0.910rlkg.mongodb.net/interior_design_db?retryWrites=true&w=majority';
 let isConnected = false;
 let cachedPromise = null;
 
 const connectDB = async () => {
   if (mongoose.connection.readyState === 1) return mongoose.connection;
   if (mongoose.connection.readyState === 2 && cachedPromise) return cachedPromise;
-  if (!process.env.MONGODB_URI) {
-    console.error('CRITICAL: MONGODB_URI is not defined in environment variables!');
-    throw new Error('MONGODB_URI environment variable is missing.');
-  }
 
   if (!cachedPromise) {
     const opts = {
-      serverSelectionTimeoutMS: 8000,
-      connectTimeoutMS: 8000,
-      socketTimeoutMS: 30000,
+      serverSelectionTimeoutMS: 12000,
+      connectTimeoutMS: 12000,
+      socketTimeoutMS: 45000,
       maxPoolSize: 10,
     };
     if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
       opts.family = 4;
     }
 
-    cachedPromise = mongoose.connect(process.env.MONGODB_URI, opts)
+    cachedPromise = mongoose.connect(MONGODB_URI, opts)
       .then((conn) => {
         isConnected = true;
         console.log(`Connected to MongoDB Atlas! Database: "${conn.connection.db.databaseName}"`);
@@ -61,9 +58,9 @@ const connectDB = async () => {
 };
 
 // Instantly start connecting on serverless cold start
-if (process.env.MONGODB_URI) {
-  connectDB().catch(() => { });
-}
+connectDB().catch((err) => {
+  console.warn('Initial serverless pre-connect warning:', err.message);
+});
 
 // ── Startup Cache Pre-Warmer ──
 // Fires internal HTTP requests right after server starts so
