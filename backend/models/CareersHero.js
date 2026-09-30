@@ -9,7 +9,7 @@ const CareersHeroSchema = new mongoose.Schema({
     // About Our Team Section
     aboutKicker: { type: String, default: 'ABOUT OUR TEAM' },
     aboutTitle: { type: String, default: 'Great People Build Great Spaces' },
-    aboutDesc: { type: String, default: 'At Good Interior, we believe that a strong team creates extraordinary results. We foster a collaborative, creative and supportive work environment where your ideas matter and your growth is our priority.' },
+    aboutDesc: { type: String, default: 'At Senkadagala Architects, we believe that a strong team creates extraordinary results. We foster a collaborative, creative and supportive work environment where your ideas matter and your growth is our priority.' },
     aboutImage: { type: String, default: '' },
     aboutF1: { type: String, default: 'Creative Environment' },
     aboutF2: { type: String, default: 'Professional Growth' },
@@ -32,7 +32,7 @@ const CareersHeroSchema = new mongoose.Schema({
     ctaDescription: { type: String, default: "If you're passionate about interior design and want to be part of a creative team, we'd love to hear from you." },
     ctaImage: { type: String, default: '' },
     ctaButtonText: { type: String, default: 'APPLY NOW' },
-    ctaQuote: { type: String, default: `"At Good Interior, we don't just design spaces — we create experiences. And we're always looking for great people to help us do it."` },
+    ctaQuote: { type: String, default: `"At Senkadagala Architects, we don't just design spaces — we create experiences. And we're always looking for great people to help us do it."` },
     ctaQuoteAuthor: { type: String, default: 'OUR TEAM' },
 
     updatedAt: { type: Date, default: Date.now }

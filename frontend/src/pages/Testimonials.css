@@ -35,7 +35,7 @@
 .testi-kicker {
     font-size: 11px;
     font-weight: 700;
-    color: #c48b59;
+    color: #6c7a89;
     letter-spacing: 2.5px;
     text-transform: uppercase;
     display: block;
@@ -52,7 +52,7 @@
 }
 
 .gold-text-italic {
-    color: #c48b59;
+    color: #6c7a89;
     font-style: italic;
     font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
 }
@@ -60,7 +60,7 @@
 .hero-gold-line {
     width: 60px;
     height: 1.5px;
-    background-color: #c48b59;
+    background-color: #6c7a89;
     margin-bottom: 20px;
 }
 
@@ -110,7 +110,7 @@
 
 .stat-icon {
     font-size: 2rem;
-    color: #d4af37;
+    color: #9ca3af;
 }
 
 .stat-number {
@@ -121,7 +121,7 @@
 }
 
 .stat-stars {
-    color: #d4af37;
+    color: #9ca3af;
     font-size: 0.9rem;
     display: flex;
     gap: 4px;
@@ -158,7 +158,7 @@
 
 .testi-kicker-center {
     font-family: 'Outfit', sans-serif;
-    color: #d4af37;
+    color: #9ca3af;
     font-size: 0.85rem;
     font-weight: 600;
     letter-spacing: 3px;
@@ -196,13 +196,13 @@
 }
 
 .testi-cat-btn:hover {
-    border-color: #d4af37;
+    border-color: #9ca3af;
     color: #1a1a1a;
 }
 
 .testi-cat-btn.active {
-    background-color: #c0994f;
-    border-color: #c0994f;
+    background-color: #000000;
+    border-color: #64748b;
     color: #ffffff;
 }
 
@@ -243,7 +243,7 @@
     transform: translateX(-50%);
     width: 44px;
     height: 44px;
-    background-color: #c0994f;
+    background-color: #000000;
     color: white;
     border-radius: 50%;
     display: flex;
@@ -265,7 +265,7 @@
     display: flex;
     justify-content: center;
     gap: 3px;
-    color: #c0994f;
+    color: #64748b;
     font-size: 0.8rem;
     margin-bottom: 1rem;
 }
@@ -338,7 +338,7 @@
 }
 
 .big-quote-mark {
-    color: #c48b59;
+    color: #6c7a89;
     font-size: 4.5rem;
     line-height: 1;
     margin-top: -65px;
@@ -358,7 +358,7 @@
 
 .quote-author {
     font-family: 'Outfit', sans-serif;
-    color: #c48b59;
+    color: #6c7a89;
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -412,7 +412,7 @@
 .testi-cta-icon-box {
     width: 65px;
     height: 65px;
-    border: 1.5px solid #d4be9f;
+    border: 1.5px solid #cbd5e1;
     /* Exact subtle gold border */
     border-radius: 4px;
     display: flex;
@@ -431,7 +431,7 @@
 
 .cta-calendar-icon {
     font-size: 2.2rem;
-    color: #c48b59;
+    color: #6c7a89;
     stroke-width: 1.2px;
     /* Thinner standard stroke style */
 }
@@ -460,7 +460,9 @@
 }
 
 .btn-solid-gold {
-    background-color: #b38b55;
+    background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
+    box-shadow: 0 4px 15px rgba(71, 85, 105, 0.4);
+
     /* The specific muted flat gold */
     color: #ffffff;
     padding: 14px 28px;
@@ -478,7 +480,9 @@
 }
 
 .btn-solid-gold:hover {
-    background-color: #9d7847;
+    background: linear-gradient(135deg, #718096 0%, #475569 50%, #1e293b 100%);
+    box-shadow: 0 6px 20px rgba(71, 85, 105, 0.6);
+
     color: #ffffff;
 }
 
@@ -489,6 +493,17 @@
 
 .btn-solid-gold:hover .btn-arrow-icon {
     transform: translateX(5px);
+}
+
+/* Submit Review button — black override */
+.testi-submit-section .btn-solid-gold {
+    background: #000000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.testi-submit-section .btn-solid-gold:hover {
+    background: #1a1a1a;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
 }
 
 /* Form Row */

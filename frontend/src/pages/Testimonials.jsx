@@ -155,7 +155,7 @@ const Testimonials = () => {
                             {[1, 2, 3, 4, 5].map((sIndex) => (
                                 <FaStar
                                     key={sIndex}
-                                    style={{ color: sIndex <= Math.round(avgRatingVal) ? '#c48b59' : '#cbd5e1' }}
+                                    style={{ color: sIndex <= Math.round(avgRatingVal) ? '#6c7a89' : '#cbd5e1' }}
                                 />
                             ))}
                         </div>
@@ -287,7 +287,7 @@ const Testimonials = () => {
                                 {[1, 2, 3, 4, 5].map((star) => (
                                     <FaStar
                                         key={star}
-                                        style={{ color: (hoverRating || reviewForm.stars) >= star ? '#c48b59' : '#e2e8f0', transition: 'color 0.2s' }}
+                                        style={{ color: (hoverRating || reviewForm.stars) >= star ? '#6c7a89' : '#e2e8f0', transition: 'color 0.2s' }}
                                         onMouseEnter={() => setHoverRating(star)}
                                         onMouseLeave={() => setHoverRating(0)}
                                         onClick={() => setReviewForm({ ...reviewForm, stars: star })}
@@ -322,7 +322,7 @@ const Testimonials = () => {
                         </select>
 
                         <button type="submit" className="btn-solid-gold" style={{ justifyContent: 'center' }}>SUBMIT REVIEW <TbArrowRight className="btn-arrow-icon" /></button>
-                        {reviewStatus && <p style={{ textAlign: 'center', marginTop: '10px', fontSize: '13px', color: '#c48b59', fontWeight: '500' }}>{reviewStatus}</p>}
+                        {reviewStatus && <p style={{ textAlign: 'center', marginTop: '10px', fontSize: '13px', color: '#6c7a89', fontWeight: '500' }}>{reviewStatus}</p>}
                     </form>
                 </div>
             </section>

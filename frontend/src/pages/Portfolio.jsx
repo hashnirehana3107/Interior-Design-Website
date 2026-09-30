@@ -48,7 +48,7 @@ const Portfolio = () => {
                 const projRes = await fetch(`${API_BASE}/api/projects`);
                 if (projRes.ok) {
                     const projJson = await projRes.json();
-                    setProjects(projJson.projects || []);
+                    setProjects(Array.isArray(projJson) ? projJson : (projJson.projects || []));
                 }
             } catch (err) {
                 console.error("Failed to load portfolio data", err);

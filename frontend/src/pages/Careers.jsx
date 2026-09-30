@@ -225,7 +225,7 @@ const Careers = () => {
                                 )}
                             </h2>
                             <p className="section-desc">
-                                {heroData.aboutDesc || 'At Good Interior, we believe that a strong team creates extraordinary results. We foster a collaborative, creative and supportive work environment where your ideas matter and your growth is our priority.'}
+                                {heroData.aboutDesc || 'At Senkadagala Architects, we believe that a strong team creates extraordinary results. We foster a collaborative, creative and supportive work environment where your ideas matter and your growth is our priority.'}
                             </p>
 
                             <div className="careers-team-features">
@@ -269,7 +269,7 @@ const Careers = () => {
 
                         {/* Center Image */}
                         <div className="careers-about-center-img">
-                            <img src={heroData.aboutImage || teamCollabImg} alt="Good Interior Team Collaborating" className="team-collab-img" />
+                            <img src={heroData.aboutImage || teamCollabImg} alt="Senkadagala Architects Team Collaborating" className="team-collab-img" />
                         </div>
 
                         {/* Right Side Cursive Accent */}
@@ -391,7 +391,7 @@ const Careers = () => {
                     <div className="careers-cta-grid">
                         {/* Left Image */}
                         <div className="cta-img-col">
-                            <img src={heroData.ctaImage || livingRoomImg} alt="Good Interior Luxury Living Space" className="cta-living-img" />
+                            <img src={heroData.ctaImage || livingRoomImg} alt="Senkadagala Architects Luxury Living Space" className="cta-living-img" />
                         </div>
 
                         {/* Middle Text & Action */}
@@ -413,7 +413,7 @@ const Careers = () => {
                             <div className="quote-content-wrap">
                                 <div className="quote-mark-gold">“</div>
                                 <p className="quote-text">
-                                    {heroData.ctaQuote || `"At Good Interior, we don't just design spaces — we create experiences. And we're always looking for great people to help us do it."`}
+                                    {heroData.ctaQuote || `"At Senkadagala Architects, we don't just design spaces — we create experiences. And we're always looking for great people to help us do it."`}
                                 </p>
                                 <span className="quote-author">— {heroData.ctaQuoteAuthor || 'OUR TEAM'}</span>
                             </div>

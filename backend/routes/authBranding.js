@@ -1,15 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const AuthBranding = require('../models/AuthBranding');
+const { getCache, setCache, clearCache } = require('../utils/cache');
 
 // GET Auth Branding settings (Auto-seed default row if database is empty)
 router.get('/', async (req, res) => {
     try {
-        let branding = await AuthBranding.findOne();
+        const cached = getCache('auth_branding');
+        if (cached) return res.json(cached);
+
+        let branding = await AuthBranding.findOne().lean();
         if (!branding) {
             branding = await AuthBranding.create({});
         }
-        res.json({ branding });
+        const payload = { branding };
+        setCache('auth_branding', payload, 60);
+        res.json(payload);
     } catch (err) {
         console.error('Error fetching auth branding settings:', err);
         res.status(500).json({ message: 'Server error fetching auth branding settings' });

@@ -23,7 +23,7 @@ const createAdmin = async () => {
             console.log(`✅ [ADMIN UPDATED] Existing user ${user.email} promoted to ADMIN role!`);
         } else {
             user = new User({
-                fullName: 'Good Interior Admin',
+                fullName: 'Senkadagala Architects Admin',
                 email: adminEmail,
                 phone: '+94 77 123 4567',
                 country: 'Sri Lanka',

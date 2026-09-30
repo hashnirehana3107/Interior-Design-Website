@@ -172,7 +172,7 @@ const InteractiveMapPicker = ({ lat, lng, onLocationSelect }) => {
                     type="button"
                     onClick={handleSearch}
                     disabled={searching}
-                    style={{ background: '#b38058', color: '#fff', border: 'none', borderRadius: '6px', padding: '0 16px', fontSize: '0.85rem', cursor: 'pointer', fontWeight: '600' }}
+                    style={{ background: '#6c7a89', color: '#fff', border: 'none', borderRadius: '6px', padding: '0 16px', fontSize: '0.85rem', cursor: 'pointer', fontWeight: '600' }}
                 >
                     {searching ? 'Searching...' : 'Find Place'}
                 </button>
@@ -197,7 +197,7 @@ const AdminDashboard = () => {
     const [heroSlides, setHeroSlides] = useState([]);
     const [homeSubTab, setHomeSubTab] = useState('slides');
     const [homeSettings, setHomeSettings] = useState({
-        about: { kicker: 'WHO WE ARE', title: 'We are a passionate<br />interior design studio.', desc1: 'At Good Interior, we believe that great design improves the way people live and work.', desc2: 'We blend creativity, functionality and detail to deliver spaces that are beautiful, comfortable and uniquely yours.', buttonText: 'ABOUT OUR STUDIO', buttonLink: '/about', image: '' },
+        about: { kicker: 'WHO WE ARE', title: 'We are a passionate<br />interior design studio.', desc1: 'At Senkadagala Architects, we believe that great design improves the way people live and work.', desc2: 'We blend creativity, functionality and detail to deliver spaces that are beautiful, comfortable and uniquely yours.', buttonText: 'ABOUT OUR STUDIO', buttonLink: '/about', image: '' },
         whyChoose: {
             kicker: 'WHY CHOOSE US', title: 'Because we care<br />about the details.', features: [
                 { iconName: 'FaUserCheck', title: 'Personalized Approach', description: 'We listen, understand and design spaces that reflect your lifestyle.' },
@@ -235,6 +235,9 @@ const AdminDashboard = () => {
 
     // ── Loading States ──
     const [loading, setLoading] = useState(true);
+    const [isSavingProject, setIsSavingProject] = useState(false);
+    const [isSavingService, setIsSavingService] = useState(false);
+    const [isCompressingImages, setIsCompressingImages] = useState(false);
 
     // ── Search & Filter ──
     const [searchQuery, setSearchQuery] = useState('');
@@ -280,7 +283,7 @@ const AdminDashboard = () => {
         client: '',
         location: '',
         year: '2026',
-        area: '1,850 sq ft',
+        area: '',
         status: 'Completed',
         projectOverview: '',
         requirements: '', // Storing as newline or comma separated
@@ -310,7 +313,7 @@ const AdminDashboard = () => {
         whyDesc: 'We combine creativity, expertise and a client-focused approach to deliver interiors that inspire and endure.',
         whyImage: '',
         whyQuote: 'Good design creates spaces where life happens beautifully.',
-        whyQuoteAuthor: 'GOOD INTERIOR DESIGN STUDIO'
+        whyQuoteAuthor: 'Senkadagala Architects'
     });
     const [serviceHeroModalOpen, setServiceHeroModalOpen] = useState(false);
     const [serviceHeroForm, setServiceHeroForm] = useState({
@@ -417,7 +420,7 @@ const AdminDashboard = () => {
         description: '',
         facebook: '',
         instagram: '',
-        pinterest: '',
+        tiktok: '',
         linkedin: '',
         img1: '',
         img2: '',
@@ -535,7 +538,7 @@ const AdminDashboard = () => {
         bgImage: '',
         aboutKicker: 'ABOUT OUR TEAM',
         aboutTitle: 'Great People Build Great Spaces',
-        aboutDesc: 'At Good Interior, we believe that a strong team creates extraordinary results. We foster a collaborative, creative and supportive work environment where your ideas matter and your growth is our priority.',
+        aboutDesc: 'At Senkadagala Architects, we believe that a strong team creates extraordinary results. We foster a collaborative, creative and supportive work environment where your ideas matter and your growth is our priority.',
         aboutImage: '',
         aboutF1: 'Creative Environment',
         aboutF2: 'Professional Growth',
@@ -554,7 +557,7 @@ const AdminDashboard = () => {
         ctaDescription: "If you're passionate about interior design and want to be part of a creative team, we'd love to hear from you.",
         ctaImage: '',
         ctaButtonText: 'APPLY NOW',
-        ctaQuote: `"At Good Interior, we don't just design spaces — we create experiences. And we're always looking for great people to help us do it."`,
+        ctaQuote: `"At Senkadagala Architects, we don't just design spaces — we create experiences. And we're always looking for great people to help us do it."`,
         ctaQuoteAuthor: 'OUR TEAM'
     });
 
@@ -610,8 +613,8 @@ const AdminDashboard = () => {
     const handleOpenEmailModal = (app) => {
         setSelectedAppForEmail(app);
         setEmailForm({
-            subject: `Update regarding your application for ${app.position} - Good Interior Studio`,
-            bodyMessage: `Dear ${app.fullName},\n\nThank you for applying for the ${app.position} position at Good Interior Studio.\n\nOur HR & Lead Architecture team has evaluated your profile and CV. We would like to connect with you regarding the next steps in our hiring process.\n\nPlease let us know your availability for a brief discussion or interview.\n\nBest regards,\nRecruitment & Talent Team\nGood Interior Studio, Colombo`,
+            subject: `Update regarding your application for ${app.position} - Senkadagala Architects`,
+            bodyMessage: `Dear ${app.fullName},\n\nThank you for applying for the ${app.position} position at Senkadagala Architects.\n\nOur HR & Lead Architecture team has evaluated your profile and CV. We would like to connect with you regarding the next steps in our hiring process.\n\nPlease let us know your availability for a brief discussion or interview.\n\nBest regards,\nRecruitment & Talent Team\nSenkadagala Architects, Colombo`,
             statusTag: app.status || 'Pending',
             isSending: false
         });
@@ -626,22 +629,22 @@ const AdminDashboard = () => {
         if (templateType === 'select') {
             setEmailForm(prev => ({
                 ...prev,
-                subject: `🎉 Interview Invitation - ${pos} | Good Interior Studio`,
-                bodyMessage: `Dear ${name},\n\nWe are pleased to inform you that after reviewing your CV and portfolio for the ${pos} position, you have been SHORTLISTED for an interview with our lead architectural team!\n\nPlease reply to this email or call us at +94 77 123 4567 to confirm your availability for an interview at our Colombo Studio or via Google Meet.\n\nWe look forward to meeting you!\n\nBest regards,\nRecruitment & Talent Team\nGood Interior Studio`,
+                subject: `🎉 Interview Invitation - ${pos} | Senkadagala Architects`,
+                bodyMessage: `Dear ${name},\n\nWe are pleased to inform you that after reviewing your CV and portfolio for the ${pos} position, you have been SHORTLISTED for an interview with our lead architectural team!\n\nPlease reply to this email or call us at +94 77 123 4567 to confirm your availability for an interview at our Colombo Studio or via Google Meet.\n\nWe look forward to meeting you!\n\nBest regards,\nRecruitment & Talent Team\nSenkadagala Architects`,
                 statusTag: 'Contacted'
             }));
         } else if (templateType === 'review') {
             setEmailForm(prev => ({
                 ...prev,
-                subject: `Application Under Review - ${pos} | Good Interior Studio`,
-                bodyMessage: `Dear ${name},\n\nThank you for submitting your application for the ${pos} position at Good Interior Studio.\n\nYour application and CV are currently under active evaluation by our Studio Directors. We will update you as soon as the review process concludes.\n\nThank you for your patience.\n\nBest regards,\nGood Interior Studio HR Team`,
+                subject: `Application Under Review - ${pos} | Senkadagala Architects`,
+                bodyMessage: `Dear ${name},\n\nThank you for submitting your application for the ${pos} position at Senkadagala Architects.\n\nYour application and CV are currently under active evaluation by our Studio Directors. We will update you as soon as the review process concludes.\n\nThank you for your patience.\n\nBest regards,\nSenkadagala Architects HR Team`,
                 statusTag: 'Reviewed'
             }));
         } else if (templateType === 'reject') {
             setEmailForm(prev => ({
                 ...prev,
-                subject: `Update regarding your application for ${pos} - Good Interior Studio`,
-                bodyMessage: `Dear ${name},\n\nThank you for your interest in joining Good Interior Studio and taking the time to share your application for the ${pos} role.\n\nAfter careful review, we regret to inform you that we have decided to proceed with candidates whose experience more closely matches our immediate project requirements.\n\nWe wish you every success in your career and will keep your profile in our database for future opportunities.\n\nWarm regards,\nGood Interior Studio HR Team`,
+                subject: `Update regarding your application for ${pos} - Senkadagala Architects`,
+                bodyMessage: `Dear ${name},\n\nThank you for your interest in joining Senkadagala Architects and taking the time to share your application for the ${pos} role.\n\nAfter careful review, we regret to inform you that we have decided to proceed with candidates whose experience more closely matches our immediate project requirements.\n\nWe wish you every success in your career and will keep your profile in our database for future opportunities.\n\nWarm regards,\nSenkadagala Architects HR Team`,
                 statusTag: 'Rejected'
             }));
         }
@@ -973,7 +976,7 @@ const AdminDashboard = () => {
     const fetchAllData = async () => {
         setLoading(true);
         try {
-            await Promise.all([
+            await Promise.allSettled([
                 fetchHeroSlides(),
                 fetchHomeSettings(),
                 fetchProjects(),
@@ -991,7 +994,6 @@ const AdminDashboard = () => {
                 fetchBlogHero(),
                 fetchBlogPosts(),
                 fetchTestiHero(),
-                fetchTestimonials(),
                 fetchTestimonials(),
                 fetchAboutData(),
                 fetchUsers(),
@@ -1433,13 +1435,22 @@ const AdminDashboard = () => {
         }
     };
 
-    const fetchProjects = async () => {
+    const fetchProjects = async (retryCount = 0) => {
         try {
             const res = await fetch(`${API_BASE}/api/projects`);
             const data = await res.json();
-            if (res.ok) setProjects(data.projects || []);
+            if (res.ok) {
+                const list = Array.isArray(data) ? data : (data.projects || []);
+                if (list.length === 0 && retryCount < 3) {
+                    // MongoDB Atlas may be warming up — retry after short delay
+                    setTimeout(() => fetchProjects(retryCount + 1), 2500);
+                } else {
+                    setProjects(list);
+                }
+            }
         } catch (err) {
             console.error('Error fetching projects:', err);
+            if (retryCount < 3) setTimeout(() => fetchProjects(retryCount + 1), 2500);
         }
     };
 
@@ -1503,19 +1514,51 @@ const AdminDashboard = () => {
     };
 
 
-    // Image Upload Base64 Helper
+    // Image Upload Base64 Helper with Auto Resizing & Compression
     const handleImageFileUpload = (e, callback) => {
         const file = e.target.files[0];
         if (!file) return;
 
-        if (file.size > 8 * 1024 * 1024) {
-            if (showToast) showToast('Please complete all required fields.', 'error');
+        if (!file.type.startsWith('image/')) {
+            if (showToast) showToast('Please select a valid image file (JPG, PNG, WEBP).', 'error');
             return;
         }
 
         const reader = new FileReader();
-        reader.onloadend = () => {
-            callback(reader.result);
+        reader.onload = (event) => {
+            const img = new Image();
+            img.onload = () => {
+                const maxDim = 1920;
+                let width = img.width;
+                let height = img.height;
+
+                if (width > maxDim || height > maxDim) {
+                    if (width > height) {
+                        height = Math.round((height * maxDim) / width);
+                        width = maxDim;
+                    } else {
+                        width = Math.round((width * maxDim) / height);
+                        height = maxDim;
+                    }
+                }
+
+                const canvas = document.createElement('canvas');
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                // Compress image to JPEG format at 0.82 quality for web optimization
+                const compressedBase64 = canvas.toDataURL('image/jpeg', 0.82);
+                callback(compressedBase64);
+            };
+            img.onerror = () => {
+                callback(event.target.result);
+            };
+            img.src = event.target.result;
+        };
+        reader.onerror = () => {
+            if (showToast) showToast('Failed to read image file. Please try again.', 'error');
         };
         reader.readAsDataURL(file);
     };
@@ -1590,6 +1633,8 @@ const AdminDashboard = () => {
             return;
         }
 
+        setIsSavingProject(true);
+
         try {
             const url = editingProject ? `${API_BASE}/api/projects/${editingProject._id}` : `${API_BASE}/api/projects`;
             const method = editingProject ? 'PUT' : 'POST';
@@ -1609,21 +1654,37 @@ const AdminDashboard = () => {
             });
             const data = await res.json();
             if (res.ok) {
-                if (showToast) showToast(`${editingProject ? 'updated' : 'created'} successfully!`, 'success');
+                if (showToast) showToast(`${editingProject ? 'Project updated' : 'Project created'} successfully!`, 'success');
                 setProjectModalOpen(false);
                 setEditingProject(null);
+
+                const savedProj = data.project || payload;
+                if (savedProj && savedProj._id) {
+                    setProjects(prev => {
+                        const idx = prev.findIndex(p => String(p._id) === String(savedProj._id));
+                        if (idx >= 0) {
+                            const list = [...prev];
+                            list[idx] = savedProj;
+                            return list;
+                        } else {
+                            return [savedProj, ...prev];
+                        }
+                    });
+                }
             } else {
                 if (showToast) showToast(`${data.message || 'Failed to save project'}`, 'error');
             }
             setProjectForm({
                 title: '', category: 'RESIDENTIAL', filterCategory: 'residential', subCategory: 'living-dining',
                 image: '', beforeImg: '', afterImg: '', galleryImages: '', description: '', client: '',
-                location: '', year: '2026', area: '1,850 sq ft', status: 'Completed', projectOverview: '', requirements: '',
+                location: '', year: '2026', area: '', status: 'Completed', projectOverview: '', requirements: '',
                 designConcept: '', keyFeatures: '', testimonialQuote: '', testimonialAuthor: '', testimonialRole: ''
             });
             fetchProjects();
         } catch (err) {
             if (showToast) showToast('An error occurred. Please try again.', 'error');
+        } finally {
+            setIsSavingProject(false);
         }
     };
 
@@ -2036,8 +2097,10 @@ const AdminDashboard = () => {
             return;
         }
 
+        setIsSavingService(true);
         try {
-            const url = editingService ? `${API_BASE}/api/services/${editingService._id}` : `${API_BASE}/api/services`;
+            const targetId = editingService ? (editingService._id || editingService.serviceId || editingService.id) : '';
+            const url = editingService ? `${API_BASE}/api/services/${targetId}` : `${API_BASE}/api/services`;
             const method = editingService ? 'PUT' : 'POST';
 
             const cleanImages = (serviceForm.images || []).filter(img => img && img.trim() !== '');
@@ -2063,31 +2126,61 @@ const AdminDashboard = () => {
                 body: JSON.stringify(payload)
             });
 
+            const data = await res.json();
             if (res.ok) {
-                if (showToast) showToast(`${editingService ? 'updated' : 'added'} successfully!`, 'success');
+                if (showToast) showToast(`Service ${editingService ? 'updated' : 'added'} successfully!`, 'success');
                 setServiceModalOpen(false);
                 setEditingService(null);
                 setServiceForm({
                     serviceId: '', title: '', kicker: 'OUR SERVICE', desc: '', fullDesc: '',
                     image: '', images: ['', '', '', '', ''], iconName: 'sofa', highlights: '', deliverables: '', order: 1
                 });
+                const savedServ = data.service || payload;
+                if (savedServ) {
+                    setServices(prev => {
+                        const savedId = savedServ._id || savedServ.serviceId || targetId;
+                        const idx = prev.findIndex(s => (s._id && String(s._id) === String(savedId)) || (s.serviceId && s.serviceId === savedId));
+                        if (idx >= 0) {
+                            const list = [...prev];
+                            list[idx] = { ...list[idx], ...savedServ };
+                            return list;
+                        } else {
+                            return [...prev, savedServ];
+                        }
+                    });
+                }
                 fetchServices();
+            } else {
+                if (showToast) showToast(data.message || 'Failed to save service. Please try again.', 'error');
             }
         } catch (err) {
+            console.error('Save service error:', err);
             if (showToast) showToast('An error occurred. Please try again.', 'error');
+        } finally {
+            setIsSavingService(false);
         }
     };
 
     const handleDeleteService = async (id) => {
         if (!(await confirmAction('Are you sure you want to proceed with this deletion?'))) return;
         try {
-            const res = await fetch(`${API_BASE}/api/services/${id}`, { method: 'DELETE' });
+            const targetId = typeof id === 'object' && id !== null ? (id._id || id.serviceId || id.id) : id;
+            if (!targetId) {
+                if (showToast) showToast('Invalid service ID', 'error');
+                return;
+            }
+            const res = await fetch(`${API_BASE}/api/services/${targetId}`, { method: 'DELETE' });
             if (res.ok) {
                 if (showToast) showToast('Operation completed successfully', 'success');
+                setServices(prev => prev.filter(s => String(s._id) !== String(targetId) && s.serviceId !== targetId));
                 fetchServices();
+            } else {
+                const data = await res.json().catch(() => ({}));
+                if (showToast) showToast(data.message || 'Failed to delete service', 'error');
             }
         } catch (err) {
             console.error(err);
+            if (showToast) showToast('An error occurred. Please try again.', 'error');
         }
     };
 
@@ -2150,7 +2243,7 @@ const AdminDashboard = () => {
         let defaultMessage = '';
 
         if (isConsultation) {
-            defaultSubject = `Consultation Confirmation: ${msg.service || 'Interior Design Consultation'} - Good Interior Studio`;
+            defaultSubject = `Consultation Confirmation: ${msg.service || 'Interior Design Consultation'} - Senkadagala Architects`;
 
             const detailsList = [];
             if (msg.service) detailsList.push(`- Required Service: ${msg.service}`);
@@ -2160,13 +2253,13 @@ const AdminDashboard = () => {
 
             const detailsBlock = detailsList.length > 0 ? `\n\nSubmitted Consultation Details:\n${detailsList.join('\n')}` : '';
 
-            defaultMessage = `Dear ${clientName},\n\nThank you for booking an interior design consultation with Good Interior Design Studio! We have received your request.${detailsBlock}\n\nOur senior interior design team has reviewed your submission and we are eager to assist you with your project. Please let us know if your preferred date works for an in-person studio session or call, or suggest any alternative time that suits you.\n\nBest Regards,\nGood Interior Design Studio Executive Team`;
+            defaultMessage = `Dear ${clientName},\n\nThank you for booking an interior design consultation with Senkadagala Architects! We have received your request.${detailsBlock}\n\nOur senior interior design team has reviewed your submission and we are eager to assist you with your project. Please let us know if your preferred date works for an in-person studio session or call, or suggest any alternative time that suits you.\n\nBest Regards,\nSenkadagala Architects Executive Team`;
         } else {
-            defaultSubject = `Re: ${msg.subject || msg.serviceType || 'Interior Design Inquiry'} - Good Interior Studio`;
+            defaultSubject = `Re: ${msg.subject || msg.serviceType || 'Interior Design Inquiry'} - Senkadagala Architects`;
 
             const userMsgBlock = msg.message ? `\n\nYour Inquiry:\n"${msg.message}"` : '';
 
-            defaultMessage = `Dear ${clientName},\n\nThank you for reaching out to Good Interior Design Studio regarding "${msg.subject || msg.serviceType || 'your inquiry'}".${userMsgBlock}\n\nWe have reviewed your message and would love to assist you with your interior design needs. Please let us know your convenient time for a brief discussion or meeting.\n\nBest Regards,\nGood Interior Design Studio Executive Team`;
+            defaultMessage = `Dear ${clientName},\n\nThank you for reaching out to Senkadagala Architects regarding "${msg.subject || msg.serviceType || 'your inquiry'}".${userMsgBlock}\n\nWe have reviewed your message and would love to assist you with your interior design needs. Please let us know your convenient time for a brief discussion or meeting.\n\nBest Regards,\nSenkadagala Architects Executive Team`;
         }
 
         setReplyForm({
@@ -2373,7 +2466,7 @@ const AdminDashboard = () => {
                 socialLinks: {
                     facebook: contactJourneyForm.facebook,
                     instagram: contactJourneyForm.instagram,
-                    pinterest: contactJourneyForm.pinterest,
+                    tiktok: contactJourneyForm.tiktok,
                     linkedin: contactJourneyForm.linkedin
                 },
                 images
@@ -2610,9 +2703,11 @@ const AdminDashboard = () => {
             <header className="admin-executive-topbar">
                 <div className="topbar-inner">
                     <div className="admin-brand">
-                        <img src={globalSettings?.logoUrl || logo} alt="Good Interior" className="admin-brand-logo" />
+                        <div className="admin-brand-logo-wrapper">
+                            <img src={globalSettings?.logoUrl || logo} alt="Senkadagala Architects" className="admin-brand-logo" />
+                        </div>
                         <div className="admin-brand-text">
-                            <span className="brand-title">{globalSettings?.siteTitle || 'GOOD INTERIOR'}</span>
+                            <span className="brand-title">{globalSettings?.siteTitle || 'SENKADAGALA ARCHITECTS'}</span>
                             <span className="brand-sub">EXECUTIVE CONTROL SUITE</span>
                         </div>
                     </div>
@@ -2683,14 +2778,14 @@ const AdminDashboard = () => {
                         </div>
                     </div>
 
-                    <div className="kpi-card" onClick={() => setActiveTab('gallery')}>
+                    <div className="kpi-card" onClick={() => setActiveTab('services')}>
                         <div className="kpi-icon-box gold">
-                            <TbPhoto />
+                            <TbLayoutGrid />
                         </div>
                         <div className="kpi-details">
-                            <span className="kpi-label">Galleries Showcase</span>
-                            <div className="kpi-value">{galleryItems.length}</div>
-                            <span className="kpi-subtext">Gallery Items & Hero</span>
+                            <span className="kpi-label">Services Showcase</span>
+                            <div className="kpi-value">{services.length}</div>
+                            <span className="kpi-subtext">Services & Deliverables</span>
                         </div>
                     </div>
 
@@ -2881,10 +2976,10 @@ const AdminDashboard = () => {
                                         const g = globalSettings || {};
                                         setGlobalSettingsForm({
                                             logoUrl: g.logoUrl || '',
-                                            siteTitle: g.siteTitle || 'GOOD INTERIOR',
+                                            siteTitle: g.siteTitle || 'Senkadagala Architects',
                                             siteSubtitle: g.siteSubtitle || 'DESIGN STUDIO',
                                             footerDesc: g.footerDesc || 'We design thoughtful interiors that\ninspire and elevate the way you live.',
-                                            footerCopyright: g.footerCopyright || '\u00a9 2025 Good Interior. All Rights Reserved.'
+                                            footerCopyright: g.footerCopyright || '\u00a9 2025 Senkadagala Architects. All Rights Reserved.'
                                         });
                                         setGlobalSettingsModalOpen(true);
                                     }}>
@@ -2893,25 +2988,21 @@ const AdminDashboard = () => {
                                 </div>
                                 <div className="branding-preview-grid">
                                     {/* Logo Preview */}
-                                    <div style={{ background: '#0f172a', borderRadius: '10px', padding: '12px 18px', display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: '100px', border: '1px dashed rgba(255,255,255,0.1)' }}>
-                                        {globalSettings?.logoUrl ? (
-                                            <img src={globalSettings.logoUrl} alt="Logo" style={{ maxHeight: '36px', maxWidth: '90px', objectFit: 'contain' }} />
-                                        ) : (
-                                            <span style={{ color: '#64748b', fontSize: '0.78rem', textAlign: 'center' }}>Default<br />SVG Logo</span>
-                                        )}
+                                    <div style={{ background: '#ffffff', borderRadius: '50%', width: '48px', height: '48px', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid #6c7a89', overflow: 'hidden', boxShadow: '0 0 12px rgba(108, 122, 137,0.3)', flexShrink: 0 }}>
+                                        <img src={globalSettings?.logoUrl || logo} alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%' }} />
                                     </div>
                                     {/* Site Title */}
                                     <div>
                                         <span style={{ color: '#64748b', fontSize: '0.72rem', display: 'block', marginBottom: '4px', fontWeight: '700', letterSpacing: '0.5px', textTransform: 'uppercase' }}>Site Name</span>
                                         <div>
-                                            <strong style={{ color: '#fff', fontSize: '1rem', letterSpacing: '0.5px' }}>{globalSettings?.siteTitle || 'GOOD INTERIOR'}</strong>
-                                            <span style={{ color: '#b38058', fontSize: '0.75rem', marginLeft: '8px', letterSpacing: '2px' }}>{globalSettings?.siteSubtitle || 'DESIGN STUDIO'}</span>
+                                            <strong style={{ color: '#fff', fontSize: '1rem', letterSpacing: '0.5px' }}>{globalSettings?.siteTitle || 'Senkadagala Architects'}</strong>
+                                            <span style={{ color: '#6c7a89', fontSize: '0.75rem', marginLeft: '8px', letterSpacing: '2px' }}>{globalSettings?.siteSubtitle || 'DESIGN STUDIO'}</span>
                                         </div>
                                     </div>
                                     {/* Footer Copy */}
                                     <div>
                                         <span style={{ color: '#64748b', fontSize: '0.72rem', display: 'block', marginBottom: '4px', fontWeight: '700', letterSpacing: '0.5px', textTransform: 'uppercase' }}>Footer Copyright</span>
-                                        <span style={{ color: '#cbd5e1', fontSize: '0.85rem' }}>{globalSettings?.footerCopyright || '\u00a9 2025 Good Interior. All Rights Reserved.'}</span>
+                                        <span style={{ color: '#cbd5e1', fontSize: '0.85rem' }}>{globalSettings?.footerCopyright || '\u00a9 2025 Senkadagala Architects. All Rights Reserved.'}</span>
                                     </div>
                                 </div>
                             </div>
@@ -2949,7 +3040,7 @@ const AdminDashboard = () => {
                                     <button
                                         onClick={() => setUserSubTab('accounts')}
                                         style={{
-                                            background: userSubTab === 'accounts' ? '#c48b59' : 'transparent',
+                                            background: userSubTab === 'accounts' ? '#6c7a89' : 'transparent',
                                             color: userSubTab === 'accounts' ? '#fff' : '#94a3b8',
                                             border: userSubTab === 'accounts' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                             borderRadius: '6px',
@@ -2967,7 +3058,7 @@ const AdminDashboard = () => {
                                     <button
                                         onClick={() => setUserSubTab('authBranding')}
                                         style={{
-                                            background: userSubTab === 'authBranding' ? '#c48b59' : 'transparent',
+                                            background: userSubTab === 'authBranding' ? '#6c7a89' : 'transparent',
                                             color: userSubTab === 'authBranding' ? '#fff' : '#94a3b8',
                                             border: userSubTab === 'authBranding' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                             borderRadius: '6px',
@@ -3003,7 +3094,7 @@ const AdminDashboard = () => {
                                                 <button
                                                     key={role}
                                                     onClick={() => setUserRoleFilter(role)}
-                                                    style={{ padding: '10px 18px', borderRadius: '8px', fontSize: '0.8rem', fontWeight: '700', cursor: 'pointer', border: 'none', background: userRoleFilter === role ? '#c48b59' : '#1e293b', color: userRoleFilter === role ? '#fff' : '#94a3b8', border: userRoleFilter === role ? 'none' : '1px solid rgba(255,255,255,0.08)' }}
+                                                    style={{ padding: '10px 18px', borderRadius: '8px', fontSize: '0.8rem', fontWeight: '700', cursor: 'pointer', border: 'none', background: userRoleFilter === role ? '#6c7a89' : '#1e293b', color: userRoleFilter === role ? '#fff' : '#94a3b8', border: userRoleFilter === role ? 'none' : '1px solid rgba(255,255,255,0.08)' }}
                                                 >
                                                     {role === 'ALL' ? `All Users (${users.length})` : role === 'admin' ? `Admins (${users.filter(u => u.role === 'admin').length})` : `Members (${users.filter(u => u.role === 'user').length})`}
                                                 </button>
@@ -3014,7 +3105,7 @@ const AdminDashboard = () => {
                                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginBottom: '20px' }}>
                                             {[
                                                 { label: 'Total Users', value: users.length, Icon: TbUsers, color: '#3b82f6' },
-                                                { label: 'Admin Accounts', value: users.filter(u => u.role === 'admin').length, Icon: TbShield, color: '#c48b59' },
+                                                { label: 'Admin Accounts', value: users.filter(u => u.role === 'admin').length, Icon: TbShield, color: '#6c7a89' },
                                                 { label: 'Members', value: users.filter(u => u.role === 'user').length, Icon: TbUserCheck, color: '#10b981' }
                                             ].map(stat => (
                                                 <div key={stat.label} style={{ background: '#1e293b', borderRadius: '10px', padding: '16px 20px', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: '14px' }}>
@@ -3054,7 +3145,7 @@ const AdminDashboard = () => {
                                                             >
                                                                 <td style={{ padding: '12px 14px' }}>
                                                                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                                                        <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: u.role === 'admin' ? 'linear-gradient(135deg,#c48b59,#8c5c38)' : 'linear-gradient(135deg,#3b82f6,#1d4ed8)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: '700', fontSize: '14px', flexShrink: 0, overflow: 'hidden' }}>
+                                                                        <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: u.role === 'admin' ? 'linear-gradient(135deg,#6c7a89,#8c5c38)' : 'linear-gradient(135deg,#3b82f6,#1d4ed8)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: '700', fontSize: '14px', flexShrink: 0, overflow: 'hidden' }}>
                                                                             {u.avatar ? <img src={u.avatar} alt={u.fullName} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} /> : u.fullName?.charAt(0)?.toUpperCase()}
                                                                         </div>
                                                                         <span style={{ color: '#f1f5f9', fontWeight: '600' }}>{u.fullName}</span>
@@ -3064,7 +3155,7 @@ const AdminDashboard = () => {
                                                                 <td style={{ padding: '12px 14px', color: '#94a3b8' }}>{u.phone || '—'}</td>
                                                                 <td style={{ padding: '12px 14px', color: '#94a3b8' }}>{u.country || '—'}</td>
                                                                 <td style={{ padding: '12px 14px' }}>
-                                                                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', padding: '3px 10px', borderRadius: '20px', fontSize: '0.72rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', background: u.role === 'admin' ? 'rgba(196,139,89,0.15)' : 'rgba(16,185,129,0.12)', color: u.role === 'admin' ? '#c48b59' : '#10b981', border: u.role === 'admin' ? '1px solid rgba(196,139,89,0.3)' : '1px solid rgba(16,185,129,0.25)' }}>
+                                                                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', padding: '3px 10px', borderRadius: '20px', fontSize: '0.72rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', background: u.role === 'admin' ? 'rgba(108, 122, 137,0.15)' : 'rgba(16,185,129,0.12)', color: u.role === 'admin' ? '#6c7a89' : '#10b981', border: u.role === 'admin' ? '1px solid rgba(108, 122, 137,0.3)' : '1px solid rgba(16,185,129,0.25)' }}>
                                                                         {u.role === 'admin' ? <><TbShield style={{ fontSize: '12px' }} /> Admin</> : <><TbUserCheck style={{ fontSize: '12px' }} /> Member</>}
                                                                     </span>
                                                                 </td>
@@ -3104,8 +3195,8 @@ const AdminDashboard = () => {
 
                                         {/* LOGIN BRANDING CARD */}
                                         <div style={{ background: '#141720', borderRadius: '12px', padding: '24px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                            <h3 style={{ color: '#fff', fontSize: '1.1rem', marginBottom: '16px', borderBottom: '1px solid rgba(212, 175, 55, 0.2)', paddingBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                <TbLock style={{ color: '#c48b59' }} /> Login Page Branding Text
+                                            <h3 style={{ color: '#fff', fontSize: '1.1rem', marginBottom: '16px', borderBottom: '1px solid rgba(156, 163, 175, 0.2)', paddingBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                <TbLock style={{ color: '#6c7a89' }} /> Login Page Branding Text
                                             </h3>
                                             <div className="form-group" style={{ marginBottom: '16px' }}>
                                                 <label style={{ display: 'block', color: '#cbd5e1', fontSize: '0.85rem', marginBottom: '8px' }}>Login Title</label>
@@ -3131,8 +3222,8 @@ const AdminDashboard = () => {
 
                                         {/* SIGNUP BRANDING CARD */}
                                         <div style={{ background: '#141720', borderRadius: '12px', padding: '24px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                            <h3 style={{ color: '#fff', fontSize: '1.1rem', marginBottom: '16px', borderBottom: '1px solid rgba(212, 175, 55, 0.2)', paddingBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                <TbUserCheck style={{ color: '#c48b59' }} /> Signup Page Branding Text
+                                            <h3 style={{ color: '#fff', fontSize: '1.1rem', marginBottom: '16px', borderBottom: '1px solid rgba(156, 163, 175, 0.2)', paddingBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                <TbUserCheck style={{ color: '#6c7a89' }} /> Signup Page Branding Text
                                             </h3>
                                             <div className="form-group" style={{ marginBottom: '16px' }}>
                                                 <label style={{ display: 'block', color: '#cbd5e1', fontSize: '0.85rem', marginBottom: '8px' }}>Signup Title</label>
@@ -3150,7 +3241,7 @@ const AdminDashboard = () => {
                                                     rows="3"
                                                     value={authBrandingData.signupSubtitle || ''}
                                                     onChange={e => setAuthBrandingData({ ...authBrandingData, signupSubtitle: e.target.value })}
-                                                    placeholder="e.g. Join Good Interior Studio to curate..."
+                                                    placeholder="e.g. Join Senkadagala Architects to curate..."
                                                     style={{ width: '100%', padding: '10px 14px', background: '#0b0d11', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }}
                                                 />
                                             </div>
@@ -3158,9 +3249,9 @@ const AdminDashboard = () => {
 
                                         {/* SIGNUP FEATURES LIST CARD */}
                                         <div style={{ background: '#141720', borderRadius: '12px', padding: '24px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', borderBottom: '1px solid rgba(212, 175, 55, 0.2)', paddingBottom: '10px' }}>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', borderBottom: '1px solid rgba(156, 163, 175, 0.2)', paddingBottom: '10px' }}>
                                                 <h3 style={{ color: '#fff', fontSize: '1.1rem', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                    <TbStar style={{ color: '#c48b59' }} /> Signup Left-Side Feature Points
+                                                    <TbStar style={{ color: '#6c7a89' }} /> Signup Left-Side Feature Points
                                                 </h3>
                                                 <button
                                                     type="button"
@@ -3171,7 +3262,7 @@ const AdminDashboard = () => {
                                                         ];
                                                         setAuthBrandingData({ ...authBrandingData, signupFeatures: updated });
                                                     }}
-                                                    style={{ background: 'rgba(196,139,89,0.15)', color: '#c48b59', border: '1px solid rgba(196,139,89,0.3)', padding: '6px 14px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
+                                                    style={{ background: 'rgba(108, 122, 137,0.15)', color: '#6c7a89', border: '1px solid rgba(108, 122, 137,0.3)', padding: '6px 14px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
                                                 >
                                                     <TbPlus /> ADD FEATURE POINT
                                                 </button>
@@ -3181,7 +3272,7 @@ const AdminDashboard = () => {
                                                 {(authBrandingData.signupFeatures || []).map((feat, idx) => (
                                                     <div key={idx} style={{ background: '#0b0d11', borderRadius: '8px', padding: '16px', border: '1px solid rgba(255,255,255,0.06)', display: 'grid', gap: '12px' }}>
                                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                            <span style={{ color: '#c48b59', fontWeight: 700, fontSize: '0.85rem' }}>Feature Point #{idx + 1}</span>
+                                                            <span style={{ color: '#6c7a89', fontWeight: 700, fontSize: '0.85rem' }}>Feature Point #{idx + 1}</span>
                                                             <button
                                                                 type="button"
                                                                 onClick={() => {
@@ -3292,7 +3383,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setHomeSubTab('slides')}
                                     style={{
-                                        background: homeSubTab === 'slides' ? '#c48b59' : 'transparent',
+                                        background: homeSubTab === 'slides' ? '#6c7a89' : 'transparent',
                                         color: homeSubTab === 'slides' ? '#fff' : '#94a3b8',
                                         border: homeSubTab === 'slides' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -3307,7 +3398,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setHomeSubTab('about')}
                                     style={{
-                                        background: homeSubTab === 'about' ? '#c48b59' : 'transparent',
+                                        background: homeSubTab === 'about' ? '#6c7a89' : 'transparent',
                                         color: homeSubTab === 'about' ? '#fff' : '#94a3b8',
                                         border: homeSubTab === 'about' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -3322,7 +3413,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setHomeSubTab('why')}
                                     style={{
-                                        background: homeSubTab === 'why' ? '#c48b59' : 'transparent',
+                                        background: homeSubTab === 'why' ? '#6c7a89' : 'transparent',
                                         color: homeSubTab === 'why' ? '#fff' : '#94a3b8',
                                         border: homeSubTab === 'why' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -3567,7 +3658,7 @@ const AdminDashboard = () => {
                                             setProjectForm({
                                                 title: '', category: 'RESIDENTIAL', filterCategory: 'residential', subCategory: 'living-dining',
                                                 image: '', beforeImg: '', afterImg: '', galleryImages: '', description: '', client: '', location: '',
-                                                year: '2026', area: '1,850 sq ft', status: 'Completed', projectOverview: '', requirements: '', designConcept: '', keyFeatures: '',
+                                                year: '2026', area: '', status: 'Completed', projectOverview: '', requirements: '', designConcept: '', keyFeatures: '',
                                                 testimonialQuote: '', testimonialAuthor: '', testimonialRole: ''
                                             });
                                             setProjectModalOpen(true);
@@ -3583,7 +3674,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setPortfolioSubTab('projects')}
                                     style={{
-                                        background: portfolioSubTab === 'projects' ? '#c48b59' : 'transparent',
+                                        background: portfolioSubTab === 'projects' ? '#6c7a89' : 'transparent',
                                         color: portfolioSubTab === 'projects' ? '#fff' : '#94a3b8',
                                         border: portfolioSubTab === 'projects' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -3601,7 +3692,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setPortfolioSubTab('hero')}
                                     style={{
-                                        background: portfolioSubTab === 'hero' ? '#c48b59' : 'transparent',
+                                        background: portfolioSubTab === 'hero' ? '#6c7a89' : 'transparent',
                                         color: portfolioSubTab === 'hero' ? '#fff' : '#94a3b8',
                                         border: portfolioSubTab === 'hero' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -3632,37 +3723,45 @@ const AdminDashboard = () => {
                                                 <p>{proj.description}</p>
                                                 <div className="project-meta-row">
                                                     <span><TbMapPin style={{ display: 'inline', verticalAlign: 'middle', marginRight: '4px' }} />{proj.location || 'Colombo'}</span>
-                                                    <span><TbUserCheck style={{ display: 'inline', verticalAlign: 'middle', marginRight: '4px' }} />{proj.client || 'Private Client'}</span>
+                                                    {proj.client && <span><TbUserCheck style={{ display: 'inline', verticalAlign: 'middle', marginRight: '4px' }} />{proj.client}</span>}
                                                     <span><TbCalendarEvent style={{ display: 'inline', verticalAlign: 'middle', marginRight: '4px' }} />{proj.year || '2025'}</span>
                                                 </div>
                                             </div>
                                             <div className="project-card-footer">
                                                 <button
                                                     className="btn-action-btn edit"
-                                                    onClick={() => {
-                                                        setEditingProject(proj);
+                                                    onClick={async () => {
+                                                        // Fetch full project data with cache buster
+                                                        let fullProj = proj;
+                                                        try {
+                                                            const r = await fetch(`${API_BASE}/api/projects/${proj._id}?t=${Date.now()}`);
+                                                            if (r.ok) fullProj = await r.json();
+                                                        } catch (err) {
+                                                            console.warn('Could not fetch full project, using list data:', err);
+                                                        }
+                                                        setEditingProject(fullProj);
                                                         setProjectForm({
-                                                            title: proj.title || '',
-                                                            category: proj.category || 'RESIDENTIAL',
-                                                            filterCategory: proj.filterCategory || 'residential',
-                                                            subCategory: proj.subCategory || 'living-dining',
-                                                            image: proj.image || '',
-                                                            beforeImg: proj.beforeImg || '',
-                                                            afterImg: proj.afterImg || '',
-                                                            galleryImages: (proj.galleryImages || []).join('\n'),
-                                                            description: proj.description || '',
-                                                            client: proj.client || '',
-                                                            location: proj.location || '',
-                                                            year: proj.year || '2026',
-                                                            area: proj.area || '1,850 sq ft',
-                                                            status: proj.status || 'Completed',
-                                                            projectOverview: proj.projectOverview || '',
-                                                            requirements: (proj.requirements || []).join('\n'),
-                                                            designConcept: proj.designConcept || '',
-                                                            keyFeatures: (proj.keyFeatures || []).join('\n'),
-                                                            testimonialQuote: proj.testimonialQuote || '',
-                                                            testimonialAuthor: proj.testimonialAuthor || '',
-                                                            testimonialRole: proj.testimonialRole || ''
+                                                            title: fullProj.title || '',
+                                                            category: fullProj.category || 'RESIDENTIAL',
+                                                            filterCategory: fullProj.filterCategory || 'residential',
+                                                            subCategory: fullProj.subCategory || 'living-dining',
+                                                            image: fullProj.image || '',
+                                                            beforeImg: fullProj.beforeImg || '',
+                                                            afterImg: fullProj.afterImg || '',
+                                                            galleryImages: Array.isArray(fullProj.galleryImages) ? fullProj.galleryImages.join('\n') : (fullProj.galleryImages || ''),
+                                                            description: fullProj.description || '',
+                                                            client: fullProj.client || '',
+                                                            location: fullProj.location || '',
+                                                            year: fullProj.year || '2026',
+                                                            area: fullProj.area || '',
+                                                            status: fullProj.status || 'Completed',
+                                                            projectOverview: fullProj.projectOverview || '',
+                                                            requirements: Array.isArray(fullProj.requirements) ? fullProj.requirements.join('\n') : (fullProj.requirements || ''),
+                                                            designConcept: fullProj.designConcept || '',
+                                                            keyFeatures: Array.isArray(fullProj.keyFeatures) ? fullProj.keyFeatures.join('\n') : (fullProj.keyFeatures || ''),
+                                                            testimonialQuote: fullProj.testimonialQuote || '',
+                                                            testimonialAuthor: fullProj.testimonialAuthor || '',
+                                                            testimonialRole: fullProj.testimonialRole || ''
                                                         });
                                                         setProjectModalOpen(true);
                                                     }}
@@ -3759,7 +3858,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setServicesSubTab('cards')}
                                     style={{
-                                        background: servicesSubTab === 'cards' ? '#c48b59' : 'transparent',
+                                        background: servicesSubTab === 'cards' ? '#6c7a89' : 'transparent',
                                         color: servicesSubTab === 'cards' ? '#fff' : '#94a3b8',
                                         border: servicesSubTab === 'cards' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -3777,7 +3876,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setServicesSubTab('process')}
                                     style={{
-                                        background: servicesSubTab === 'process' ? '#c48b59' : 'transparent',
+                                        background: servicesSubTab === 'process' ? '#6c7a89' : 'transparent',
                                         color: servicesSubTab === 'process' ? '#fff' : '#94a3b8',
                                         border: servicesSubTab === 'process' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -3795,7 +3894,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setServicesSubTab('why')}
                                     style={{
-                                        background: servicesSubTab === 'why' ? '#c48b59' : 'transparent',
+                                        background: servicesSubTab === 'why' ? '#6c7a89' : 'transparent',
                                         color: servicesSubTab === 'why' ? '#fff' : '#94a3b8',
                                         border: servicesSubTab === 'why' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -3813,7 +3912,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setServicesSubTab('hero')}
                                     style={{
-                                        background: servicesSubTab === 'hero' ? '#c48b59' : 'transparent',
+                                        background: servicesSubTab === 'hero' ? '#6c7a89' : 'transparent',
                                         color: servicesSubTab === 'hero' ? '#fff' : '#94a3b8',
                                         border: servicesSubTab === 'hero' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -3861,7 +3960,7 @@ const AdminDashboard = () => {
                                                     <TbEdit /> Edit Service
                                                 </button>
                                                 <button
-                                                    onClick={() => handleDeleteService(srv._id)}
+                                                    onClick={() => handleDeleteService(srv)}
                                                     className="btn-srv-delete"
                                                 >
                                                     <TbTrash />
@@ -3880,7 +3979,7 @@ const AdminDashboard = () => {
                                             <div key={step._id || step.stepNumber} style={{ background: '#1e293b', borderRadius: '10px', padding: '18px', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                                                 <div>
                                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                                                        <span style={{ background: '#c48b59', color: '#fff', fontSize: '0.8rem', fontWeight: '800', padding: '2px 10px', borderRadius: '4px' }}>
+                                                        <span style={{ background: '#6c7a89', color: '#fff', fontSize: '0.8rem', fontWeight: '800', padding: '2px 10px', borderRadius: '4px' }}>
                                                             STEP {step.stepNumber}
                                                         </span>
                                                         <span style={{ color: '#94a3b8', fontSize: '0.78rem' }}>Icon: {step.iconName || 'chat'}</span>
@@ -3916,7 +4015,7 @@ const AdminDashboard = () => {
                                             <div key={feat._id || feat.title} style={{ background: '#1e293b', borderRadius: '10px', padding: '18px', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                                                 <div>
                                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                                                        <span style={{ background: '#c48b59', color: '#fff', fontSize: '0.8rem', fontWeight: '800', padding: '2px 10px', borderRadius: '4px' }}>
+                                                        <span style={{ background: '#6c7a89', color: '#fff', fontSize: '0.8rem', fontWeight: '800', padding: '2px 10px', borderRadius: '4px' }}>
                                                             FEATURE #{feat.order || 1}
                                                         </span>
                                                         <span style={{ color: '#94a3b8', fontSize: '0.78rem' }}>Icon: {feat.iconName || 'diamond'}</span>
@@ -4041,8 +4140,8 @@ const AdminDashboard = () => {
                                                 </div>
                                                 <div>
                                                     <span style={{ fontSize: '0.75rem', color: '#94a3b8', display: 'block', marginBottom: '4px' }}>QUOTE AUTHOR</span>
-                                                    <div style={{ background: '#0f172a', padding: '10px 14px', borderRadius: '6px', color: '#c48b59', fontSize: '0.88rem', fontWeight: '700' }}>
-                                                        {serviceHero.whyQuoteAuthor || 'GOOD INTERIOR DESIGN STUDIO'}
+                                                    <div style={{ background: '#0f172a', padding: '10px 14px', borderRadius: '6px', color: '#6c7a89', fontSize: '0.88rem', fontWeight: '700' }}>
+                                                        {serviceHero.whyQuoteAuthor || 'Senkadagala Architects'}
                                                     </div>
                                                 </div>
                                             </div>
@@ -4089,7 +4188,7 @@ const AdminDashboard = () => {
                                                 setServiceHeroModalOpen(true);
                                             }}
                                             style={{
-                                                background: 'linear-gradient(135deg, #c48b59 0%, #a36f41 100%)',
+                                                background: 'linear-gradient(135deg, #6c7a89 0%, #a36f41 100%)',
                                                 color: '#ffffff',
                                                 border: 'none',
                                                 borderRadius: '8px',
@@ -4100,7 +4199,7 @@ const AdminDashboard = () => {
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 gap: '8px',
-                                                boxShadow: '0 4px 12px rgba(196, 139, 89, 0.3)',
+                                                boxShadow: '0 4px 12px rgba(108, 122, 137, 0.3)',
                                                 transition: 'all 0.2s ease-in-out'
                                             }}
                                         >
@@ -4305,7 +4404,7 @@ const AdminDashboard = () => {
                                             setGalleryItemModalOpen(true);
                                         }}
                                         style={{
-                                            background: 'linear-gradient(135deg, #c48b59 0%, #a36f41 100%)',
+                                            background: 'linear-gradient(135deg, #6c7a89 0%, #a36f41 100%)',
                                             color: '#ffffff',
                                             border: 'none',
                                             borderRadius: '8px',
@@ -4316,7 +4415,7 @@ const AdminDashboard = () => {
                                             display: 'flex',
                                             alignItems: 'center',
                                             gap: '8px',
-                                            boxShadow: '0 4px 12px rgba(196, 139, 89, 0.3)',
+                                            boxShadow: '0 4px 12px rgba(108, 122, 137, 0.3)',
                                             transition: 'all 0.2s ease-in-out'
                                         }}
                                     >
@@ -4326,7 +4425,7 @@ const AdminDashboard = () => {
                             </div>
 
                             {/* Hero Banner Status Box */}
-                            <div className="overview-card" style={{ marginBottom: '32px', borderLeft: '4px solid #b38058' }}>
+                            <div className="overview-card" style={{ marginBottom: '32px', borderLeft: '4px solid #6c7a89' }}>
                                 <div className="card-top">
                                     <h3>Galleries Page Hero Settings</h3>
                                     <button
@@ -4356,7 +4455,7 @@ const AdminDashboard = () => {
                                     <div>
                                         <span className="slide-kicker-tag">{galleryHero.kicker || 'OUR GALLERY'}</span>
                                         <h3 style={{ color: '#fff', fontSize: '1.2rem', margin: '4px 0' }}>
-                                            {galleryHero.title || 'A Collection of'} <span style={{ color: '#d4af37' }}>{galleryHero.highlightTitle || 'Beautiful Spaces'}</span>
+                                            {galleryHero.title || 'A Collection of'} <span style={{ color: '#9ca3af' }}>{galleryHero.highlightTitle || 'Beautiful Spaces'}</span>
                                         </h3>
                                         <p style={{ color: '#94a3b8', fontSize: '0.88rem', margin: 0 }}>
                                             {galleryHero.subtitle}
@@ -4440,9 +4539,9 @@ const AdminDashboard = () => {
                             </div>
 
                             {/* Hero Settings Card */}
-                            <div className="overview-card" style={{ marginBottom: '24px', borderLeft: '4px solid #b38058' }}>
+                            <div className="overview-card" style={{ marginBottom: '24px', borderLeft: '4px solid #6c7a89' }}>
                                 <div className="card-top">
-                                    <h3 style={{ display: 'flex', alignItems: 'center' }}><TbPhoto style={{ marginRight: '8px', color: '#b38058' }} /> Hero Section</h3>
+                                    <h3 style={{ display: 'flex', alignItems: 'center' }}><TbPhoto style={{ marginRight: '8px', color: '#6c7a89' }} /> Hero Section</h3>
                                     <button className="view-all-link" onClick={() => {
                                         const h = contactPageSettings?.hero || {};
                                         setContactHeroForm({ kicker: h.kicker || '', title: h.title || '', highlightText: h.highlightText || '', subtitle: h.subtitle || '', heroBg: h.heroBg || '' });
@@ -4455,7 +4554,7 @@ const AdminDashboard = () => {
                                     </div>
                                     <div>
                                         <span className="slide-kicker-tag">{contactPageSettings?.hero?.kicker || 'GET IN TOUCH'}</span>
-                                        <h3 style={{ color: '#fff', fontSize: '1.1rem', margin: '4px 0' }}>{contactPageSettings?.hero?.title || "Let's Design a Space"} <span style={{ color: '#d4af37', fontStyle: 'italic' }}>{contactPageSettings?.hero?.highlightText || "You'll Love."}</span></h3>
+                                        <h3 style={{ color: '#fff', fontSize: '1.1rem', margin: '4px 0' }}>{contactPageSettings?.hero?.title || "Let's Design a Space"} <span style={{ color: '#9ca3af', fontStyle: 'italic' }}>{contactPageSettings?.hero?.highlightText || "You'll Love."}</span></h3>
                                         <p style={{ color: '#94a3b8', fontSize: '0.82rem', margin: 0 }}>{contactPageSettings?.hero?.subtitle}</p>
                                     </div>
                                 </div>
@@ -4533,7 +4632,7 @@ const AdminDashboard = () => {
                                             description: j.description || 'Get inspired by our latest projects, behind-the-scenes and design tips.',
                                             facebook: sl.facebook || '',
                                             instagram: sl.instagram || '',
-                                            pinterest: sl.pinterest || '',
+                                            tiktok: sl.tiktok || '',
                                             linkedin: sl.linkedin || '',
                                             img1: imgs[0] || '',
                                             img2: imgs[1] || '',
@@ -4559,8 +4658,8 @@ const AdminDashboard = () => {
                                             <span style={{ padding: '3px 10px', borderRadius: '12px', fontSize: '0.75rem', background: contactPageSettings?.journey?.socialLinks?.instagram ? 'rgba(236, 72, 153, 0.2)' : 'rgba(255,255,255,0.05)', color: contactPageSettings?.journey?.socialLinks?.instagram ? '#f472b6' : '#64748b' }}>
                                                 Insta: {contactPageSettings?.journey?.socialLinks?.instagram ? 'Connected' : 'None'}
                                             </span>
-                                            <span style={{ padding: '3px 10px', borderRadius: '12px', fontSize: '0.75rem', background: contactPageSettings?.journey?.socialLinks?.pinterest ? 'rgba(239, 68, 68, 0.2)' : 'rgba(255,255,255,0.05)', color: contactPageSettings?.journey?.socialLinks?.pinterest ? '#f87171' : '#64748b' }}>
-                                                Pinterest: {contactPageSettings?.journey?.socialLinks?.pinterest ? 'Connected' : 'None'}
+                                            <span style={{ padding: '3px 10px', borderRadius: '12px', fontSize: '0.75rem', background: contactPageSettings?.journey?.socialLinks?.tiktok ? 'rgba(239, 68, 68, 0.2)' : 'rgba(255,255,255,0.05)', color: contactPageSettings?.journey?.socialLinks?.tiktok ? '#f87171' : '#64748b' }}>
+                                                TikTok: {contactPageSettings?.journey?.socialLinks?.tiktok ? 'Connected' : 'None'}
                                             </span>
                                             <span style={{ padding: '3px 10px', borderRadius: '12px', fontSize: '0.75rem', background: contactPageSettings?.journey?.socialLinks?.linkedin ? 'rgba(14, 165, 233, 0.2)' : 'rgba(255,255,255,0.05)', color: contactPageSettings?.journey?.socialLinks?.linkedin ? '#38bdf8' : '#64748b' }}>
                                                 LinkedIn: {contactPageSettings?.journey?.socialLinks?.linkedin ? 'Connected' : 'None'}
@@ -4670,7 +4769,7 @@ const AdminDashboard = () => {
                                         <button
                                             onClick={handleOpenAddBlogPost}
                                             style={{
-                                                background: 'linear-gradient(135deg, #c48b59 0%, #a36f41 100%)',
+                                                background: 'linear-gradient(135deg, #6c7a89 0%, #a36f41 100%)',
                                                 color: '#ffffff',
                                                 border: 'none',
                                                 borderRadius: '8px',
@@ -4681,7 +4780,7 @@ const AdminDashboard = () => {
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 gap: '8px',
-                                                boxShadow: '0 4px 12px rgba(196, 139, 89, 0.3)',
+                                                boxShadow: '0 4px 12px rgba(108, 122, 137, 0.3)',
                                                 transition: 'all 0.2s ease-in-out'
                                             }}
                                         >
@@ -4691,7 +4790,7 @@ const AdminDashboard = () => {
                                         <button
                                             onClick={handleOpenEditBlogHero}
                                             style={{
-                                                background: 'linear-gradient(135deg, #c48b59 0%, #a36f41 100%)',
+                                                background: 'linear-gradient(135deg, #6c7a89 0%, #a36f41 100%)',
                                                 color: '#ffffff',
                                                 border: 'none',
                                                 borderRadius: '8px',
@@ -4702,7 +4801,7 @@ const AdminDashboard = () => {
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 gap: '8px',
-                                                boxShadow: '0 4px 12px rgba(196, 139, 89, 0.3)',
+                                                boxShadow: '0 4px 12px rgba(108, 122, 137, 0.3)',
                                                 transition: 'all 0.2s ease-in-out'
                                             }}
                                         >
@@ -4717,7 +4816,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setBlogSubTab('articles')}
                                     style={{
-                                        background: blogSubTab === 'articles' ? '#c48b59' : 'transparent',
+                                        background: blogSubTab === 'articles' ? '#6c7a89' : 'transparent',
                                         color: blogSubTab === 'articles' ? '#fff' : '#94a3b8',
                                         border: blogSubTab === 'articles' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -4735,7 +4834,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setBlogSubTab('hero')}
                                     style={{
-                                        background: blogSubTab === 'hero' ? '#c48b59' : 'transparent',
+                                        background: blogSubTab === 'hero' ? '#6c7a89' : 'transparent',
                                         color: blogSubTab === 'hero' ? '#fff' : '#94a3b8',
                                         border: blogSubTab === 'hero' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -4767,7 +4866,7 @@ const AdminDashboard = () => {
                                                 <div key={post._id || post.id} className="admin-card-item" style={{ background: '#1e293b', borderRadius: '10px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', flexDirection: 'column' }}>
                                                     <div style={{ height: '180px', position: 'relative', overflow: 'hidden', background: '#0f172a' }}>
                                                         <img src={post.img} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                                        <div style={{ position: 'absolute', top: '10px', left: '10px', background: '#c48b59', color: '#fff', fontSize: '0.68rem', fontWeight: '700', padding: '3px 8px', borderRadius: '4px', textTransform: 'uppercase' }}>
+                                                        <div style={{ position: 'absolute', top: '10px', left: '10px', background: '#6c7a89', color: '#fff', fontSize: '0.68rem', fontWeight: '700', padding: '3px 8px', borderRadius: '4px', textTransform: 'uppercase' }}>
                                                             {post.badge || 'ARTICLE'}
                                                         </div>
                                                         {post.isFeatured && (
@@ -4788,7 +4887,7 @@ const AdminDashboard = () => {
                                                         </p>
 
                                                         <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '10px', marginTop: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                            <span style={{ fontSize: '0.78rem', color: '#c48b59', fontWeight: '500' }}>
+                                                            <span style={{ fontSize: '0.78rem', color: '#6c7a89', fontWeight: '500' }}>
                                                                 {post.author || 'Author'}
                                                             </span>
                                                             <div style={{ display: 'flex', gap: '8px' }}>
@@ -4817,7 +4916,7 @@ const AdminDashboard = () => {
                             {/* SUB-TAB: HERO BANNER */}
                             {blogSubTab === 'hero' && (
                                 <div style={{ background: '#1e293b', borderRadius: '12px', padding: '24px', border: '1px solid rgba(255,255,255,0.08)' }}>
-                                    <h3 style={{ color: '#c48b59', marginBottom: '16px', fontSize: '1.1rem' }}>Current Blog Hero Configuration</h3>
+                                    <h3 style={{ color: '#6c7a89', marginBottom: '16px', fontSize: '1.1rem' }}>Current Blog Hero Configuration</h3>
 
                                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
                                         <div>
@@ -4853,7 +4952,7 @@ const AdminDashboard = () => {
                                     <button
                                         onClick={handleOpenEditBlogHero}
                                         style={{
-                                            background: 'linear-gradient(135deg, #c48b59 0%, #a36f41 100%)',
+                                            background: 'linear-gradient(135deg, #6c7a89 0%, #a36f41 100%)',
                                             color: '#ffffff',
                                             border: 'none',
                                             borderRadius: '8px',
@@ -4864,7 +4963,7 @@ const AdminDashboard = () => {
                                             display: 'flex',
                                             alignItems: 'center',
                                             gap: '8px',
-                                            boxShadow: '0 4px 12px rgba(196, 139, 89, 0.3)',
+                                            boxShadow: '0 4px 12px rgba(108, 122, 137, 0.3)',
                                             transition: 'all 0.2s ease-in-out'
                                         }}
                                     >
@@ -4902,7 +5001,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setTestiSubTab('reviews')}
                                     style={{
-                                        background: testiSubTab === 'reviews' ? '#c48b59' : 'transparent',
+                                        background: testiSubTab === 'reviews' ? '#6c7a89' : 'transparent',
                                         color: testiSubTab === 'reviews' ? '#fff' : '#94a3b8',
                                         border: testiSubTab === 'reviews' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -4923,7 +5022,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setTestiSubTab('hero')}
                                     style={{
-                                        background: testiSubTab === 'hero' ? '#c48b59' : 'transparent',
+                                        background: testiSubTab === 'hero' ? '#6c7a89' : 'transparent',
                                         color: testiSubTab === 'hero' ? '#fff' : '#94a3b8',
                                         border: testiSubTab === 'hero' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -4941,7 +5040,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setTestiSubTab('quote')}
                                     style={{
-                                        background: testiSubTab === 'quote' ? '#c48b59' : 'transparent',
+                                        background: testiSubTab === 'quote' ? '#6c7a89' : 'transparent',
                                         color: testiSubTab === 'quote' ? '#fff' : '#94a3b8',
                                         border: testiSubTab === 'quote' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -4973,7 +5072,7 @@ const AdminDashboard = () => {
                                                 <div key={testi._id || testi.id} className="admin-card-item" style={{ background: '#1e293b', borderRadius: '10px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', flexDirection: 'column' }}>
                                                     <div style={{ height: '180px', position: 'relative', overflow: 'hidden', background: '#0f172a' }}>
                                                         <img src={testi.image} alt="Project" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                                        <div style={{ position: 'absolute', top: '10px', left: '10px', background: '#c48b59', color: '#fff', fontSize: '0.68rem', fontWeight: '700', padding: '3px 8px', borderRadius: '4px', textTransform: 'uppercase' }}>
+                                                        <div style={{ position: 'absolute', top: '10px', left: '10px', background: '#6c7a89', color: '#fff', fontSize: '0.68rem', fontWeight: '700', padding: '3px 8px', borderRadius: '4px', textTransform: 'uppercase' }}>
                                                             {testi.category || 'RESIDENTIAL'}
                                                         </div>
                                                         <div style={{ position: 'absolute', top: '10px', right: '10px', background: testi.isApproved ? '#22c55e' : '#eab308', color: testi.isApproved ? '#fff' : '#000', fontSize: '0.68rem', fontWeight: '800', padding: '3px 8px', borderRadius: '4px' }}>
@@ -5031,7 +5130,7 @@ const AdminDashboard = () => {
                             {/* SUB-TAB: HERO BANNER */}
                             {testiSubTab === 'hero' && (
                                 <div style={{ background: '#1e293b', borderRadius: '12px', padding: '24px', border: '1px solid rgba(255,255,255,0.08)' }}>
-                                    <h3 style={{ color: '#c48b59', marginBottom: '16px', fontSize: '1.1rem' }}>Testimonials Hero Configuration</h3>
+                                    <h3 style={{ color: '#6c7a89', marginBottom: '16px', fontSize: '1.1rem' }}>Testimonials Hero Configuration</h3>
                                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
                                         <div>
                                             <span style={{ fontSize: '0.75rem', color: '#94a3b8', display: 'block', marginBottom: '4px' }}>KICKER TAGLINE</span>
@@ -5085,7 +5184,7 @@ const AdminDashboard = () => {
                                             setTestiHeroModalOpen(true);
                                         }}
                                         style={{
-                                            background: 'linear-gradient(135deg, #c48b59 0%, #a36f41 100%)',
+                                            background: 'linear-gradient(135deg, #6c7a89 0%, #a36f41 100%)',
                                             color: '#ffffff',
                                             border: 'none',
                                             borderRadius: '8px',
@@ -5096,7 +5195,7 @@ const AdminDashboard = () => {
                                             display: 'flex',
                                             alignItems: 'center',
                                             gap: '8px',
-                                            boxShadow: '0 4px 12px rgba(196, 139, 89, 0.3)',
+                                            boxShadow: '0 4px 12px rgba(108, 122, 137, 0.3)',
                                             transition: 'all 0.2s ease-in-out'
                                         }}
                                     >
@@ -5108,7 +5207,7 @@ const AdminDashboard = () => {
                             {/* SUB-TAB: QUOTE BANNER */}
                             {testiSubTab === 'quote' && (
                                 <div style={{ background: '#1e293b', borderRadius: '12px', padding: '24px', border: '1px solid rgba(255,255,255,0.08)' }}>
-                                    <h3 style={{ color: '#c48b59', marginBottom: '16px', fontSize: '1.1rem' }}>Large Quote Banner Configuration</h3>
+                                    <h3 style={{ color: '#6c7a89', marginBottom: '16px', fontSize: '1.1rem' }}>Large Quote Banner Configuration</h3>
                                     <div style={{ marginBottom: '20px' }}>
                                         <span style={{ fontSize: '0.75rem', color: '#94a3b8', display: 'block', marginBottom: '4px' }}>QUOTE TEXT</span>
                                         <div style={{ background: '#0f172a', padding: '10px 14px', borderRadius: '6px', color: '#cbd5e1', fontSize: '0.88rem', lineHeight: '1.5', fontStyle: 'italic' }}>
@@ -5137,7 +5236,7 @@ const AdminDashboard = () => {
                                             setTestiQuoteModalOpen(true);
                                         }}
                                         style={{
-                                            background: 'linear-gradient(135deg, #c48b59 0%, #a36f41 100%)',
+                                            background: 'linear-gradient(135deg, #6c7a89 0%, #a36f41 100%)',
                                             color: '#ffffff',
                                             border: 'none',
                                             borderRadius: '8px',
@@ -5148,7 +5247,7 @@ const AdminDashboard = () => {
                                             display: 'flex',
                                             alignItems: 'center',
                                             gap: '8px',
-                                            boxShadow: '0 4px 12px rgba(196, 139, 89, 0.3)',
+                                            boxShadow: '0 4px 12px rgba(108, 122, 137, 0.3)',
                                             transition: 'all 0.2s ease-in-out'
                                         }}
                                     >
@@ -5165,7 +5264,7 @@ const AdminDashboard = () => {
                             <div className="panel-header" style={{ marginBottom: '15px' }}>
                                 <div>
                                     <h2>About Page Management</h2>
-                                    <p>Customize the story, mission, and philosophy of Good Interior.</p>
+                                    <p>Customize the story, mission, and philosophy of Senkadagala Architects.</p>
                                 </div>
                             </div>
 
@@ -5173,7 +5272,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setActiveAboutSubTab('hero')}
                                     style={{
-                                        background: activeAboutSubTab === 'hero' ? '#c48b59' : 'transparent',
+                                        background: activeAboutSubTab === 'hero' ? '#6c7a89' : 'transparent',
                                         color: activeAboutSubTab === 'hero' ? '#fff' : '#94a3b8',
                                         border: activeAboutSubTab === 'hero' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -5186,7 +5285,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setActiveAboutSubTab('whoWeAre')}
                                     style={{
-                                        background: activeAboutSubTab === 'whoWeAre' ? '#c48b59' : 'transparent',
+                                        background: activeAboutSubTab === 'whoWeAre' ? '#6c7a89' : 'transparent',
                                         color: activeAboutSubTab === 'whoWeAre' ? '#fff' : '#94a3b8',
                                         border: activeAboutSubTab === 'whoWeAre' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -5199,7 +5298,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setActiveAboutSubTab('purpose')}
                                     style={{
-                                        background: activeAboutSubTab === 'purpose' ? '#c48b59' : 'transparent',
+                                        background: activeAboutSubTab === 'purpose' ? '#6c7a89' : 'transparent',
                                         color: activeAboutSubTab === 'purpose' ? '#fff' : '#94a3b8',
                                         border: activeAboutSubTab === 'purpose' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -5212,7 +5311,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setActiveAboutSubTab('philosophy')}
                                     style={{
-                                        background: activeAboutSubTab === 'philosophy' ? '#c48b59' : 'transparent',
+                                        background: activeAboutSubTab === 'philosophy' ? '#6c7a89' : 'transparent',
                                         color: activeAboutSubTab === 'philosophy' ? '#fff' : '#94a3b8',
                                         border: activeAboutSubTab === 'philosophy' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -5225,7 +5324,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setActiveAboutSubTab('achievements')}
                                     style={{
-                                        background: activeAboutSubTab === 'achievements' ? '#c48b59' : 'transparent',
+                                        background: activeAboutSubTab === 'achievements' ? '#6c7a89' : 'transparent',
                                         color: activeAboutSubTab === 'achievements' ? '#fff' : '#94a3b8',
                                         border: activeAboutSubTab === 'achievements' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -5238,7 +5337,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setActiveAboutSubTab('team')}
                                     style={{
-                                        background: activeAboutSubTab === 'team' ? '#c48b59' : 'transparent',
+                                        background: activeAboutSubTab === 'team' ? '#6c7a89' : 'transparent',
                                         color: activeAboutSubTab === 'team' ? '#fff' : '#94a3b8',
                                         border: activeAboutSubTab === 'team' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -5252,7 +5351,7 @@ const AdminDashboard = () => {
 
                             {activeAboutSubTab === 'hero' && (
                                 <div className="card-luxury p-6" style={{ background: '#141720', borderRadius: '12px', padding: '24px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                    <h3 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '20px', borderBottom: '1px solid rgba(212, 175, 55, 0.2)', paddingBottom: '10px' }}>Edit About Hero</h3>
+                                    <h3 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '20px', borderBottom: '1px solid rgba(156, 163, 175, 0.2)', paddingBottom: '10px' }}>Edit About Hero</h3>
                                     <form onSubmit={(e) => {
                                         e.preventDefault();
                                         const combinedTitle = `${e.target.titleLine1.value} <br />${e.target.titleLine2.value} <span class="highlight-text">${e.target.titleHighlight.value}</span>`;
@@ -5301,7 +5400,7 @@ const AdminDashboard = () => {
 
                             {activeAboutSubTab === 'whoWeAre' && (
                                 <div className="card-luxury p-6" style={{ background: '#141720', borderRadius: '12px', padding: '24px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                    <h3 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '20px', borderBottom: '1px solid rgba(212, 175, 55, 0.2)', paddingBottom: '10px' }}>Edit "Who We Are" Section</h3>
+                                    <h3 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '20px', borderBottom: '1px solid rgba(156, 163, 175, 0.2)', paddingBottom: '10px' }}>Edit "Who We Are" Section</h3>
                                     <form onSubmit={(e) => {
                                         e.preventDefault();
                                         handleSaveAboutSection('whoWeAre', {
@@ -5344,7 +5443,7 @@ const AdminDashboard = () => {
 
                             {activeAboutSubTab === 'purpose' && (
                                 <div className="card-luxury p-6" style={{ background: '#141720', borderRadius: '12px', padding: '24px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                    <h3 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '20px', borderBottom: '1px solid rgba(212, 175, 55, 0.2)', paddingBottom: '10px' }}>Edit Mission & Vision</h3>
+                                    <h3 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '20px', borderBottom: '1px solid rgba(156, 163, 175, 0.2)', paddingBottom: '10px' }}>Edit Mission & Vision</h3>
                                     <form onSubmit={(e) => {
                                         e.preventDefault();
                                         handleSaveAboutSection('purpose', {
@@ -5379,7 +5478,7 @@ const AdminDashboard = () => {
 
                             {activeAboutSubTab === 'philosophy' && (
                                 <div className="card-luxury p-6" style={{ background: '#141720', borderRadius: '12px', padding: '24px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                    <h3 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '20px', borderBottom: '1px solid rgba(212, 175, 55, 0.2)', paddingBottom: '10px' }}>Edit Philosophy & Core Values</h3>
+                                    <h3 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '20px', borderBottom: '1px solid rgba(156, 163, 175, 0.2)', paddingBottom: '10px' }}>Edit Philosophy & Core Values</h3>
                                     <form onSubmit={(e) => {
                                         e.preventDefault();
                                         const combinedPhilTitle = e.target.philLine2.value
@@ -5433,7 +5532,7 @@ const AdminDashboard = () => {
 
                             {activeAboutSubTab === 'achievements' && (
                                 <div className="card-luxury p-6" style={{ background: '#141720', borderRadius: '12px', padding: '24px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                    <h3 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '20px', borderBottom: '1px solid rgba(212, 175, 55, 0.2)', paddingBottom: '10px' }}>Edit Achievements</h3>
+                                    <h3 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '20px', borderBottom: '1px solid rgba(156, 163, 175, 0.2)', paddingBottom: '10px' }}>Edit Achievements</h3>
                                     <form onSubmit={(e) => {
                                         e.preventDefault();
                                         const newAchievements = [0, 1, 2, 3, 4].map(i => ({
@@ -5448,7 +5547,7 @@ const AdminDashboard = () => {
                                                 const ach = (aboutData.achievements && aboutData.achievements[idx]) || { icon: 'BiCalendarStar', value: '', label: '' };
                                                 return (
                                                     <div key={idx} style={{ padding: '15px', background: '#0b0d11', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                                        <h4 style={{ color: '#c48b59', marginBottom: '15px', fontSize: '0.9rem' }}>Achievement {idx + 1}</h4>
+                                                        <h4 style={{ color: '#6c7a89', marginBottom: '15px', fontSize: '0.9rem' }}>Achievement {idx + 1}</h4>
                                                         <div className="form-group" style={{ marginBottom: '12px' }}>
                                                             <label style={{ display: 'block', color: '#cbd5e1', fontSize: '0.8rem', marginBottom: '6px' }}>Icon</label>
                                                             <select name={`ach_icon_${idx}`} defaultValue={ach.icon} style={{ width: '100%', padding: '8px', background: '#141720', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', color: '#fff' }}>
@@ -5481,7 +5580,7 @@ const AdminDashboard = () => {
 
                             {activeAboutSubTab === 'team' && (
                                 <div className="card-luxury p-6" style={{ background: '#141720', borderRadius: '12px', padding: '24px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                    <h3 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '20px', borderBottom: '1px solid rgba(212, 175, 55, 0.2)', paddingBottom: '10px' }}>Edit Team Section</h3>
+                                    <h3 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '20px', borderBottom: '1px solid rgba(156, 163, 175, 0.2)', paddingBottom: '10px' }}>Edit Team Section</h3>
                                     <form onSubmit={(e) => {
                                         e.preventDefault();
                                         const combinedTitle = e.target.titleLine2.value
@@ -5528,7 +5627,7 @@ const AdminDashboard = () => {
                                                     || defaultTraits[idx];
                                                 return (
                                                     <div key={idx} style={{ padding: '15px', background: '#0b0d11', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                                        <h5 style={{ color: '#c48b59', marginBottom: '15px', fontSize: '0.9rem', margin: 0 }}>Trait Card {idx + 1}</h5>
+                                                        <h5 style={{ color: '#6c7a89', marginBottom: '15px', fontSize: '0.9rem', margin: 0 }}>Trait Card {idx + 1}</h5>
                                                         <div className="form-group" style={{ marginBottom: '12px', marginTop: '12px' }}>
                                                             <label style={{ display: 'block', color: '#cbd5e1', fontSize: '0.8rem', marginBottom: '6px' }}>Icon</label>
                                                             <select name={`trait_icon_${idx}`} defaultValue={trait.icon} style={{ width: '100%', padding: '8px', background: '#141720', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', color: '#fff' }}>
@@ -5595,7 +5694,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setCareersSubTab('jobs')}
                                     style={{
-                                        background: careersSubTab === 'jobs' ? '#c48b59' : 'transparent',
+                                        background: careersSubTab === 'jobs' ? '#6c7a89' : 'transparent',
                                         color: careersSubTab === 'jobs' ? '#fff' : '#94a3b8',
                                         border: careersSubTab === 'jobs' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -5613,7 +5712,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setCareersSubTab('hero')}
                                     style={{
-                                        background: careersSubTab === 'hero' ? '#c48b59' : 'transparent',
+                                        background: careersSubTab === 'hero' ? '#6c7a89' : 'transparent',
                                         color: careersSubTab === 'hero' ? '#fff' : '#94a3b8',
                                         border: careersSubTab === 'hero' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -5631,7 +5730,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setCareersSubTab('about')}
                                     style={{
-                                        background: careersSubTab === 'about' ? '#c48b59' : 'transparent',
+                                        background: careersSubTab === 'about' ? '#6c7a89' : 'transparent',
                                         color: careersSubTab === 'about' ? '#fff' : '#94a3b8',
                                         border: careersSubTab === 'about' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -5649,7 +5748,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setCareersSubTab('why')}
                                     style={{
-                                        background: careersSubTab === 'why' ? '#c48b59' : 'transparent',
+                                        background: careersSubTab === 'why' ? '#6c7a89' : 'transparent',
                                         color: careersSubTab === 'why' ? '#fff' : '#94a3b8',
                                         border: careersSubTab === 'why' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -5667,7 +5766,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setCareersSubTab('cta')}
                                     style={{
-                                        background: careersSubTab === 'cta' ? '#c48b59' : 'transparent',
+                                        background: careersSubTab === 'cta' ? '#6c7a89' : 'transparent',
                                         color: careersSubTab === 'cta' ? '#fff' : '#94a3b8',
                                         border: careersSubTab === 'cta' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -5685,7 +5784,7 @@ const AdminDashboard = () => {
                                 <button
                                     onClick={() => setCareersSubTab('applications')}
                                     style={{
-                                        background: careersSubTab === 'applications' ? '#c48b59' : 'transparent',
+                                        background: careersSubTab === 'applications' ? '#6c7a89' : 'transparent',
                                         color: careersSubTab === 'applications' ? '#fff' : '#94a3b8',
                                         border: careersSubTab === 'applications' ? 'none' : '1px solid rgba(255,255,255,0.1)',
                                         borderRadius: '6px',
@@ -5727,13 +5826,13 @@ const AdminDashboard = () => {
                                                 jobOpenings.map(job => (
                                                     <tr key={job._id}>
                                                         <td>
-                                                            <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#faf2ea', color: '#c48b59', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', fontWeight: 'bold' }}>
+                                                            <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#faf2ea', color: '#6c7a89', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', fontWeight: 'bold' }}>
                                                                 {job.title ? job.title.charAt(0) : 'J'}
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <strong style={{ color: '#fff', fontSize: '0.95rem' }}>{job.title}</strong>
-                                                            <div style={{ fontSize: '0.78rem', color: '#c48b59', marginTop: '2px' }}>{job.department || 'Design Studio'}</div>
+                                                            <div style={{ fontSize: '0.78rem', color: '#6c7a89', marginTop: '2px' }}>{job.department || 'Design Studio'}</div>
                                                         </td>
                                                         <td>
                                                             <span style={{ color: '#cbd5e1', fontSize: '0.85rem' }}>{job.type || 'Full-time'}</span>
@@ -5767,7 +5866,7 @@ const AdminDashboard = () => {
                             {careersSubTab === 'hero' && (
                                 <div className="overview-card" style={{ padding: '24px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                                        <h3 style={{ margin: 0, color: '#c48b59', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <h3 style={{ margin: 0, color: '#6c7a89', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                             <TbSlideshow /> Current Careers Page Hero Header
                                         </h3>
                                         <button className="btn-primary-gold" onClick={() => {
@@ -5789,7 +5888,7 @@ const AdminDashboard = () => {
                                         borderRadius: '16px',
                                         overflow: 'hidden',
                                         padding: '40px 36px',
-                                        border: '1px solid rgba(212, 175, 55, 0.25)',
+                                        border: '1px solid rgba(156, 163, 175, 0.25)',
                                         backgroundImage: `linear-gradient(rgba(11, 13, 17, 0.8), rgba(11, 13, 17, 0.88)), url(${careersHero.bgImage || careersHeroBg})`,
                                         backgroundSize: 'cover',
                                         backgroundPosition: 'center',
@@ -5799,7 +5898,7 @@ const AdminDashboard = () => {
                                         flexDirection: 'column',
                                         justifyContent: 'center'
                                     }}>
-                                        <span style={{ color: '#c48b59', fontSize: '0.75rem', fontWeight: '700', letterSpacing: '2.5px', textTransform: 'uppercase' }}>
+                                        <span style={{ color: '#6c7a89', fontSize: '0.75rem', fontWeight: '700', letterSpacing: '2.5px', textTransform: 'uppercase' }}>
                                             {careersHero.kicker || 'JOIN OUR TEAM'}
                                         </span>
                                         <h1 style={{ color: '#ffffff', fontSize: '2rem', margin: '12px 0 16px', fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: '600' }}>
@@ -5812,7 +5911,7 @@ const AdminDashboard = () => {
 
                                     {/* Image Status & Thumbnail Row */}
                                     <div style={{ marginTop: '24px', background: '#0f1219', borderRadius: '12px', padding: '16px 20px', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
-                                        <div style={{ width: '120px', height: '70px', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(196,139,89,0.4)', flexShrink: 0, position: 'relative' }}>
+                                        <div style={{ width: '120px', height: '70px', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(108, 122, 137,0.4)', flexShrink: 0, position: 'relative' }}>
                                             <img src={careersHero.bgImage || careersHeroBg} alt="Careers Hero Thumbnail" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                         </div>
                                         <div style={{ flex: 1, minWidth: '200px' }}>
@@ -5840,14 +5939,14 @@ const AdminDashboard = () => {
                             {careersSubTab === 'about' && (
                                 <div className="overview-card" style={{ padding: '24px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                                        <h3 style={{ margin: 0, color: '#c48b59', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <h3 style={{ margin: 0, color: '#6c7a89', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                             <TbUsers /> About Our Team Section
                                         </h3>
                                         <button className="btn-primary-gold" onClick={() => {
                                             setCareersAboutForm({
                                                 aboutKicker: careersHero.aboutKicker || 'ABOUT OUR TEAM',
                                                 aboutTitle: careersHero.aboutTitle || 'Great People Build Great Spaces',
-                                                aboutDesc: careersHero.aboutDesc || 'At Good Interior, we believe that a strong team creates extraordinary results...',
+                                                aboutDesc: careersHero.aboutDesc || 'At Senkadagala Architects, we believe that a strong team creates extraordinary results...',
                                                 aboutImage: careersHero.aboutImage || '',
                                                 aboutF1: careersHero.aboutF1 || 'Creative Environment',
                                                 aboutF2: careersHero.aboutF2 || 'Professional Growth',
@@ -5867,44 +5966,44 @@ const AdminDashboard = () => {
                                         overflow: 'hidden',
                                         padding: '30px',
                                         background: '#0f1219',
-                                        border: '1px solid rgba(212, 175, 55, 0.25)',
+                                        border: '1px solid rgba(156, 163, 175, 0.25)',
                                         display: 'grid',
                                         gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
                                         gap: '24px',
                                         alignItems: 'center'
                                     }}>
                                         <div>
-                                            <span style={{ color: '#c48b59', fontSize: '0.75rem', fontWeight: '700', letterSpacing: '2.5px', textTransform: 'uppercase' }}>
+                                            <span style={{ color: '#6c7a89', fontSize: '0.75rem', fontWeight: '700', letterSpacing: '2.5px', textTransform: 'uppercase' }}>
                                                 {careersHero.aboutKicker || 'ABOUT OUR TEAM'}
                                             </span>
                                             <h2 style={{ color: '#ffffff', fontSize: '1.8rem', margin: '10px 0 10px', fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
                                                 {careersHero.aboutTitle || 'Great People Build Great Spaces'}
                                             </h2>
                                             <p style={{ color: '#cbd5e1', fontSize: '0.88rem', lineHeight: '1.6', margin: '0 0 20px 0' }}>
-                                                {careersHero.aboutDesc || 'At Good Interior, we believe that a strong team creates extraordinary results...'}
+                                                {careersHero.aboutDesc || 'At Senkadagala Architects, we believe that a strong team creates extraordinary results...'}
                                             </p>
 
                                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
                                                 <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '8px', padding: '10px 14px', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                    <TbBulb style={{ color: '#c48b59', fontSize: '1.2rem' }} />
+                                                    <TbBulb style={{ color: '#6c7a89', fontSize: '1.2rem' }} />
                                                     <span style={{ color: '#fff', fontSize: '0.85rem', fontWeight: '600' }}>{careersHero.aboutF1 || 'Creative Environment'}</span>
                                                 </div>
                                                 <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '8px', padding: '10px 14px', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                    <TbTrendingUp style={{ color: '#c48b59', fontSize: '1.2rem' }} />
+                                                    <TbTrendingUp style={{ color: '#6c7a89', fontSize: '1.2rem' }} />
                                                     <span style={{ color: '#fff', fontSize: '0.85rem', fontWeight: '600' }}>{careersHero.aboutF2 || 'Professional Growth'}</span>
                                                 </div>
                                                 <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '8px', padding: '10px 14px', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                    <TbUsers style={{ color: '#c48b59', fontSize: '1.2rem' }} />
+                                                    <TbUsers style={{ color: '#6c7a89', fontSize: '1.2rem' }} />
                                                     <span style={{ color: '#fff', fontSize: '0.85rem', fontWeight: '600' }}>{careersHero.aboutF3 || 'Collaborative Team'}</span>
                                                 </div>
                                                 <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '8px', padding: '10px 14px', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                    <TbHeart style={{ color: '#c48b59', fontSize: '1.2rem' }} />
+                                                    <TbHeart style={{ color: '#6c7a89', fontSize: '1.2rem' }} />
                                                     <span style={{ color: '#fff', fontSize: '0.85rem', fontWeight: '600' }}>{careersHero.aboutF4 || 'Meaningful Impact'}</span>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div style={{ borderRadius: '12px', overflow: 'hidden', height: '220px', border: '1px solid rgba(196,139,89,0.3)' }}>
+                                        <div style={{ borderRadius: '12px', overflow: 'hidden', height: '220px', border: '1px solid rgba(108, 122, 137,0.3)' }}>
                                             <img src={careersHero.aboutImage || teamCollabImg} alt="About Team Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                         </div>
                                     </div>
@@ -5915,7 +6014,7 @@ const AdminDashboard = () => {
                             {careersSubTab === 'why' && (
                                 <div className="overview-card" style={{ padding: '24px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                                        <h3 style={{ margin: 0, color: '#c48b59', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <h3 style={{ margin: 0, color: '#6c7a89', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                             <TbHeart /> Why Work With Us Section
                                         </h3>
                                         <button className="btn-primary-gold" onClick={() => {
@@ -5941,37 +6040,37 @@ const AdminDashboard = () => {
                                         borderRadius: '16px',
                                         overflow: 'hidden',
                                         padding: '40px 36px',
-                                        border: '1px solid rgba(212, 175, 55, 0.25)',
+                                        border: '1px solid rgba(156, 163, 175, 0.25)',
                                         backgroundImage: `linear-gradient(rgba(11, 13, 17, 0.85), rgba(11, 13, 17, 0.9)), url(${careersHero.whyBgImage || careersWhyBg})`,
                                         backgroundSize: 'cover',
                                         backgroundPosition: 'center',
                                         boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
                                     }}>
-                                        <span style={{ color: '#c48b59', fontSize: '0.75rem', fontWeight: '700', letterSpacing: '2.5px', textTransform: 'uppercase' }}>
+                                        <span style={{ color: '#6c7a89', fontSize: '0.75rem', fontWeight: '700', letterSpacing: '2.5px', textTransform: 'uppercase' }}>
                                             {careersHero.whyKicker || 'WHY WORK WITH US'}
                                         </span>
                                         <h2 style={{ color: '#ffffff', fontSize: '1.8rem', margin: '10px 0 6px', fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
                                             {careersHero.whyTitle || 'More Than a Job'}
                                         </h2>
-                                        <h3 style={{ color: '#c48b59', fontSize: '1.4rem', fontStyle: 'italic', margin: '0 0 24px 0', fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
+                                        <h3 style={{ color: '#6c7a89', fontSize: '1.4rem', fontStyle: 'italic', margin: '0 0 24px 0', fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
                                             {careersHero.whySubtitle || "It's a Place to Grow"}
                                         </h3>
 
                                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px', marginTop: '20px', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '20px' }}>
                                             <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '14px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                                <span style={{ color: '#c48b59', fontSize: '0.75rem', fontWeight: '700', display: 'block', marginBottom: '4px' }}>BENEFIT 1</span>
+                                                <span style={{ color: '#6c7a89', fontSize: '0.75rem', fontWeight: '700', display: 'block', marginBottom: '4px' }}>BENEFIT 1</span>
                                                 <strong style={{ color: '#fff', fontSize: '0.9rem' }}>{careersHero.whyB1Title || 'Competitive Salary & Benefits'}</strong>
                                             </div>
                                             <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '14px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                                <span style={{ color: '#c48b59', fontSize: '0.75rem', fontWeight: '700', display: 'block', marginBottom: '4px' }}>BENEFIT 2</span>
+                                                <span style={{ color: '#6c7a89', fontSize: '0.75rem', fontWeight: '700', display: 'block', marginBottom: '4px' }}>BENEFIT 2</span>
                                                 <strong style={{ color: '#fff', fontSize: '0.9rem' }}>{careersHero.whyB2Title || 'Learning & Development'}</strong>
                                             </div>
                                             <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '14px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                                <span style={{ color: '#c48b59', fontSize: '0.75rem', fontWeight: '700', display: 'block', marginBottom: '4px' }}>BENEFIT 3</span>
+                                                <span style={{ color: '#6c7a89', fontSize: '0.75rem', fontWeight: '700', display: 'block', marginBottom: '4px' }}>BENEFIT 3</span>
                                                 <strong style={{ color: '#fff', fontSize: '0.9rem' }}>{careersHero.whyB3Title || 'Supportive Team Culture'}</strong>
                                             </div>
                                             <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '14px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                                <span style={{ color: '#c48b59', fontSize: '0.75rem', fontWeight: '700', display: 'block', marginBottom: '4px' }}>BENEFIT 4</span>
+                                                <span style={{ color: '#6c7a89', fontSize: '0.75rem', fontWeight: '700', display: 'block', marginBottom: '4px' }}>BENEFIT 4</span>
                                                 <strong style={{ color: '#fff', fontSize: '0.9rem' }}>{careersHero.whyB4Title || 'Work-Life Balance'}</strong>
                                             </div>
                                         </div>
@@ -5983,7 +6082,7 @@ const AdminDashboard = () => {
                             {careersSubTab === 'cta' && (
                                 <div className="overview-card" style={{ padding: '24px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                                        <h3 style={{ margin: 0, color: '#c48b59', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <h3 style={{ margin: 0, color: '#6c7a89', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                             <TbQuote /> Ready To Join (CTA Section)
                                         </h3>
                                         <button className="btn-primary-gold" onClick={() => {
@@ -5993,7 +6092,7 @@ const AdminDashboard = () => {
                                                 ctaDescription: careersHero.ctaDescription || "If you're passionate about interior design and want to be part of a creative team, we'd love to hear from you.",
                                                 ctaImage: careersHero.ctaImage || '',
                                                 ctaButtonText: careersHero.ctaButtonText || 'APPLY NOW',
-                                                ctaQuote: careersHero.ctaQuote || `"At Good Interior, we don't just design spaces — we create experiences. And we're always looking for great people to help us do it."`,
+                                                ctaQuote: careersHero.ctaQuote || `"At Senkadagala Architects, we don't just design spaces — we create experiences. And we're always looking for great people to help us do it."`,
                                                 ctaQuoteAuthor: careersHero.ctaQuoteAuthor || 'OUR TEAM'
                                             });
                                             setCareersCtaModalOpen(true);
@@ -6004,11 +6103,11 @@ const AdminDashboard = () => {
 
                                     {/* Live CTA Section Preview */}
                                     <div style={{ background: '#0f1219', borderRadius: '16px', padding: '30px', border: '1px solid rgba(255,255,255,0.08)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '24px', alignItems: 'center' }}>
-                                        <div style={{ borderRadius: '12px', overflow: 'hidden', height: '180px', border: '1px solid rgba(196,139,89,0.3)' }}>
+                                        <div style={{ borderRadius: '12px', overflow: 'hidden', height: '180px', border: '1px solid rgba(108, 122, 137,0.3)' }}>
                                             <img src={careersHero.ctaImage || careersCtaLivingRoom} alt="CTA Feature Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                         </div>
                                         <div>
-                                            <span style={{ color: '#c48b59', fontSize: '0.75rem', fontWeight: '700', letterSpacing: '2px', textTransform: 'uppercase' }}>
+                                            <span style={{ color: '#6c7a89', fontSize: '0.75rem', fontWeight: '700', letterSpacing: '2px', textTransform: 'uppercase' }}>
                                                 {careersHero.ctaKicker || 'READY TO JOIN?'}
                                             </span>
                                             <h3 style={{ color: '#ffffff', fontSize: '1.4rem', margin: '8px 0 10px', fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
@@ -6017,15 +6116,15 @@ const AdminDashboard = () => {
                                             <p style={{ color: '#94a3b8', fontSize: '0.85rem', lineHeight: '1.5', margin: '0 0 14px 0' }}>
                                                 {careersHero.ctaDescription || "If you're passionate about interior design and want to be part of a creative team..."}
                                             </p>
-                                            <span style={{ background: '#c48b59', color: '#fff', padding: '6px 14px', borderRadius: '4px', fontSize: '0.78rem', fontWeight: '700', display: 'inline-block' }}>
+                                            <span style={{ background: '#6c7a89', color: '#fff', padding: '6px 14px', borderRadius: '4px', fontSize: '0.78rem', fontWeight: '700', display: 'inline-block' }}>
                                                 {careersHero.ctaButtonText || 'APPLY NOW'} →
                                             </span>
                                         </div>
-                                        <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '10px', padding: '16px', borderLeft: '3px solid #c48b59' }}>
+                                        <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '10px', padding: '16px', borderLeft: '3px solid #6c7a89' }}>
                                             <p style={{ color: '#cbd5e1', fontSize: '0.82rem', fontStyle: 'italic', margin: '0 0 8px 0', lineHeight: '1.5' }}>
-                                                {careersHero.ctaQuote || `"At Good Interior, we don't just design spaces — we create experiences..."`}
+                                                {careersHero.ctaQuote || `"At Senkadagala Architects, we don't just design spaces — we create experiences..."`}
                                             </p>
-                                            <span style={{ color: '#c48b59', fontSize: '0.75rem', fontWeight: '700' }}>
+                                            <span style={{ color: '#6c7a89', fontSize: '0.75rem', fontWeight: '700' }}>
                                                 — {careersHero.ctaQuoteAuthor || 'OUR TEAM'}
                                             </span>
                                         </div>
@@ -6066,13 +6165,13 @@ const AdminDashboard = () => {
                                                         <td>
                                                             <strong style={{ color: '#fff' }}>{app.fullName}</strong>
                                                             {app.experience && (
-                                                                <div style={{ fontSize: '0.78rem', color: '#c48b59', fontWeight: '600', marginTop: '2px' }}>
+                                                                <div style={{ fontSize: '0.78rem', color: '#6c7a89', fontWeight: '600', marginTop: '2px' }}>
                                                                     Exp: {app.experience}
                                                                 </div>
                                                             )}
                                                         </td>
                                                         <td>
-                                                            <span style={{ color: '#c48b59', fontWeight: '600' }}>{app.position}</span>
+                                                            <span style={{ color: '#6c7a89', fontWeight: '600' }}>{app.position}</span>
                                                         </td>
                                                         <td>
                                                             <div style={{ color: '#cbd5e1', fontSize: '0.85rem' }}>{app.email}</div>
@@ -6388,7 +6487,7 @@ const AdminDashboard = () => {
                                         <textarea rows="1" placeholder="Short description..." value={projectForm.description} onChange={(e) => setProjectForm({ ...projectForm, description: e.target.value })} />
                                     </div>
 
-                                    <h4 style={{ color: '#c48b59', borderBottom: '1px solid rgba(196,139,89,0.3)', paddingBottom: '5px', marginTop: '15px' }}>Project Details Page Content</h4>
+                                    <h4 style={{ color: '#6c7a89', borderBottom: '1px solid rgba(108, 122, 137,0.3)', paddingBottom: '5px', marginTop: '15px' }}>Project Details Page Content</h4>
 
                                     <div className="form-group">
                                         <label>Project Overview</label>
@@ -6438,10 +6537,12 @@ const AdminDashboard = () => {
                                         </div>
                                     </div>
                                     <div className="form-group">
-                                        <label>Gallery Images (Upload up to 5 images)</label>
+                                        <label>Gallery Images (Upload multiple images)</label>
                                         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                             <input type="file" multiple accept="image/*" onChange={(e) => {
-                                                const files = Array.from(e.target.files).slice(0, 5);
+                                                const files = Array.from(e.target.files);
+                                                if (files.length === 0) return;
+                                                setIsCompressingImages(true);
 
                                                 const readers = files.map(file => {
                                                     return compressImage(file);
@@ -6449,20 +6550,51 @@ const AdminDashboard = () => {
 
                                                 Promise.all(readers).then(base64Arr => {
                                                     setProjectForm({ ...projectForm, galleryImages: base64Arr.join('\n') });
+                                                    setIsCompressingImages(false);
                                                 });
-                                            }} style={{ fontSize: '0.9rem', color: '#c48b59' }} />
+                                            }} style={{ fontSize: '0.9rem', color: '#6c7a89' }} />
+                                            {isCompressingImages && <small style={{ color: '#fbbf24', fontSize: '0.8rem', fontWeight: 'bold' }}>Processing and compressing images, please wait...</small>}
                                             <small style={{ color: '#94a3b8', fontSize: '0.75rem' }}>* Holding Ctrl (Windows) or Cmd (Mac) allows selecting multiple files at once. Note: This replaces current images.</small>
 
                                             {/* Preview existing/uploaded images */}
                                             {projectForm.galleryImages && (
                                                 <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '10px' }}>
                                                     {projectForm.galleryImages.split('\n').filter(Boolean).map((src, idx) => (
-                                                        <div key={idx} style={{ position: 'relative', width: '80px', height: '80px' }}>
+                                                        <div key={idx} style={{ position: 'relative', width: '80px', height: '80px', display: 'inline-block' }}>
                                                             <img
                                                                 src={src}
                                                                 alt={`Gallery ${idx}`}
                                                                 style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '6px', border: '1px solid #475569' }}
                                                             />
+                                                            <button
+                                                                type="button"
+                                                                onClick={(e) => {
+                                                                    e.preventDefault();
+                                                                    const currentImages = projectForm.galleryImages.split('\n').filter(Boolean);
+                                                                    currentImages.splice(idx, 1);
+                                                                    setProjectForm(prev => ({ ...prev, galleryImages: currentImages.join('\n') }));
+                                                                }}
+                                                                style={{
+                                                                    position: 'absolute',
+                                                                    top: '-5px',
+                                                                    right: '-5px',
+                                                                    background: '#ef4444',
+                                                                    color: 'white',
+                                                                    border: 'none',
+                                                                    borderRadius: '50%',
+                                                                    width: '20px',
+                                                                    height: '20px',
+                                                                    cursor: 'pointer',
+                                                                    display: 'flex',
+                                                                    alignItems: 'center',
+                                                                    justifyContent: 'center',
+                                                                    fontSize: '12px',
+                                                                    boxShadow: '0 2px 4px rgba(0,0,0,0.3)'
+                                                                }}
+                                                                title="Remove Image"
+                                                            >
+                                                                <TbX size={14} />
+                                                            </button>
                                                         </div>
                                                     ))}
                                                 </div>
@@ -6470,7 +6602,7 @@ const AdminDashboard = () => {
                                         </div>
                                     </div>
 
-                                    <h4 style={{ color: '#c48b59', borderBottom: '1px solid rgba(196,139,89,0.3)', paddingBottom: '5px', marginTop: '15px' }}>Testimonial</h4>
+                                    <h4 style={{ color: '#6c7a89', borderBottom: '1px solid rgba(108, 122, 137,0.3)', paddingBottom: '5px', marginTop: '15px' }}>Testimonial</h4>
                                     <div className="form-group">
                                         <label>Testimonial Quote</label>
                                         <textarea rows="2" value={projectForm.testimonialQuote} onChange={(e) => setProjectForm({ ...projectForm, testimonialQuote: e.target.value })} />
@@ -6487,8 +6619,10 @@ const AdminDashboard = () => {
                                     </div>
 
                                     <div className="modal-actions-luxury">
-                                        <button type="button" className="btn-cancel-modal" onClick={() => setProjectModalOpen(false)}>Cancel</button>
-                                        <button type="submit" className="btn-save-modal">SAVE PROJECT</button>
+                                        <button type="button" className="btn-cancel-modal" onClick={() => setProjectModalOpen(false)} disabled={isSavingProject || isCompressingImages}>Cancel</button>
+                                        <button type="submit" className="btn-save-modal" disabled={isSavingProject || isCompressingImages}>
+                                            {isSavingProject ? 'SAVING...' : 'SAVE PROJECT'}
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -6661,7 +6795,7 @@ const AdminDashboard = () => {
 
                                 {/* Modal Slider Gallery Images (Up to 5 images) */}
                                 <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px', marginTop: '16px' }}>
-                                    <h4 style={{ color: '#c48b59', fontSize: '0.95rem', marginBottom: '12px' }}>
+                                    <h4 style={{ color: '#6c7a89', fontSize: '0.95rem', marginBottom: '12px' }}>
                                         Modal Slider Images (5 Gallery Photos)
                                     </h4>
                                     {[0, 1, 2, 3, 4].map((idx) => (
@@ -6722,8 +6856,10 @@ const AdminDashboard = () => {
                                 </div>
 
                                 <div className="modal-actions-luxury">
-                                    <button type="button" className="btn-cancel-modal" onClick={() => setServiceModalOpen(false)}>Cancel</button>
-                                    <button type="submit" className="btn-save-modal">SAVE SERVICE DETAILS</button>
+                                    <button type="button" className="btn-cancel-modal" onClick={() => setServiceModalOpen(false)} disabled={isSavingService}>Cancel</button>
+                                    <button type="submit" className="btn-save-modal" disabled={isSavingService}>
+                                        {isSavingService ? 'SAVING...' : 'SAVE SERVICE DETAILS'}
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -6763,13 +6899,13 @@ const AdminDashboard = () => {
 
                                 <div className="form-row-2col">
                                     <div className="form-group">
-                                        <label style={{ color: '#c48b59' }}>Highlighted Title Text (Gold Accent)</label>
+                                        <label style={{ color: '#6c7a89' }}>Highlighted Title Text (Gold Accent)</label>
                                         <input
                                             type="text"
                                             placeholder="e.g. Interior Design"
                                             value={serviceHeroForm.titleHighlight || ''}
                                             onChange={(e) => setServiceHeroForm({ ...serviceHeroForm, titleHighlight: e.target.value })}
-                                            style={{ borderColor: '#c48b59' }}
+                                            style={{ borderColor: '#6c7a89' }}
                                         />
                                     </div>
                                     <div className="form-group">
@@ -6815,7 +6951,7 @@ const AdminDashboard = () => {
                                 </div>
 
                                 <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px', marginTop: '16px' }}>
-                                    <h4 style={{ color: '#c48b59', fontSize: '0.95rem', marginBottom: '12px' }}>
+                                    <h4 style={{ color: '#6c7a89', fontSize: '0.95rem', marginBottom: '12px' }}>
                                         "What We Offer" Section Header
                                     </h4>
                                     <div className="form-row-2col">
@@ -6850,7 +6986,7 @@ const AdminDashboard = () => {
                                 </div>
 
                                 <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px', marginTop: '16px' }}>
-                                    <h4 style={{ color: '#c48b59', fontSize: '0.95rem', marginBottom: '12px' }}>
+                                    <h4 style={{ color: '#6c7a89', fontSize: '0.95rem', marginBottom: '12px' }}>
                                         "Our Process" Section Header
                                     </h4>
                                     <div className="form-row-2col">
@@ -6885,7 +7021,7 @@ const AdminDashboard = () => {
                                 </div>
 
                                 <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px', marginTop: '16px' }}>
-                                    <h4 style={{ color: '#c48b59', fontSize: '0.95rem', marginBottom: '12px' }}>
+                                    <h4 style={{ color: '#6c7a89', fontSize: '0.95rem', marginBottom: '12px' }}>
                                         "Why Choose Us" Section Header & Quote Box
                                     </h4>
                                     <div className="form-row-2col">
@@ -6953,7 +7089,7 @@ const AdminDashboard = () => {
                                             <label>Quote Author / Brand Subtitle</label>
                                             <input
                                                 type="text"
-                                                placeholder="GOOD INTERIOR DESIGN STUDIO"
+                                                placeholder="Senkadagala Architects"
                                                 value={serviceHeroForm.whyQuoteAuthor || ''}
                                                 onChange={(e) => setServiceHeroForm({ ...serviceHeroForm, whyQuoteAuthor: e.target.value })}
                                             />
@@ -7474,7 +7610,7 @@ const AdminDashboard = () => {
                                 </div>
                                 <div className="form-group">
                                     <label>Location Label (shown as chip on map)</label>
-                                    <input type="text" placeholder="e.g. Good Interior Design Studio" value={contactMapForm.label} onChange={(e) => setContactMapForm({ ...contactMapForm, label: e.target.value })} />
+                                    <input type="text" placeholder="e.g. Senkadagala Architects" value={contactMapForm.label} onChange={(e) => setContactMapForm({ ...contactMapForm, label: e.target.value })} />
                                 </div>
                                 <div className="form-group">
                                     <label>Location Address (shown in chip)</label>
@@ -7521,7 +7657,7 @@ const AdminDashboard = () => {
                                 </div>
 
                                 <div style={{ margin: '15px 0 10px 0', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '15px' }}>
-                                    <h4 style={{ color: '#d4af37', fontSize: '0.9rem', margin: '0 0 10px 0' }}>Social Media Links (Optional)</h4>
+                                    <h4 style={{ color: '#9ca3af', fontSize: '0.9rem', margin: '0 0 10px 0' }}>Social Media Links (Optional)</h4>
                                     <div className="form-row-2col">
                                         <div className="form-group">
                                             <label>Facebook URL</label>
@@ -7534,8 +7670,8 @@ const AdminDashboard = () => {
                                     </div>
                                     <div className="form-row-2col">
                                         <div className="form-group">
-                                            <label>Pinterest URL</label>
-                                            <input type="text" placeholder="https://pinterest.com/yourpage" value={contactJourneyForm.pinterest} onChange={(e) => setContactJourneyForm({ ...contactJourneyForm, pinterest: e.target.value })} />
+                                            <label>TikTok URL</label>
+                                            <input type="text" placeholder="https://tiktok.com/@yourpage" value={contactJourneyForm.tiktok} onChange={(e) => setContactJourneyForm({ ...contactJourneyForm, tiktok: e.target.value })} />
                                         </div>
                                         <div className="form-group">
                                             <label>LinkedIn URL</label>
@@ -7545,7 +7681,7 @@ const AdminDashboard = () => {
                                 </div>
 
                                 <div style={{ margin: '15px 0 10px 0', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '15px' }}>
-                                    <h4 style={{ color: '#d4af37', fontSize: '0.9rem', margin: '0 0 10px 0' }}>Journey Grid Images (4 Images - Optional)</h4>
+                                    <h4 style={{ color: '#9ca3af', fontSize: '0.9rem', margin: '0 0 10px 0' }}>Journey Grid Images (4 Images - Optional)</h4>
                                     <span style={{ fontSize: '0.78rem', color: '#94a3b8', display: 'block', marginBottom: '12px' }}>Upload custom images or leave empty to automatically display portfolio gallery items.</span>
 
                                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
@@ -7647,7 +7783,7 @@ const AdminDashboard = () => {
                                             </div>
                                             <label
                                                 htmlFor="logo-file-input"
-                                                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'linear-gradient(135deg, #b38058, #9c6c47)', color: '#fff', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer', fontSize: '0.82rem', fontWeight: '700', letterSpacing: '0.5px' }}
+                                                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'linear-gradient(135deg, #6c7a89, #9c6c47)', color: '#fff', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer', fontSize: '0.82rem', fontWeight: '700', letterSpacing: '0.5px' }}
                                             >
                                                 <TbPhoto /> Choose Logo Image
                                             </label>
@@ -7678,7 +7814,7 @@ const AdminDashboard = () => {
                                 </div>
                                 <div className="form-row-2col">
                                     <div className="form-group">
-                                        <label>Site Title (e.g. GOOD INTERIOR)</label>
+                                        <label>Site Title (e.g. Senkadagala Architects)</label>
                                         <input type="text" required value={globalSettingsForm.siteTitle} onChange={(e) => setGlobalSettingsForm({ ...globalSettingsForm, siteTitle: e.target.value })} />
                                     </div>
                                     <div className="form-group">
@@ -7794,7 +7930,7 @@ const AdminDashboard = () => {
                                 </div>
 
                                 <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '14px', marginTop: '14px' }}>
-                                    <h4 style={{ color: '#c48b59', fontSize: '0.9rem', marginBottom: '10px' }}>Author Details</h4>
+                                    <h4 style={{ color: '#6c7a89', fontSize: '0.9rem', marginBottom: '10px' }}>Author Details</h4>
                                     <div className="form-row-2col">
                                         <div className="form-group">
                                             <label>Author Name</label>
@@ -7831,7 +7967,7 @@ const AdminDashboard = () => {
                                         />
                                         {blogPostForm.authorImg && (
                                             <div style={{ marginTop: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                                <div style={{ width: '50px', height: '50px', borderRadius: '50%', overflow: 'hidden', border: '2px solid #c48b59', flexShrink: 0 }}>
+                                                <div style={{ width: '50px', height: '50px', borderRadius: '50%', overflow: 'hidden', border: '2px solid #6c7a89', flexShrink: 0 }}>
                                                     <img src={blogPostForm.authorImg} alt="Author Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                                 </div>
                                                 <span style={{ fontSize: '0.78rem', color: '#94a3b8' }}>Author Avatar Preview</span>
@@ -7874,7 +8010,7 @@ const AdminDashboard = () => {
                                             checked={blogPostForm.isPopular}
                                             onChange={(e) => setBlogPostForm({ ...blogPostForm, isPopular: e.target.checked })}
                                         />
-                                        <TbTrendingUp style={{ fontSize: '14px', color: '#c48b59' }} /> Show in Popular Posts Sidebar
+                                        <TbTrendingUp style={{ fontSize: '14px', color: '#6c7a89' }} /> Show in Popular Posts Sidebar
                                     </label>
                                 </div>
 
@@ -8219,8 +8355,8 @@ const AdminDashboard = () => {
                                     </div>
                                 </div>
                                 {editingUser && (
-                                    <div style={{ background: 'rgba(196,139,89,0.08)', border: '1px solid rgba(196,139,89,0.2)', borderRadius: '8px', padding: '10px 14px', fontSize: '0.8rem', color: '#94a3b8', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                        <TbLock style={{ color: '#c48b59', flexShrink: 0 }} />
+                                    <div style={{ background: 'rgba(108, 122, 137,0.08)', border: '1px solid rgba(108, 122, 137,0.2)', borderRadius: '8px', padding: '10px 14px', fontSize: '0.8rem', color: '#94a3b8', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <TbLock style={{ color: '#6c7a89', flexShrink: 0 }} />
                                         Leave the password field empty to keep the user's current password unchanged.
                                     </div>
                                 )}
@@ -8240,7 +8376,7 @@ const AdminDashboard = () => {
                     <div className="modal-overlay-luxury" style={{ zIndex: 100000, padding: '40px', boxSizing: 'border-box', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div className="preview-modal-box" style={{
                             position: 'relative', width: '100%', maxWidth: '1280px', height: '100%', maxHeight: '800px',
-                            background: '#0d1117', border: '1px solid rgba(196,139,89,0.3)', borderRadius: '16px',
+                            background: '#0d1117', border: '1px solid rgba(108, 122, 137,0.3)', borderRadius: '16px',
                             boxShadow: '0 30px 80px rgba(0,0,0,0.8)', overflow: 'hidden', display: 'flex', flexDirection: 'column'
                         }}>
                             {/* Browser-like Toolbar */}
@@ -8250,7 +8386,7 @@ const AdminDashboard = () => {
                                     <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ffbd2e' }}></div>
                                     <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#27c93f' }}></div>
                                 </div>
-                                <div style={{ fontSize: '12px', color: '#c48b59', textTransform: 'uppercase', letterSpacing: '1.5px', fontWeight: 600 }}>Live Hero Preview</div>
+                                <div style={{ fontSize: '12px', color: '#6c7a89', textTransform: 'uppercase', letterSpacing: '1.5px', fontWeight: 600 }}>Live Hero Preview</div>
                                 <button onClick={() => setLivePreviewSlide(null)} style={{ background: 'transparent', border: 'none', color: '#94a3b8', fontSize: '24px', cursor: 'pointer' }}>&times;</button>
                             </div>
 
@@ -8388,8 +8524,8 @@ const AdminDashboard = () => {
                                 <input type="text" value={careersHeroForm.bgImage} onChange={e => setCareersHeroForm({ ...careersHeroForm, bgImage: e.target.value })} placeholder="Paste Image URL or Leave empty for default background" />
 
                                 {/* Live Image Preview Box */}
-                                <div style={{ marginTop: '12px', background: '#0b0d11', borderRadius: '10px', padding: '12px', border: '1px dashed rgba(212,175,55,0.3)' }}>
-                                    <span style={{ fontSize: '0.72rem', color: '#c48b59', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>
+                                <div style={{ marginTop: '12px', background: '#0b0d11', borderRadius: '10px', padding: '12px', border: '1px dashed rgba(156, 163, 175,0.3)' }}>
+                                    <span style={{ fontSize: '0.72rem', color: '#6c7a89', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>
                                         Live Image Preview
                                     </span>
                                     <div style={{ position: 'relative', width: '100%', height: '120px', borderRadius: '6px', overflow: 'hidden' }}>
@@ -8452,7 +8588,7 @@ const AdminDashboard = () => {
                                     rows="3"
                                     value={careersAboutForm.aboutDesc}
                                     onChange={e => setCareersAboutForm({ ...careersAboutForm, aboutDesc: e.target.value })}
-                                    placeholder="At Good Interior, we believe that a strong team..."
+                                    placeholder="At Senkadagala Architects, we believe that a strong team..."
                                 />
                             </div>
                             <div className="form-group">
@@ -8464,7 +8600,7 @@ const AdminDashboard = () => {
                                         onChange={e => setCareersAboutForm({ ...careersAboutForm, aboutImage: e.target.value })}
                                         placeholder="https://... or upload below"
                                     />
-                                    <label className="btn-upload-label" style={{ flexShrink: 0, padding: '10px 14px', background: '#c48b59', color: '#fff', borderRadius: '8px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: '600' }}>
+                                    <label className="btn-upload-label" style={{ flexShrink: 0, padding: '10px 14px', background: '#6c7a89', color: '#fff', borderRadius: '8px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: '600' }}>
                                         Upload Image
                                         <input
                                             type="file"
@@ -8474,8 +8610,8 @@ const AdminDashboard = () => {
                                         />
                                     </label>
                                 </div>
-                                <div style={{ marginTop: '10px', background: '#0b0d11', borderRadius: '8px', padding: '12px', border: '1px dashed rgba(196,139,89,0.4)' }}>
-                                    <span style={{ fontSize: '0.72rem', color: '#c48b59', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>
+                                <div style={{ marginTop: '10px', background: '#0b0d11', borderRadius: '8px', padding: '12px', border: '1px dashed rgba(108, 122, 137,0.4)' }}>
+                                    <span style={{ fontSize: '0.72rem', color: '#6c7a89', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>
                                         Image Live Preview
                                     </span>
                                     <div style={{ position: 'relative', width: '100%', height: '120px', borderRadius: '6px', overflow: 'hidden' }}>
@@ -8592,7 +8728,7 @@ const AdminDashboard = () => {
                                         onChange={e => setCareersWhyForm({ ...careersWhyForm, whyBgImage: e.target.value })}
                                         placeholder="https://... or upload below"
                                     />
-                                    <label className="btn-upload-label" style={{ flexShrink: 0, padding: '10px 14px', background: '#c48b59', color: '#fff', borderRadius: '8px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: '600' }}>
+                                    <label className="btn-upload-label" style={{ flexShrink: 0, padding: '10px 14px', background: '#6c7a89', color: '#fff', borderRadius: '8px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: '600' }}>
                                         Upload Image
                                         <input
                                             type="file"
@@ -8602,8 +8738,8 @@ const AdminDashboard = () => {
                                         />
                                     </label>
                                 </div>
-                                <div style={{ marginTop: '10px', background: '#0b0d11', borderRadius: '8px', padding: '12px', border: '1px dashed rgba(196,139,89,0.4)' }}>
-                                    <span style={{ fontSize: '0.72rem', color: '#c48b59', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>
+                                <div style={{ marginTop: '10px', background: '#0b0d11', borderRadius: '8px', padding: '12px', border: '1px dashed rgba(108, 122, 137,0.4)' }}>
+                                    <span style={{ fontSize: '0.72rem', color: '#6c7a89', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>
                                         Background Image Live Preview
                                     </span>
                                     <div style={{ position: 'relative', width: '100%', height: '120px', borderRadius: '6px', overflow: 'hidden' }}>
@@ -8729,7 +8865,7 @@ const AdminDashboard = () => {
                                         onChange={e => setCareersCtaForm({ ...careersCtaForm, ctaImage: e.target.value })}
                                         placeholder="https://... or upload image"
                                     />
-                                    <label className="btn-upload-label" style={{ flexShrink: 0, padding: '10px 14px', background: '#c48b59', color: '#fff', borderRadius: '8px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: '600' }}>
+                                    <label className="btn-upload-label" style={{ flexShrink: 0, padding: '10px 14px', background: '#6c7a89', color: '#fff', borderRadius: '8px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: '600' }}>
                                         Upload Image
                                         <input
                                             type="file"
@@ -8739,8 +8875,8 @@ const AdminDashboard = () => {
                                         />
                                     </label>
                                 </div>
-                                <div style={{ marginTop: '10px', background: '#0b0d11', borderRadius: '8px', padding: '12px', border: '1px dashed rgba(196,139,89,0.4)' }}>
-                                    <span style={{ fontSize: '0.72rem', color: '#c48b59', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>
+                                <div style={{ marginTop: '10px', background: '#0b0d11', borderRadius: '8px', padding: '12px', border: '1px dashed rgba(108, 122, 137,0.4)' }}>
+                                    <span style={{ fontSize: '0.72rem', color: '#6c7a89', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>
                                         Feature Image Live Preview
                                     </span>
                                     <div style={{ position: 'relative', width: '100%', height: '140px', borderRadius: '6px', overflow: 'hidden' }}>
@@ -8767,7 +8903,7 @@ const AdminDashboard = () => {
                                     rows="2"
                                     value={careersCtaForm.ctaQuote}
                                     onChange={e => setCareersCtaForm({ ...careersCtaForm, ctaQuote: e.target.value })}
-                                    placeholder="At Good Interior, we don't just design spaces..."
+                                    placeholder="At Senkadagala Architects, we don't just design spaces..."
                                 />
                             </div>
                             <div className="form-group">
@@ -8794,13 +8930,13 @@ const AdminDashboard = () => {
                     <div className="modal-box-luxury" style={{ maxWidth: '650px' }}>
                         <div className="modal-header-luxury">
                             <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <TbMail style={{ color: '#c48b59' }} /> Send Email to Candidate
+                                <TbMail style={{ color: '#6c7a89' }} /> Send Email to Candidate
                             </h3>
                             <button className="btn-close-modal" onClick={() => setCandidateEmailModalOpen(false)}>×</button>
                         </div>
                         <form onSubmit={handleSendCandidateEmail} className="modal-form-luxury modal-body-luxury">
-                            <div style={{ background: '#0b0d11', border: '1px solid rgba(196,139,89,0.25)', borderRadius: '10px', padding: '14px 18px', marginBottom: '20px' }}>
-                                <div style={{ fontSize: '0.75rem', color: '#c48b59', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>
+                            <div style={{ background: '#0b0d11', border: '1px solid rgba(108, 122, 137,0.25)', borderRadius: '10px', padding: '14px 18px', marginBottom: '20px' }}>
+                                <div style={{ fontSize: '0.75rem', color: '#6c7a89', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>
                                     Candidate Details
                                 </div>
                                 <div style={{ fontSize: '1.05rem', color: '#ffffff', fontWeight: '700' }}>
@@ -8811,14 +8947,14 @@ const AdminDashboard = () => {
                                         <TbMail style={{ color: '#60a5fa' }} /> {selectedAppForEmail.email}
                                     </span>
                                     <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                                        <TbBriefcase style={{ color: '#c48b59' }} /> {selectedAppForEmail.position}
+                                        <TbBriefcase style={{ color: '#6c7a89' }} /> {selectedAppForEmail.position}
                                     </span>
                                 </div>
                             </div>
 
                             {/* Quick Template Presets */}
                             <div className="form-group" style={{ marginBottom: '20px' }}>
-                                <label style={{ fontSize: '0.78rem', color: '#c48b59', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '10px' }}>
+                                <label style={{ fontSize: '0.78rem', color: '#6c7a89', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '10px' }}>
                                     <TbSend /> Quick Email Templates (Click to Apply)
                                 </label>
                                 <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
@@ -8925,7 +9061,7 @@ const AdminDashboard = () => {
                                 <button type="button" className="btn-cancel-modal" onClick={() => setCandidateEmailModalOpen(false)}>
                                     Cancel
                                 </button>
-                                <button type="submit" className="btn-save-modal" disabled={emailForm.isSending} style={{ background: '#c48b59', color: '#fff', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                                <button type="submit" className="btn-save-modal" disabled={emailForm.isSending} style={{ background: '#6c7a89', color: '#fff', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                                     {emailForm.isSending ? 'Sending Email...' : <>SEND EMAIL TO CANDIDATE <TbSend /></>}
                                 </button>
                             </div>
@@ -8943,7 +9079,7 @@ const AdminDashboard = () => {
                                 <h3>Confirmation Required</h3>
                                 <button className="btn-close-modal" onClick={handleConfirmNo}>×</button>
                             </div>
-                            <div className="modal-body" style={{ padding: '20px 0', fontSize: '1rem', color: '#c48b59' }}>
+                            <div className="modal-body" style={{ padding: '20px 0', fontSize: '1rem', color: '#6c7a89' }}>
                                 <p>{confirmState.message || "Are you sure you want to proceed? This action cannot be undone."}</p>
                             </div>
                             <div className="modal-actions-luxury" style={{ justifyContent: 'center' }}>

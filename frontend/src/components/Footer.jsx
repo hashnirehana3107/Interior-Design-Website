@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
-import logo from '../assets/logo.svg';
-import { FaFacebookF, FaInstagram, FaPinterestP, FaLinkedinIn, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaClock } from 'react-icons/fa';
+import logo from '../assets/senkadagala_logo.png';
+import { FaFacebookF, FaInstagram, FaTiktok, FaLinkedinIn, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaClock } from 'react-icons/fa';
 
 import API_BASE from '../config/api';
 
@@ -12,7 +12,7 @@ const Footer = () => {
     const [socialLinks, setSocialLinks] = useState({
         facebook: '',
         instagram: '',
-        pinterest: '',
+        tiktok: '',
         linkedin: ''
     });
 
@@ -29,7 +29,7 @@ const Footer = () => {
 
                 if (servRes.ok) {
                     const data = await servRes.json();
-                    if (data.services && data.services.length > 0) {
+                    if (Array.isArray(data.services)) {
                         setServices(data.services);
                     }
                 }
@@ -63,14 +63,8 @@ const Footer = () => {
             <div className="footer-top">
                 <div className="footer-col brand-col">
                     <div className="logo-container footer-logo">
-                        {(globalSettings?.logoUrl || logo) && (
-                            <div className="logo-mark">
-                                <img src={globalSettings?.logoUrl || logo} alt="Good Interior Logo" />
-                            </div>
-                        )}
-                        <div className="logo-text">
-                            <span className="logo-title">{globalSettings?.siteTitle || 'GOOD INTERIOR'}</span>
-                            <span className="logo-subtitle">{globalSettings?.siteSubtitle || 'DESIGN STUDIO'}</span>
+                        <div className="logo-mark">
+                            <img src={globalSettings?.logoUrl || logo} alt="Senkadagala Architects Logo" />
                         </div>
                     </div>
                     <p className="footer-desc">
@@ -83,19 +77,18 @@ const Footer = () => {
                         {socialLinks.instagram && (
                             <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
                         )}
-                        {socialLinks.pinterest && (
-                            <a href={socialLinks.pinterest} target="_blank" rel="noopener noreferrer"><FaPinterestP /></a>
+                        {socialLinks.tiktok && (
+                            <a href={socialLinks.tiktok} target="_blank" rel="noopener noreferrer"><FaTiktok /></a>
                         )}
                         {socialLinks.linkedin && (
                             <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer"><FaLinkedinIn /></a>
                         )}
-                        {/* Fallback: show placeholder icons if no links are set */}
-                        {!socialLinks.facebook && !socialLinks.instagram && !socialLinks.pinterest && !socialLinks.linkedin && (
+                        {/* Fallback: show placeholder icons if no core links are set */}
+                        {!socialLinks.facebook && !socialLinks.instagram && !socialLinks.tiktok && (
                             <>
                                 <a href="#"><FaFacebookF /></a>
                                 <a href="#"><FaInstagram /></a>
-                                <a href="#"><FaPinterestP /></a>
-                                <a href="#"><FaLinkedinIn /></a>
+                                <a href="#"><FaTiktok /></a>
                             </>
                         )}
                     </div>
@@ -176,7 +169,7 @@ const Footer = () => {
             </div>
 
             <div className="footer-bottom">
-                <p>{globalSettings?.footerCopyright || ' 2025 Good Interior. All Rights Reserved.'}</p>
+                <p>{globalSettings?.footerCopyright || ' 2025 Senkadagala Architects. All Rights Reserved.'}</p>
                 <div className="footer-bottom-links">
                     <Link to="/privacy">Privacy Policy</Link>
                     <span className="separator">|</span>

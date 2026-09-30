@@ -12,7 +12,7 @@
 .admin-executive-topbar {
     background: rgba(14, 17, 23, 0.95);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    border-bottom: 1px solid rgba(156, 163, 175, 0.2);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -34,11 +34,33 @@
     gap: 14px;
 }
 
+.admin-brand-logo-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid #6c7a89;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    box-shadow: 0 0 16px rgba(108, 122, 137, 0.35), 0 4px 10px rgba(0, 0, 0, 0.5);
+    flex-shrink: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.admin-brand-logo-wrapper:hover {
+    transform: scale(1.06);
+    border-color: #9ca3af;
+    box-shadow: 0 0 22px rgba(156, 163, 175, 0.5), 0 6px 14px rgba(0, 0, 0, 0.6);
+}
+
 .admin-brand-logo {
-    height: 38px;
-    max-width: 44px;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 2px 8px rgba(212, 175, 55, 0.3));
+    border-radius: 50%;
 }
 
 .admin-brand-text {
@@ -56,7 +78,7 @@
 
 .brand-sub {
     font-size: 0.68rem;
-    color: #b38058;
+    color: #6c7a89;
     letter-spacing: 2.5px;
     font-weight: 600;
 }
@@ -108,8 +130,8 @@
     align-items: center;
     gap: 8px;
     background: transparent;
-    border: 1px solid rgba(212, 175, 55, 0.4);
-    color: #d4af37;
+    border: 1px solid rgba(156, 163, 175, 0.4);
+    color: #9ca3af;
     padding: 8px 18px;
     border-radius: 8px;
     font-size: 0.82rem;
@@ -120,10 +142,10 @@
 }
 
 .btn-exit-website:hover {
-    background: rgba(212, 175, 55, 0.15);
+    background: rgba(156, 163, 175, 0.15);
     color: #ffffff;
-    border-color: #d4af37;
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+    border-color: #9ca3af;
+    box-shadow: 0 0 15px rgba(156, 163, 175, 0.2);
 }
 
 .admin-profile-pill {
@@ -140,7 +162,7 @@
     width: 34px;
     height: 34px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #b38058 0%, #8c603e 100%);
+    background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
     color: #ffffff;
     display: flex;
     align-items: center;
@@ -195,7 +217,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    color: #b38058;
+    color: #6c7a89;
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 2.5px;
@@ -246,7 +268,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at left center, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+    background: radial-gradient(ellipse at left center, rgba(156, 163, 175, 0.05) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
@@ -254,7 +276,7 @@
 
 .kpi-card:hover {
     transform: translateY(-3px) translateX(2px);
-    border-left-color: #b38058;
+    border-left-color: #6c7a89;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     background: linear-gradient(160deg, #1e2230 0%, #181c27 100%);
 }
@@ -280,9 +302,9 @@
 }
 
 .kpi-icon-box.gold {
-    background: rgba(212, 175, 55, 0.12);
-    color: #d4af37;
-    border: 1px solid rgba(212, 175, 55, 0.25);
+    background: rgba(156, 163, 175, 0.12);
+    color: #9ca3af;
+    border: 1px solid rgba(156, 163, 175, 0.25);
 }
 
 .kpi-icon-box.blue {
@@ -342,7 +364,7 @@
 
 .kpi-subtext {
     font-size: 0.7rem;
-    color: #b38058;
+    color: #6c7a89;
     font-weight: 600;
     letter-spacing: 0.2px;
 }
@@ -394,15 +416,15 @@
 .tab-btn:hover {
     background: #181c26;
     color: #ffffff;
-    border-color: rgba(212, 175, 55, 0.3);
+    border-color: rgba(156, 163, 175, 0.3);
 }
 
 .tab-btn.active {
-    background: linear-gradient(135deg, #b38058 0%, #8c603e 100%);
+    background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
     color: #ffffff;
     font-weight: 600;
-    border-color: #b38058;
-    box-shadow: 0 4px 18px rgba(179, 128, 88, 0.3);
+    border-color: #64748b;
+    box-shadow: 0 4px 18px rgba(100, 116, 139, 0.3);
 }
 
 .tab-icon {
@@ -520,7 +542,7 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    background: linear-gradient(135deg, #b38058 0%, #9c6c47 100%);
+    background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
     color: #ffffff;
     font-family: 'Outfit', sans-serif;
     font-weight: 600;
@@ -531,15 +553,15 @@
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.25s ease;
-    box-shadow: 0 4px 14px rgba(179, 128, 88, 0.25);
+    box-shadow: 0 4px 14px rgba(108, 122, 137, 0.25);
     flex-shrink: 0;
     white-space: nowrap;
 }
 
 .btn-primary-gold:hover {
-    background: linear-gradient(135deg, #c99368 0%, #b38058 100%);
+    background: linear-gradient(135deg, #14223a 0%, #6c7a89 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(179, 128, 88, 0.4);
+    box-shadow: 0 6px 20px rgba(108, 122, 137, 0.4);
 }
 
 .btn-refresh {
@@ -626,7 +648,7 @@
 }
 
 .srv-kicker-tag {
-    background: #c48b59;
+    background: #6c7a89;
     color: #fff;
     font-size: 0.68rem;
     font-weight: 700;
@@ -655,7 +677,7 @@
 
 .srv-deliverables-text {
     font-size: 0.75rem;
-    color: #c48b59;
+    color: #6c7a89;
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -730,7 +752,7 @@
 .view-all-link {
     background: transparent;
     border: none;
-    color: #b38058;
+    color: #6c7a89;
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
@@ -822,7 +844,7 @@
 
 .slide-num {
     font-size: 0.7rem;
-    color: #b38058;
+    color: #6c7a89;
     font-weight: 600;
 }
 
@@ -869,8 +891,8 @@
     top: 12px;
     left: 12px;
     background: rgba(0, 0, 0, 0.8);
-    color: #d4af37;
-    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: #9ca3af;
+    border: 1px solid rgba(156, 163, 175, 0.4);
     padding: 4px 10px;
     border-radius: 6px;
     font-size: 0.75rem;
@@ -904,7 +926,7 @@
 
 .slide-kicker-tag {
     font-size: 0.75rem;
-    color: #b38058;
+    color: #6c7a89;
     font-weight: 700;
     letter-spacing: 1.5px;
     display: block;
@@ -954,8 +976,8 @@
 }
 
 .btn-action-btn.edit:hover {
-    border-color: #b38058;
-    color: #b38058;
+    border-color: #6c7a89;
+    color: #6c7a89;
 }
 
 .btn-action-btn.delete:hover {
@@ -983,15 +1005,15 @@
 }
 
 .action-buttons .btn-edit {
-    background: rgba(179, 128, 88, 0.15);
-    color: #b38058;
-    border-color: rgba(179, 128, 88, 0.3);
+    background: rgba(108, 122, 137, 0.15);
+    color: #6c7a89;
+    border-color: rgba(108, 122, 137, 0.3);
 }
 
 .action-buttons .btn-edit:hover {
-    background: #b38058;
+    background: #6c7a89;
     color: #ffffff;
-    border-color: #b38058;
+    border-color: #6c7a89;
 }
 
 .action-buttons .btn-delete {
@@ -1025,7 +1047,7 @@
 
 .admin-table th {
     background: #11141b;
-    color: #c48b59;
+    color: #6c7a89;
     padding: 14px 18px;
     font-size: 0.75rem;
     font-weight: 700;
@@ -1067,16 +1089,16 @@
 }
 
 .btn-action.edit {
-    background: rgba(196, 139, 89, 0.15);
-    color: #c48b59;
-    border: 1px solid rgba(196, 139, 89, 0.3);
+    background: rgba(108, 122, 137, 0.15);
+    color: #6c7a89;
+    border: 1px solid rgba(108, 122, 137, 0.3);
 }
 
 .btn-action.edit:hover {
-    background: #c48b59;
+    background: #6c7a89;
     color: #ffffff;
-    border-color: #c48b59;
-    box-shadow: 0 4px 12px rgba(196, 139, 89, 0.3);
+    border-color: #6c7a89;
+    box-shadow: 0 4px 12px rgba(108, 122, 137, 0.3);
 }
 
 .btn-action.delete {
@@ -1123,7 +1145,7 @@
     position: absolute;
     bottom: 12px;
     left: 12px;
-    background: rgba(179, 128, 88, 0.9);
+    background: rgba(108, 122, 137, 0.9);
     color: #ffffff;
     font-size: 0.7rem;
     font-weight: 700;
@@ -1240,9 +1262,9 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    background: rgba(179, 128, 88, 0.15);
-    color: #b38058;
-    border: 1px solid rgba(179, 128, 88, 0.3);
+    background: rgba(108, 122, 137, 0.15);
+    color: #6c7a89;
+    border: 1px solid rgba(108, 122, 137, 0.3);
     padding: 6px 12px;
     border-radius: 6px;
     font-size: 0.8rem;
@@ -1252,8 +1274,8 @@
 }
 
 .btn-edit-hero-small:hover {
-    background: rgba(179, 128, 88, 0.25);
-    border-color: #b38058;
+    background: rgba(108, 122, 137, 0.25);
+    border-color: #6c7a89;
     color: #fff;
 }
 
@@ -1281,7 +1303,7 @@
 .mock-kicker {
     display: block;
     font-size: 0.8rem;
-    color: #b38058;
+    color: #6c7a89;
     font-weight: 700;
     letter-spacing: 2px;
     margin-bottom: 12px;
@@ -1296,7 +1318,7 @@
 }
 
 .mock-hero-content h1 .gold-text {
-    color: #d4af37;
+    color: #9ca3af;
 }
 
 .mock-hero-content p {
@@ -1336,7 +1358,7 @@
 
 .srv-kicker {
     font-size: 0.72rem;
-    color: #b38058;
+    color: #6c7a89;
     font-weight: 700;
     letter-spacing: 1.5px;
 }
@@ -1384,12 +1406,12 @@
 
 .admin-table th {
     background: #181c26;
-    color: #b38058;
+    color: #6c7a89;
     font-size: 0.75rem;
     letter-spacing: 1.5px;
     text-align: left;
     padding: 14px 18px;
-    border-bottom: 2px solid rgba(212, 175, 55, 0.2);
+    border-bottom: 2px solid rgba(156, 163, 175, 0.2);
 }
 
 .admin-table td {
@@ -1429,12 +1451,12 @@
 
 .email-link:hover,
 .phone-link:hover {
-    color: #b38058;
+    color: #6c7a89;
 }
 
 .service-badge {
-    background: rgba(179, 128, 88, 0.15);
-    color: #b38058;
+    background: rgba(108, 122, 137, 0.15);
+    color: #6c7a89;
     padding: 4px 12px;
     border-radius: 12px;
     font-size: 0.8rem;
@@ -1518,7 +1540,7 @@
 
 .enquiry-meta {
     font-size: 0.85rem;
-    color: #b38058;
+    color: #6c7a89;
 }
 
 .enquiry-date {
@@ -1552,8 +1574,8 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(179, 128, 88, 0.15);
-    color: #b38058;
+    background: rgba(108, 122, 137, 0.15);
+    color: #6c7a89;
     padding: 8px 16px;
     border-radius: 8px;
     font-size: 0.85rem;
@@ -1562,7 +1584,7 @@
 }
 
 .btn-reply-link:hover {
-    background: #b38058;
+    background: #6c7a89;
     color: #ffffff;
 }
 
@@ -1584,7 +1606,7 @@
 
 .modal-box-luxury {
     background: #141720;
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    border: 1px solid rgba(156, 163, 175, 0.3);
     border-radius: 20px;
     width: 100%;
     max-width: 640px;
@@ -1660,8 +1682,8 @@
 .modal-body-luxury textarea:focus,
 .modal-body-luxury select:focus {
     outline: none;
-    border-color: #b38058;
-    box-shadow: 0 0 10px rgba(179, 128, 88, 0.25);
+    border-color: #6c7a89;
+    box-shadow: 0 0 10px rgba(108, 122, 137, 0.25);
 }
 
 .form-row-2col {
@@ -1689,7 +1711,7 @@
 }
 
 .btn-save-modal {
-    background: linear-gradient(135deg, #b38058 0%, #9c6c47 100%);
+    background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
     color: #ffffff;
     border: none;
     padding: 12px 26px;
@@ -1704,7 +1726,7 @@
     height: 140px;
     border-radius: 10px;
     overflow: hidden;
-    border: 1px solid rgba(212, 175, 55, 0.4);
+    border: 1px solid rgba(156, 163, 175, 0.4);
 }
 
 .img-preview-box img {
@@ -1732,7 +1754,7 @@
     width: 100%;
     padding: 10px 14px;
     background: #0b0f19;
-    border: 1px dashed rgba(196, 139, 89, 0.4);
+    border: 1px dashed rgba(108, 122, 137, 0.4);
     border-radius: 10px;
     color: #94a3b8;
     font-size: 0.82rem;
@@ -1745,15 +1767,15 @@
 .form-group input[type="file"]:hover,
 .modal-form-luxury input[type="file"]:hover,
 .panel-section input[type="file"]:hover {
-    border-color: #c48b59;
-    background: rgba(196, 139, 89, 0.06);
-    box-shadow: 0 0 15px rgba(196, 139, 89, 0.15);
+    border-color: #6c7a89;
+    background: rgba(108, 122, 137, 0.06);
+    box-shadow: 0 0 15px rgba(108, 122, 137, 0.15);
 }
 
 .form-group input[type="file"]::file-selector-button,
 .modal-form-luxury input[type="file"]::file-selector-button,
 .panel-section input[type="file"]::file-selector-button {
-    background: linear-gradient(135deg, #c48b59 0%, #a66e3f 100%);
+    background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
     color: #ffffff;
     border: none;
     padding: 7px 16px;
@@ -1770,9 +1792,9 @@
 .form-group input[type="file"]::file-selector-button:hover,
 .modal-form-luxury input[type="file"]::file-selector-button:hover,
 .panel-section input[type="file"]::file-selector-button:hover {
-    background: linear-gradient(135deg, #d49b69 0%, #b67e4f 100%);
+    background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(196, 139, 89, 0.3);
+    box-shadow: 0 4px 12px rgba(108, 122, 137, 0.3);
 }
 
 /* OR Text Divider Styling */
@@ -1968,7 +1990,7 @@
     }
 
     .admin-subtab-bar::-webkit-scrollbar-thumb {
-        background: rgba(196, 139, 89, 0.4);
+        background: rgba(108, 122, 137, 0.4);
         border-radius: 4px;
     }
 

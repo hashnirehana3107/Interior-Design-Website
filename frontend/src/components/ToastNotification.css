@@ -51,7 +51,7 @@
 }
 
 .toast-icon.info {
-    color: #B38058;
+    color: #6c7a89;
 }
 
 .toast-message {
@@ -105,7 +105,7 @@
 .toast-notification-wrapper.info {
     background-color: #fffbe8;
     border: 1px solid #ffe58f;
-    border-left: 5px solid #B38058;
+    border-left: 5px solid #6c7a89;
     color: #854d0e;
 }
 

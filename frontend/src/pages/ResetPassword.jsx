@@ -78,7 +78,7 @@ const ResetPassword = () => {
             <div className="rp-card">
                 {/* Logo / Brand */}
                 <div className="rp-brand">
-                    <span className="rp-brand-name">GOOD INTERIOR</span>
+                    <span className="rp-brand-name">Senkadagala Architects</span>
                     <span className="rp-brand-sub">DESIGN STUDIO</span>
                 </div>
 

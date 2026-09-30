@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const HomePageSettings = require('../models/HomePageSettings');
+const { getCache, setCache, clearCache } = require('../utils/cache');
 
 // Default mock data
 const defaultSettings = {
     about: {
         kicker: 'WHO WE ARE',
         title: 'We are a passionate\ninterior design studio.',
-        desc1: 'At Good Interior, we believe that great design improves the way people live and work.',
+        desc1: 'At Senkadagala Architects, we believe that great design improves the way people live and work.',
         desc2: 'We blend creativity, functionality and detail to deliver spaces that are beautiful, comfortable and uniquely yours.',
         buttonText: 'ABOUT OUR STUDIO',
         buttonLink: '/about',
@@ -28,16 +29,22 @@ const defaultSettings = {
 // Get settings
 router.get('/', async (req, res) => {
     try {
-        let settings = await HomePageSettings.findOne();
+        const cached = getCache('home_page_settings');
+        if (cached) return res.json(cached);
+
+        let settings = await HomePageSettings.findOne().maxTimeMS(5000).lean();
         if (!settings) {
             settings = await HomePageSettings.create(defaultSettings);
         } else if (!settings.about || !settings.about.title) {
-            // Document exists but empty fields, populate it
-            settings.about = defaultSettings.about;
-            settings.whyChoose = defaultSettings.whyChoose;
-            await settings.save();
+            const doc = await HomePageSettings.findOne();
+            doc.about = defaultSettings.about;
+            doc.whyChoose = defaultSettings.whyChoose;
+            await doc.save();
+            settings = doc.toObject();
         }
-        res.json({ settings });
+        const payload = { settings };
+        setCache('home_page_settings', payload, 60);
+        res.json(payload);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -56,6 +63,7 @@ router.put('/', async (req, res) => {
         if (whyChoose) settings.whyChoose = whyChoose;
 
         await settings.save();
+        clearCache('home_page_settings');
         res.json({ message: 'Home Page Settings updated successfully', settings });
     } catch (err) {
         res.status(400).json({ message: err.message });

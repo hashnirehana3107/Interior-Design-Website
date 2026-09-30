@@ -30,7 +30,7 @@ const authBrandingSchema = new mongoose.Schema({
     },
     signupSubtitle: {
         type: String,
-        default: 'Join Good Interior Studio to curate your dream space, track design consultations, and access exclusive portfolio concepts.'
+        default: 'Join Senkadagala Architects to curate your dream space, track design consultations, and access exclusive portfolio concepts.'
     },
     signupFeatures: {
         type: [signupFeatureSchema],

@@ -5,7 +5,7 @@ const homePageSettingsSchema = new mongoose.Schema({
     about: {
         kicker: { type: String, default: 'WHO WE ARE' },
         title: { type: String, default: 'We are a passionate<br />interior design studio.' },
-        desc1: { type: String, default: 'At Good Interior, we believe that great design improves the way people live and work.' },
+        desc1: { type: String, default: 'At Senkadagala Architects, we believe that great design improves the way people live and work.' },
         desc2: { type: String, default: 'We blend creativity, functionality and detail to deliver spaces that are beautiful, comfortable and uniquely yours.' },
         buttonText: { type: String, default: 'ABOUT OUR STUDIO' },
         buttonLink: { type: String, default: '/about' },

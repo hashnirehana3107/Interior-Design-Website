@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const HeroSlide = require('../models/HeroSlide');
+const { getCache, setCache, clearCache } = require('../utils/cache');
 const heroBg = '../assets/hero_bg.png'; // default ref identifier
 
 // Initial seed slides if database is empty
@@ -36,18 +37,23 @@ const defaultHeroSlides = [
 // @access  Public
 router.get('/', async (req, res) => {
     try {
-        let slides = await HeroSlide.find({ active: true }).sort({ order: 1, createdAt: -1 });
+        const cached = getCache('hero_slides_public');
+        if (cached) return res.status(200).json(cached);
+
+        let slides = await HeroSlide.find({ active: true }).sort({ order: 1, createdAt: -1 }).lean();
 
         // Auto-seed if database has no slides yet
         if (slides.length === 0) {
             const count = await HeroSlide.countDocuments();
             if (count === 0) {
                 await HeroSlide.insertMany(defaultHeroSlides);
-                slides = await HeroSlide.find({ active: true }).sort({ order: 1, createdAt: -1 });
+                slides = await HeroSlide.find({ active: true }).sort({ order: 1, createdAt: -1 }).lean();
             }
         }
 
-        res.status(200).json({ slides });
+        const payload = { slides };
+        setCache('hero_slides_public', payload, 60);
+        res.status(200).json(payload);
     } catch (error) {
         console.error('Fetch Hero Slides Error:', error);
         res.status(500).json({ message: 'Failed to fetch hero slides' });
@@ -59,12 +65,17 @@ router.get('/', async (req, res) => {
 // @access  Public / Admin
 router.get('/admin/all', async (req, res) => {
     try {
-        let slides = await HeroSlide.find().sort({ order: 1, createdAt: -1 });
+        const cached = getCache('hero_slides_admin');
+        if (cached) return res.status(200).json(cached);
+
+        let slides = await HeroSlide.find().sort({ order: 1, createdAt: -1 }).lean();
         if (slides.length === 0) {
             await HeroSlide.insertMany(defaultHeroSlides);
-            slides = await HeroSlide.find().sort({ order: 1, createdAt: -1 });
+            slides = await HeroSlide.find().sort({ order: 1, createdAt: -1 }).lean();
         }
-        res.status(200).json({ slides });
+        const payload = { slides };
+        setCache('hero_slides_admin', payload, 60);
+        res.status(200).json(payload);
     } catch (error) {
         console.error('Fetch Admin Hero Slides Error:', error);
         res.status(500).json({ message: 'Failed to fetch hero slides' });
@@ -92,6 +103,7 @@ router.post('/', async (req, res) => {
         });
 
         await newSlide.save();
+        clearCache('hero_slides');
         console.log(`✅ [ADMIN HERO SLIDE ADDED] ID: ${newSlide._id}`);
         res.status(201).json({ message: 'Hero slide created successfully', slide: newSlide });
     } catch (error) {
@@ -125,6 +137,7 @@ router.put('/:id', async (req, res) => {
             return res.status(404).json({ message: 'Hero slide not found' });
         }
 
+        clearCache('hero_slides');
         console.log(`✅ [ADMIN HERO SLIDE UPDATED] ID: ${updatedSlide._id}`);
         res.status(200).json({ message: 'Hero slide updated successfully', slide: updatedSlide });
     } catch (error) {
@@ -143,6 +156,7 @@ router.delete('/:id', async (req, res) => {
             return res.status(404).json({ message: 'Hero slide not found' });
         }
 
+        clearCache('hero_slides');
         console.log(`✅ [ADMIN HERO SLIDE DELETED] ID: ${req.params.id}`);
         res.status(200).json({ message: 'Hero slide deleted successfully' });
     } catch (error) {

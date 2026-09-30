@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Header.css';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
-import logo from '../assets/logo.svg';
+import logo from '../assets/senkadagala_logo.png';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { FiUser, FiLogOut, FiChevronDown, FiShield } from 'react-icons/fi';
 
@@ -81,14 +81,8 @@ const Header = () => {
         <header className="site-header">
             <div className="header-inner">
                 <Link to="/" className="logo-container" onClick={closeMobileMenu}>
-                    {(globalSettings?.logoUrl || logo) && (
-                        <div className="logo-mark">
-                            <img src={globalSettings?.logoUrl || logo} alt="Good Interior" />
-                        </div>
-                    )}
-                    <div className="logo-text">
-                        <span className="logo-title">{globalSettings?.siteTitle || 'GOOD INTERIOR'}</span>
-                        <span className="logo-subtitle">{globalSettings?.siteSubtitle || 'DESIGN STUDIO'}</span>
+                    <div className="logo-mark">
+                        <img src={globalSettings?.logoUrl || logo} alt="Senkadagala Architects" />
                     </div>
                 </Link>
 

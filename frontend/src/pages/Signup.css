@@ -28,13 +28,13 @@
 }
 
 .feature-icon {
-    color: #d4af37;
+    color: #9ca3af;
     font-size: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(179, 128, 88, 0.15);
-    border: 1px solid rgba(179, 128, 88, 0.35);
+    background: rgba(108, 122, 137, 0.15);
+    border: 1px solid rgba(108, 122, 137, 0.35);
     padding: 12px;
     border-radius: 12px;
     flex-shrink: 0;
@@ -43,8 +43,8 @@
 }
 
 .feature-item:hover .feature-icon {
-    background: rgba(179, 128, 88, 0.3);
-    border-color: #d4af37;
+    background: rgba(108, 122, 137, 0.3);
+    border-color: #9ca3af;
     transform: translateY(-2px);
 }
 
@@ -109,8 +109,8 @@
 
 .custom-select-wrapper select:focus {
     outline: none;
-    border-color: #B38058;
-    box-shadow: 0 0 0 3px rgba(179, 128, 88, 0.1);
+    border-color: #6c7a89;
+    box-shadow: 0 0 0 3px rgba(108, 122, 137, 0.1);
 }
 
 .custom-select-wrapper select:invalid {
@@ -135,7 +135,7 @@
 }
 
 .req-icon-container {
-    color: #B38058;
+    color: #6c7a89;
     font-size: 26px;
     margin-top: 2px;
 }
@@ -192,13 +192,13 @@
 }
 
 .terms-checkbox a {
-    color: #B38058;
+    color: #6c7a89;
     text-decoration: none;
     transition: 0.3s;
 }
 
 .terms-checkbox a:hover {
-    color: #9C6C47;
+    color: #222221;
 }
 
 /* Responsiveness overrides for signup */

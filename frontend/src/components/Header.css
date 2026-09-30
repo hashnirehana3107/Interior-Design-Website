@@ -17,7 +17,7 @@
     max-width: 1600px;
     margin: 0 auto;
     padding: 0 30px;
-    height: 95px;
+    height: 115px;
 }
 
 /* Logo Styles */
@@ -33,14 +33,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
+    width: auto;
+    height: 72px;
     flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.logo-container:hover .logo-mark {
+    transform: scale(1.02);
 }
 
 .logo-mark img {
-    width: 100%;
     height: 100%;
+    width: auto;
+    max-height: 72px;
+    max-width: 280px;
     object-fit: contain;
 }
 
@@ -52,19 +59,20 @@
 
 .logo-title {
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 700;
     color: #1a1a1a;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     line-height: 1.1;
+    text-transform: uppercase;
 }
 
 .logo-subtitle {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
-    color: #B38058;
+    color: #475569;
     letter-spacing: 3px;
     text-transform: uppercase;
-    margin-top: 2px;
+    margin-top: 3px;
 }
 
 /* Navigation Styles */
@@ -98,11 +106,17 @@
 }
 
 .main-nav a:hover {
-    color: #B38058;
+    background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .main-nav a.active {
-    color: #B38058;
+    background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .main-nav a.active::after {
@@ -111,8 +125,9 @@
     left: 0;
     right: 0;
     bottom: 0;
-    height: 2px;
-    background-color: #B38058;
+    height: 2.5px;
+    background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
+    border-radius: 2px;
 }
 
 /* Header Action Container */
@@ -148,14 +163,14 @@
 /* Join Us Button */
 .btn-join-us {
     background-color: transparent;
-    color: #B38058;
+    color: #000000;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     padding: 12px 28px;
     border-radius: 2px;
-    border: 1.5px solid #B38058;
+    border: 1.5px solid #000000;
     cursor: pointer;
     font-family: inherit;
     white-space: nowrap;
@@ -165,9 +180,9 @@
 }
 
 .btn-join-us:hover {
-    background-color: #B38058;
+    background-color: #000000;
     color: #ffffff;
-    box-shadow: 0 6px 18px rgba(179, 128, 88, 0.3);
+    box-shadow: 0 6px 18px rgba(108, 122, 137, 0.3);
 }
 
 /* User Profile Dropdown Pill (Matches user mockup image) */
@@ -192,15 +207,15 @@
 .user-profile-pill:hover,
 .user-profile-pill.active {
     background-color: #F0EADF;
-    border-color: #B38058;
-    box-shadow: 0 4px 12px rgba(179, 128, 88, 0.12);
+    border-color: #6c7a89;
+    box-shadow: 0 4px 12px rgba(108, 122, 137, 0.12);
 }
 
 .user-pill-avatar {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background-color: #B38058;
+    background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
     color: #ffffff;
     display: flex;
     align-items: center;
@@ -241,7 +256,7 @@
 
 .chevron-icon.rotated {
     transform: rotate(180deg);
-    color: #B38058;
+    color: #6c7a89;
 }
 
 /* User Profile Dropdown Menu Popup */
@@ -282,14 +297,14 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #B38058 0%, #8C5C38 100%);
+    background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
     color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 18px;
     font-weight: 700;
-    box-shadow: 0 4px 10px rgba(179, 128, 88, 0.25);
+    box-shadow: 0 4px 10px rgba(108, 122, 137, 0.25);
     flex-shrink: 0;
 }
 
@@ -323,7 +338,7 @@
     gap: 4px;
     font-size: 10px;
     font-weight: 700;
-    color: #B38058;
+    color: #6c7a89;
     background-color: #FAF6F0;
     padding: 2px 7px;
     border-radius: 10px;
@@ -356,13 +371,13 @@
 
 .dropdown-item-icon {
     font-size: 17px;
-    color: #B38058;
+    color: #6c7a89;
     transition: transform 0.2s ease;
 }
 
 .dropdown-item:hover {
     background-color: #FAF7F2;
-    color: #B38058;
+    color: #6c7a89;
 }
 
 .dropdown-item:hover .dropdown-item-icon {
@@ -388,7 +403,7 @@
     gap: 8px;
     background: none;
     border: none;
-    color: #B38058;
+    color: #6c7a89;
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;

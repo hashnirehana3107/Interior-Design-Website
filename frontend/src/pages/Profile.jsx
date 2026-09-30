@@ -215,7 +215,7 @@ const Profile = () => {
 
                         <div className="profile-vip-tag">
                             <FiShield className="vip-icon" />
-                            <span>GOOD INTERIOR CLUB MEMBER</span>
+                            <span>Senkadagala Architects CLUB MEMBER</span>
                         </div>
 
                         <div className="profile-sidebar-stats">

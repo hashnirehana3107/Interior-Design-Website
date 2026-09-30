@@ -43,7 +43,7 @@
 .blog-kicker {
     font-size: 11px;
     font-weight: 700;
-    color: #c48b59;
+    color: #6c7a89;
     letter-spacing: 2.5px;
     text-transform: uppercase;
     display: block;
@@ -60,7 +60,7 @@
 }
 
 .gold-text-italic {
-    color: #c48b59;
+    color: #6c7a89;
     font-style: italic;
     font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
 }
@@ -68,7 +68,7 @@
 .hero-gold-line {
     width: 60px;
     height: 1.5px;
-    background-color: #c48b59;
+    background-color: #6c7a89;
     margin-bottom: 20px;
 }
 
@@ -132,7 +132,7 @@
     position: absolute;
     top: 18px;
     left: 18px;
-    background-color: #ba8c53;
+    background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
     color: #fff;
     padding: 7px 14px;
     font-size: 9px;
@@ -183,7 +183,7 @@
     font-family: 'Outfit', sans-serif;
     font-size: 11px;
     font-weight: 700;
-    color: #c48b59;
+    color: #6c7a89;
     letter-spacing: 2px;
     text-transform: uppercase;
     display: inline-block;
@@ -196,10 +196,10 @@
     gap: 8px;
     font-size: 10.5px;
     font-weight: 700;
-    color: #ba8c53;
+    color: #475569;
     letter-spacing: 1.5px;
     text-decoration: none;
-    transition: gap 0.3s;
+    transition: all 0.3s;
     text-transform: uppercase;
     margin-top: auto;
 }
@@ -288,7 +288,7 @@
 }
 
 .sort-option.active {
-    color: #ba8c53;
+    color: #475569;
 }
 
 /* Articles Grid — 3 columns */
@@ -360,9 +360,9 @@
 }
 
 .btn-outline-dark-gold {
-    background: transparent;
-    border: 1px solid #ba8c53;
-    color: #ba8c53;
+    background: #000000;
+    border: 1px solid #475569;
+    color: #ffffff;
     padding: 14px 30px;
     font-size: 11px;
     font-weight: 700;
@@ -377,7 +377,9 @@
 }
 
 .btn-outline-dark-gold:hover {
-    background: #ba8c53;
+    background: #312f2f;
+    box-shadow: 0 6px 20px rgba(71, 85, 105, 0.6);
+    border-color: transparent;
     color: #fff;
 }
 
@@ -421,7 +423,7 @@
 .sidebar-title-gold-line {
     width: 30px;
     height: 2px;
-    background-color: #c48b59;
+    background-color: #6c7a89;
     margin-top: 8px;
     margin-bottom: 18px;
 }
@@ -462,7 +464,7 @@
 }
 
 .popular-item-info h4:hover {
-    color: #ba8c53;
+    color: #475569;
 }
 
 .popular-date {
@@ -492,7 +494,7 @@
 .subs-icon {
     width: 48px;
     height: 48px;
-    border: 1px solid #c48b59;
+    border: 1px solid #6c7a89;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -537,6 +539,13 @@
     justify-content: center;
     padding: 12px;
     font-size: 11px;
+    background: #000000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.btn-subs:hover {
+    background: #1a1a1a;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
 }
 
 /* Tags box */
@@ -565,22 +574,22 @@
 }
 
 .tag-pill:hover {
-    border-color: #ba8c53;
-    color: #ba8c53;
+    border-color: #475569;
+    color: #475569;
     background-color: rgba(186, 140, 83, 0.06);
 }
 
 .tag-pill--active {
-    background-color: #ba8c53;
-    border-color: #ba8c53;
+    background-color: #475569;
+    border-color: #475569;
     color: #fff !important;
     font-weight: 600;
 }
 
 .tag-clear-btn {
     background: transparent;
-    border: 1px solid #ba8c53;
-    color: #ba8c53;
+    border: 1px solid #475569;
+    color: #475569;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 1px;
@@ -593,7 +602,7 @@
 }
 
 .tag-clear-btn:hover {
-    background: #ba8c53;
+    background: #475569;
     color: #fff;
 }
 
@@ -601,7 +610,9 @@
    7. Gold Buttons
    ════════════════════════════════════════ */
 .btn-solid-gold {
-    background-color: #b38b55;
+    background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
+    box-shadow: 0 4px 15px rgba(71, 85, 105, 0.4);
+
     color: #fff;
     padding: 14px 28px;
     font-family: 'Outfit', sans-serif;
@@ -620,7 +631,9 @@
 }
 
 .btn-solid-gold:hover {
-    background-color: #9d7847;
+    background: linear-gradient(135deg, #718096 0%, #475569 50%, #1e293b 100%);
+    box-shadow: 0 6px 20px rgba(71, 85, 105, 0.6);
+
     color: #fff;
 }
 
@@ -668,7 +681,7 @@
 
 .cta-calendar-icon {
     font-size: 24px;
-    color: #c48b59;
+    color: #6c7a89;
 }
 
 .blog-cta-v-divider {
@@ -686,7 +699,7 @@
 
 .blog-cta-kicker {
     font-family: 'Outfit', sans-serif;
-    color: #c48b59;
+    color: #6c7a89;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 2px;

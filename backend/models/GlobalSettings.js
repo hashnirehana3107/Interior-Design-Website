@@ -7,7 +7,7 @@ const globalSettingsSchema = new mongoose.Schema({
     },
     siteTitle: {
         type: String,
-        default: 'GOOD INTERIOR'
+        default: 'Senkadagala Architects'
     },
     siteSubtitle: {
         type: String,
@@ -19,7 +19,7 @@ const globalSettingsSchema = new mongoose.Schema({
     },
     footerCopyright: {
         type: String,
-        default: '© 2025 Good Interior. All Rights Reserved.'
+        default: '© 2025 Senkadagala Architects. All Rights Reserved.'
     }
 }, { timestamps: true });
 

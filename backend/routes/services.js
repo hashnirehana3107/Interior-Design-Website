@@ -3,6 +3,29 @@ const router = express.Router();
 const Service = require('../models/Service');
 const ServiceHero = require('../models/ServiceHero');
 const ServiceProcess = require('../models/ServiceProcess');
+const { getCache, setCache, clearCache, getOrRevalidate } = require('../utils/cache');
+const { optimizeImage } = require('../utils/optimizeProjectImages');
+
+const optimizeServiceImages = async (serviceData) => {
+    if (!serviceData || typeof serviceData !== 'object') return serviceData;
+    const optimized = { ...serviceData };
+
+    if (optimized.image) {
+        optimized.image = await optimizeImage(optimized.image);
+    }
+    if (Array.isArray(optimized.images)) {
+        const optList = [];
+        for (let i = 0; i < optimized.images.length; i++) {
+            if (optimized.images[i]) {
+                optList.push(await optimizeImage(optimized.images[i]));
+            } else {
+                optList.push('');
+            }
+        }
+        optimized.images = optList;
+    }
+    return optimized;
+};
 
 const initialProcessSteps = [
     {
@@ -248,7 +271,10 @@ const initialServicesData = [
 // GET /api/services/hero
 router.get('/hero', async (req, res) => {
     try {
-        let hero = await ServiceHero.findOne();
+        const cached = getCache('services_hero');
+        if (cached) return res.status(200).json(cached);
+
+        let hero = await ServiceHero.findOne().lean();
         if (!hero) {
             hero = new ServiceHero({
                 whyImage: '/src/assets/about_img.png'
@@ -263,11 +289,17 @@ router.get('/hero', async (req, res) => {
             if (!hero.whyTitle) { hero.whyTitle = 'More Than Design.<br />A Better Way of Living.'; updated = true; }
             if (!hero.whyDesc) { hero.whyDesc = 'We combine creativity, expertise and a client-focused approach to deliver interiors that inspire and endure.'; updated = true; }
             if (!hero.whyQuote) { hero.whyQuote = 'Good design creates spaces where life happens beautifully.'; updated = true; }
-            if (!hero.whyQuoteAuthor) { hero.whyQuoteAuthor = 'GOOD INTERIOR DESIGN STUDIO'; updated = true; }
+            if (!hero.whyQuoteAuthor) { hero.whyQuoteAuthor = 'Senkadagala Architects'; updated = true; }
             if (!hero.whyImage) { hero.whyImage = '/src/assets/about_img.png'; updated = true; }
-            if (updated) await hero.save();
+            if (updated) {
+                const doc = await ServiceHero.findOne();
+                Object.assign(doc, hero);
+                await doc.save();
+            }
         }
-        res.status(200).json({ hero });
+        const payload = { hero };
+        setCache('services_hero', payload, 60);
+        res.status(200).json(payload);
     } catch (error) {
         console.error('Fetch Service Hero Error:', error);
         res.status(500).json({ message: 'Failed to fetch service hero' });
@@ -284,6 +316,7 @@ router.put('/hero', async (req, res) => {
             Object.assign(hero, req.body);
         }
         await hero.save();
+        clearCache('services');
         res.status(200).json({ message: 'Service hero updated successfully', hero });
     } catch (error) {
         console.error('Update Service Hero Error:', error);
@@ -294,17 +327,29 @@ router.put('/hero', async (req, res) => {
 // GET /api/services
 router.get('/', async (req, res) => {
     try {
-        let services = await Service.find().sort({ order: 1, createdAt: 1 });
-        // If empty or missing rich detail fields, seed full 8 services
-        if (services.length < 8 || !services.every(s => s.fullDesc && s.images && s.images.length > 0)) {
-            await Service.deleteMany({});
-            await Service.insertMany(initialServicesData);
-            services = await Service.find().sort({ order: 1, createdAt: 1 });
+        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
+
+        let services = await Service.find().sort({ order: 1, createdAt: 1 }).lean();
+        if (!services || services.length === 0) {
+            const count = await Service.countDocuments();
+            if (count === 0) {
+                try {
+                    await Service.insertMany(initialServicesData);
+                    services = await Service.find().sort({ order: 1, createdAt: 1 }).lean();
+                } catch (e) {
+                    services = initialServicesData;
+                }
+            } else {
+                services = await Service.find().sort({ order: 1, createdAt: 1 }).lean();
+            }
         }
-        res.status(200).json({ services });
+        const payload = { services: services && services.length > 0 ? services : initialServicesData };
+        res.status(200).json(payload);
     } catch (error) {
-        console.error('Fetch Services Error:', error);
-        res.status(500).json({ message: 'Failed to fetch services' });
+        console.error('Fetch Services Fail-Safe Triggered:', error.message);
+        res.status(200).json({ services: initialServicesData });
     }
 });
 
@@ -313,7 +358,8 @@ router.post('/reseed', async (req, res) => {
     try {
         await Service.deleteMany({});
         await Service.insertMany(initialServicesData);
-        const services = await Service.find().sort({ order: 1, createdAt: 1 });
+        const services = await Service.find().sort({ order: 1, createdAt: 1 }).lean();
+        setCache('services_list', { services }, 300);
         res.status(200).json({ message: 'Reseeded all 8 services successfully', services });
     } catch (error) {
         res.status(500).json({ message: 'Reseed failed' });
@@ -329,7 +375,28 @@ router.post('/', async (req, res) => {
         const count = await Service.countDocuments();
         const serviceId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
-        const newService = new Service({
+        const existing = await Service.findOne({ $or: [{ serviceId }, { title }] });
+        if (existing) {
+            const rawData = {
+                title,
+                kicker: kicker || existing.kicker,
+                desc: desc || existing.desc,
+                fullDesc: fullDesc || existing.fullDesc,
+                image: image || existing.image,
+                images: images && images.length > 0 ? images : existing.images,
+                iconName: iconName || existing.iconName,
+                highlights: highlights || existing.highlights,
+                deliverables: deliverables || existing.deliverables,
+                order: order || existing.order
+            };
+            const serviceData = await optimizeServiceImages(rawData);
+            Object.assign(existing, serviceData);
+            await existing.save();
+            clearCache('services');
+            return res.status(200).json({ message: 'Service updated successfully', service: existing });
+        }
+
+        const rawData = {
             serviceId,
             title,
             kicker: kicker || 'OUR SERVICE',
@@ -341,8 +408,14 @@ router.post('/', async (req, res) => {
             highlights: highlights || [],
             deliverables: deliverables || '',
             order: order || count + 1
-        });
+        };
+
+        const serviceData = await optimizeServiceImages(rawData);
+        const newService = new Service(serviceData);
         await newService.save();
+
+        clearCache('services');
+
         res.status(201).json({ message: 'Service created successfully', service: newService });
     } catch (error) {
         console.error('Create Service Error:', error);
@@ -518,28 +591,52 @@ router.delete('/why-features/:id', async (req, res) => {
 // PUT /api/services/:id (Admin)
 router.put('/:id', async (req, res) => {
     try {
-        const updatedService = await Service.findByIdAndUpdate(
-            req.params.id,
-            { $set: req.body },
+        const mongoose = require('mongoose');
+        const isObjectId = mongoose.Types.ObjectId.isValid(req.params.id);
+        const filter = isObjectId
+            ? { _id: req.params.id }
+            : { serviceId: req.params.id };
+
+        const updateData = { ...req.body };
+        delete updateData._id;
+        delete updateData.id;
+
+        const serviceData = await optimizeServiceImages(updateData);
+
+        const updatedService = await Service.findOneAndUpdate(
+            filter,
+            { $set: serviceData },
             { new: true, runValidators: true }
         );
         if (!updatedService) return res.status(404).json({ message: 'Service not found' });
+
+        clearCache('services');
+
         res.status(200).json({ message: 'Service updated successfully', service: updatedService });
     } catch (error) {
         console.error('Update Service Error:', error);
-        res.status(500).json({ message: 'Failed to update service' });
+        res.status(500).json({ message: error.message || 'Failed to update service' });
     }
 });
 
 // DELETE /api/services/:id (Admin)
 router.delete('/:id', async (req, res) => {
     try {
-        const deletedService = await Service.findByIdAndDelete(req.params.id);
+        const mongoose = require('mongoose');
+        const isObjectId = mongoose.Types.ObjectId.isValid(req.params.id);
+        const filter = isObjectId
+            ? { _id: req.params.id }
+            : { serviceId: req.params.id };
+
+        const deletedService = await Service.findOneAndDelete(filter);
         if (!deletedService) return res.status(404).json({ message: 'Service not found' });
+
+        clearCache('services');
+
         res.status(200).json({ message: 'Service deleted successfully' });
     } catch (error) {
         console.error('Delete Service Error:', error);
-        res.status(500).json({ message: 'Failed to delete service' });
+        res.status(500).json({ message: error.message || 'Failed to delete service' });
     }
 });
 

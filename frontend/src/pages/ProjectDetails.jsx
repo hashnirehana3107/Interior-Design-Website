@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
-import { TbMapPin, TbRulerMeasure, TbCalendarStats, TbChevronLeft, TbChevronRight } from 'react-icons/tb';
+import { TbMapPin, TbRulerMeasure, TbCalendarStats, TbChevronLeft, TbChevronRight, TbX } from 'react-icons/tb';
 import { BiHomeAlt, BiCheckCircle, BiLayer, BiTargetLock, BiStar } from 'react-icons/bi';
 import { MdOutlineLightbulb } from 'react-icons/md';
 import ProjectCard from '../components/ProjectCard';
@@ -18,6 +18,19 @@ const ProjectDetails = () => {
     const [projectInfo, setProjectInfo] = useState(null);
     const [relatedProjects, setRelatedProjects] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [modalImageIndex, setModalImageIndex] = useState(null);
+    const galleryScrollRef = React.useRef(null);
+
+    const scrollGallery = (direction) => {
+        if (galleryScrollRef.current) {
+            const scrollAmount = 300;
+            if (direction === 'left') {
+                galleryScrollRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                galleryScrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+    };
 
     // Scroll to top when loaded
     useEffect(() => {
@@ -63,7 +76,7 @@ const ProjectDetails = () => {
     }, [id, navigate]);
 
     if (loading || !projectInfo) {
-        return <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1a1a19', color: '#c48b59' }}>Loading Project...</div>;
+        return <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1a1a19', color: '#6c7a89' }}>Loading Project...</div>;
     }
 
     return (
@@ -103,27 +116,42 @@ const ProjectDetails = () => {
                         )}
                     </div>
                     <div className="overview-right">
-                        <div className="stat-box">
-                            <TbMapPin className="stat-icon" />
-                            <div className="stat-text">
-                                <span className="stat-label">Location</span>
-                                <span className="stat-value">{projectInfo.location}</span>
+                        {projectInfo.client && (
+                            <div className="stat-box">
+                                <BiTargetLock className="stat-icon" />
+                                <div className="stat-text">
+                                    <span className="stat-label">Client</span>
+                                    <span className="stat-value">{projectInfo.client}</span>
+                                </div>
                             </div>
-                        </div>
-                        <div className="stat-box">
-                            <TbRulerMeasure className="stat-icon" />
-                            <div className="stat-text">
-                                <span className="stat-label">Area</span>
-                                <span className="stat-value">{projectInfo.area || '1,850 sq ft'}</span>
+                        )}
+                        {projectInfo.location && (
+                            <div className="stat-box">
+                                <TbMapPin className="stat-icon" />
+                                <div className="stat-text">
+                                    <span className="stat-label">Location</span>
+                                    <span className="stat-value">{projectInfo.location}</span>
+                                </div>
                             </div>
-                        </div>
-                        <div className="stat-box">
-                            <TbCalendarStats className="stat-icon" />
-                            <div className="stat-text">
-                                <span className="stat-label">Completion Date</span>
-                                <span className="stat-value">{projectInfo.year}</span>
+                        )}
+                        {projectInfo.area && (
+                            <div className="stat-box">
+                                <TbRulerMeasure className="stat-icon" />
+                                <div className="stat-text">
+                                    <span className="stat-label">Area</span>
+                                    <span className="stat-value">{projectInfo.area}</span>
+                                </div>
                             </div>
-                        </div>
+                        )}
+                        {projectInfo.year && (
+                            <div className="stat-box">
+                                <TbCalendarStats className="stat-icon" />
+                                <div className="stat-text">
+                                    <span className="stat-label">Completion Date</span>
+                                    <span className="stat-value">{projectInfo.year}</span>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>
@@ -194,13 +222,13 @@ const ProjectDetails = () => {
                     <div className="section-header gallery-header">
                         <h3>PROJECT GALLERY</h3>
                         <div className="gallery-arrows">
-                            <button className="arrow-btn"><TbChevronLeft /></button>
-                            <button className="arrow-btn"><TbChevronRight /></button>
+                            <button className="arrow-btn" onClick={() => scrollGallery('left')}><TbChevronLeft /></button>
+                            <button className="arrow-btn" onClick={() => scrollGallery('right')}><TbChevronRight /></button>
                         </div>
                     </div>
-                    <div className="gallery-grid">
+                    <div className="gallery-grid" ref={galleryScrollRef}>
                         {projectInfo.galleryImages.map((src, index) => (
-                            <div key={index} className="gallery-img-wrap">
+                            <div key={index} className="gallery-img-wrap" onClick={() => setModalImageIndex(index)}>
                                 <img src={src} alt={`Gallery ${index}`} />
                             </div>
                         ))}
@@ -217,25 +245,37 @@ const ProjectDetails = () => {
                             <span className="spec-label">Project Type</span>
                             <span className="spec-val">{projectInfo.category}</span>
                         </div>
-                        <div className="spec-row">
-                            <span className="spec-label">Location</span>
-                            <span className="spec-val">{projectInfo.location}</span>
-                        </div>
-                        <div className="spec-row">
-                            <span className="spec-label">Area</span>
-                            <span className="spec-val">{projectInfo.area || '1,850 sq ft'}</span>
-                        </div>
-                        <div className="spec-row">
-                            <span className="spec-label">Completion Date</span>
-                            <span className="spec-val">{projectInfo.year}</span>
-                        </div>
+                        {projectInfo.client && (
+                            <div className="spec-row">
+                                <span className="spec-label">Client</span>
+                                <span className="spec-val">{projectInfo.client}</span>
+                            </div>
+                        )}
+                        {projectInfo.location && (
+                            <div className="spec-row">
+                                <span className="spec-label">Location</span>
+                                <span className="spec-val">{projectInfo.location}</span>
+                            </div>
+                        )}
+                        {projectInfo.area && (
+                            <div className="spec-row">
+                                <span className="spec-label">Area</span>
+                                <span className="spec-val">{projectInfo.area}</span>
+                            </div>
+                        )}
+                        {projectInfo.year && (
+                            <div className="spec-row">
+                                <span className="spec-label">Completion Date</span>
+                                <span className="spec-val">{projectInfo.year}</span>
+                            </div>
+                        )}
                         <div className="spec-row">
                             <span className="spec-label">Design Style</span>
                             <span className="spec-val">{projectInfo.title}</span>
                         </div>
                         <div className="spec-row">
                             <span className="spec-label">Principal Designer</span>
-                            <span className="spec-val">Good Interior Design Studio</span>
+                            <span className="spec-val">Senkadagala Architects</span>
                         </div>
                         <div className="spec-row">
                             <span className="spec-label">Scope of Work</span>
@@ -243,23 +283,25 @@ const ProjectDetails = () => {
                         </div>
                     </div>
 
-                    <div className="testimonial-right">
-                        {projectInfo.testimonialQuote ? (
+                    {projectInfo.testimonialQuote ? (
+                        <div className="testimonial-right">
                             <div className="testimonial-card">
                                 <span className="quote-mark">“</span>
                                 <p className="test-text">
                                     {projectInfo.testimonialQuote}
                                 </p>
-                                <div className="test-author">
-                                    <span className="author-line"></span>
-                                    <div className="author-info">
-                                        <span className="author-name">{projectInfo.testimonialAuthor}</span>
-                                        <span className="author-role">{projectInfo.testimonialRole}</span>
+                                {(projectInfo.testimonialAuthor || projectInfo.testimonialRole) && (
+                                    <div className="test-author">
+                                        <span className="author-line"></span>
+                                        <div className="author-info">
+                                            {projectInfo.testimonialAuthor && <span className="author-name">{projectInfo.testimonialAuthor}</span>}
+                                            {projectInfo.testimonialRole && <span className="author-role">{projectInfo.testimonialRole}</span>}
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                             </div>
-                        ) : null}
-                    </div>
+                        </div>
+                    ) : null}
                 </div>
             </section>
 
@@ -309,6 +351,35 @@ const ProjectDetails = () => {
                 </div>
             </section>
 
+            {/* Gallery Fullscreen Modal */}
+            {modalImageIndex !== null && projectInfo.galleryImages?.length > 0 && (
+                <div className="gallery-modal-overlay" onClick={() => setModalImageIndex(null)}>
+                    <button className="gallery-modal-close" onClick={() => setModalImageIndex(null)}>
+                        <TbX />
+                    </button>
+                    <button
+                        className="gallery-modal-prev_btn"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setModalImageIndex(prev => (prev === 0 ? projectInfo.galleryImages.length - 1 : prev - 1));
+                        }}
+                    >
+                        <TbChevronLeft />
+                    </button>
+                    <div className="gallery-modal-content" onClick={(e) => e.stopPropagation()}>
+                        <img src={projectInfo.galleryImages[modalImageIndex]} alt="Fullscreen view" />
+                    </div>
+                    <button
+                        className="gallery-modal-next_btn"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setModalImageIndex(prev => (prev === projectInfo.galleryImages.length - 1 ? 0 : prev + 1));
+                        }}
+                    >
+                        <TbChevronRight />
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

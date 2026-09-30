@@ -36,7 +36,7 @@
 .about-hero-content .section-label {
     font-size: 11px;
     font-weight: 700;
-    color: #c48b59;
+    color: #6c7a89;
     letter-spacing: 2.5px;
     text-transform: uppercase;
     display: block;
@@ -53,7 +53,7 @@
 }
 
 .highlight-text {
-    color: #c48b59;
+    color: #6c7a89;
     font-style: italic;
     font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
     font-weight: 400;
@@ -87,7 +87,7 @@
 .section-subtitle {
     font-size: 11px;
     font-weight: 700;
-    color: #B38058;
+    color: #6c7a89;
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 20px;
@@ -130,8 +130,8 @@
     align-items: center;
     gap: 10px;
     padding: 14px 30px;
-    border: 1px solid #B38058;
-    color: #B38058;
+    border: 1px solid #6c7a89;
+    color: #6c7a89;
     text-decoration: none;
     font-size: 12px;
     font-weight: 600;
@@ -143,7 +143,7 @@
 }
 
 .btn-outline-gold:hover {
-    background-color: #B38058;
+    background-color: #6c7a89;
     color: #ffffff;
 }
 
@@ -195,7 +195,7 @@
 
 .purpose-icon {
     font-size: 32px;
-    color: #c48b59;
+    color: #6c7a89;
     background-color: #1a1a1a;
     padding: 22px;
     border-radius: 50%;
@@ -231,7 +231,7 @@
 .dark-section-subtitle {
     font-size: 11px;
     font-weight: 700;
-    color: #B38058;
+    color: #6c7a89;
     letter-spacing: 2px;
     text-transform: uppercase;
 }
@@ -259,7 +259,7 @@
 
 .achievement-icon {
     font-size: 38px;
-    color: #B38058;
+    color: #6c7a89;
     font-weight: 100;
 }
 
@@ -301,7 +301,7 @@
 }
 
 .check-icon {
-    color: #B38058;
+    color: #6c7a89;
     font-size: 18px;
 }
 
@@ -349,12 +349,12 @@
 
 .team-action-container .btn-outline-gold {
     color: #ffffff;
-    border: 1px solid rgba(179, 128, 88, 0.4);
+    border: 1px solid rgba(108, 122, 137, 0.4);
 }
 
 .team-action-container .btn-outline-gold:hover {
     background-color: transparent;
-    border: 1px solid rgba(179, 128, 88, 1);
+    border: 1px solid rgba(108, 122, 137, 1);
 }
 
 .team-traits-grid {
@@ -374,7 +374,7 @@
 
 .trait-icon {
     font-size: 48px;
-    color: #B38058;
+    color: #6c7a89;
     margin-bottom: 25px;
 }
 
@@ -418,7 +418,7 @@
 
 .cta-strip-icon {
     font-size: 60px;
-    color: #B38058;
+    color: #6c7a89;
 }
 
 .cta-vertical-divider {
@@ -445,11 +445,13 @@
 }
 
 .btn-solid-gold {
+    background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
+    box-shadow: 0 4px 15px rgba(71, 85, 105, 0.4);
     display: inline-flex;
     align-items: center;
     gap: 10px;
     padding: 18px 40px;
-    background-color: #B38058;
+
     color: #ffffff;
     text-decoration: none;
     font-size: 12px;
@@ -460,7 +462,9 @@
 }
 
 .btn-solid-gold:hover {
-    background-color: #9C6C47;
+    background: linear-gradient(135deg, #718096 0%, #475569 50%, #1e293b 100%);
+    box-shadow: 0 6px 20px rgba(71, 85, 105, 0.6);
+
 }
 
 /* Responsive Styles */

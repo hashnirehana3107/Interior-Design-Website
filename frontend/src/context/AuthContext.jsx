@@ -116,7 +116,7 @@ export const AuthProvider = ({ children }) => {
             setToken(data.token);
             setUser(cleanUser);
 
-            showToast(`Account created successfully! Welcome to Good Interior, ${cleanUser.fullName.split(' ')[0]}!`, 'success', 5000);
+            showToast(`Account created successfully! Welcome to Senkadagala Architects, ${cleanUser.fullName.split(' ')[0]}!`, 'success', 5000);
 
             return data;
         } catch (error) {

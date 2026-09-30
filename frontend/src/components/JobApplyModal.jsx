@@ -162,7 +162,7 @@ const JobApplyModal = ({ isOpen, onClose, selectedPosition = '' }) => {
                 {!user ? (
                     <div className="jam-auth-required">
                         <div className="jam-auth-icon">
-                            <BsLock style={{ color: '#b38058', fontSize: '2.8rem' }} />
+                            <BsLock style={{ color: '#6c7a89', fontSize: '2.8rem' }} />
                         </div>
                         <h3>Login Required to Apply</h3>
                         <p>
@@ -178,7 +178,7 @@ const JobApplyModal = ({ isOpen, onClose, selectedPosition = '' }) => {
                         <div className="jam-header">
                             <div className="jam-kicker-wrap">
                                 <BsBriefcase className="jam-kicker-icon" />
-                                <span className="jam-kicker">JOIN GOOD INTERIOR STUDIO</span>
+                                <span className="jam-kicker">JOIN Senkadagala Architects</span>
                             </div>
                             <h2 className="jam-title">Apply for {formData.position}</h2>
                             <p className="jam-subtitle">
@@ -302,7 +302,7 @@ const JobApplyModal = ({ isOpen, onClose, selectedPosition = '' }) => {
                                 <textarea
                                     name="message"
                                     rows="3"
-                                    placeholder="Tell us briefly why you'd love to join Good Interior Studio..."
+                                    placeholder="Tell us briefly why you'd love to join Senkadagala Architects..."
                                     value={formData.message}
                                     onChange={handleChange}
                                 ></textarea>

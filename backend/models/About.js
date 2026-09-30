@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 const aboutSchema = new mongoose.Schema({
     heroInfo: {
         title: { type: String, default: 'Designing Spaces. <br />Defining <span class="highlight-text">Experiences.</span>' },
-        subtitle: { type: String, default: 'At Good Interior, we transform ideas into timeless interior experiences that reflect who you are and how you live.' },
+        subtitle: { type: String, default: 'At Senkadagala Architects, we transform ideas into timeless interior experiences that reflect who you are and how you live.' },
         bgImage: { type: String, default: '' },
     },
     whoWeAre: {
         title: { type: String, default: 'Crafting Beautiful Interiors Since 2015' },
-        paragraph1: { type: String, default: 'Good Interior is a Colombo-based interior design studio specializing in residential, commercial and hospitality spaces. We combine creativity, functionality and attention to detail to deliver spaces that are not only beautiful but also enrich everyday living.' },
+        paragraph1: { type: String, default: 'Senkadagala Architects is a Colombo-based interior design studio specializing in residential, commercial and hospitality spaces. We combine creativity, functionality and attention to detail to deliver spaces that are not only beautiful but also enrich everyday living.' },
         paragraph2: { type: String, default: 'From concept to completion, our team works closely with clients to bring their vision to life with a personalized approach and seamless execution.' },
         image: { type: String, default: '' }
     },

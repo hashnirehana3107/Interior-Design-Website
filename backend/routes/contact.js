@@ -69,7 +69,7 @@ router.post('/', async (req, res) => {
         try {
             const transporter = createTransporter();
             const mailOptions = {
-                from: `"Good Interior Studio" <${EMAIL_USER}>`,
+                from: `"Senkadagala Architects" <${EMAIL_USER}>`,
                 to: ADMIN_EMAIL,
                 replyTo: `"${fullName.trim()}" <${email.trim()}>`,
                 subject: `[NEW CONTACT ENQUIRY] ${subject.trim()} - from ${fullName.trim()}`,
@@ -77,7 +77,7 @@ router.post('/', async (req, res) => {
                     <div style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; padding: 30px; color: #1e293b;">
                         <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; padding: 30px; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
                             <div style="text-align: center; padding-bottom: 20px; border-bottom: 2px solid #b38058;">
-                                <h2 style="color: #b38058; margin: 0; font-size: 22px; letter-spacing: 1px;">GOOD INTERIOR DESIGN STUDIO</h2>
+                                <h2 style="color: #b38058; margin: 0; font-size: 22px; letter-spacing: 1px;">Senkadagala Architects</h2>
                                 <p style="font-size: 12px; color: #64748b; margin: 5px 0 0 0; letter-spacing: 2px;">NEW WEBSITE CONTACT ENQUIRY</p>
                             </div>
                             
@@ -101,7 +101,7 @@ router.post('/', async (req, res) => {
                             </div>
 
                             <div style="border-top: 1px solid #e2e8f0; padding-top: 15px; text-align: center; font-size: 12px; color: #94a3b8;">
-                                <p style="margin: 0;">Good Interior Studio Automated Notification System</p>
+                                <p style="margin: 0;">Senkadagala Architects Automated Notification System</p>
                             </div>
                         </div>
                     </div>
@@ -182,14 +182,14 @@ router.post('/:id/reply', async (req, res) => {
         try {
             const transporter = createTransporter();
             const mailOptions = {
-                from: `"Good Interior Studio" <${process.env.EMAIL_USER}>`,
+                from: `"Senkadagala Architects" <${process.env.EMAIL_USER}>`,
                 to: recipientEmail,
                 subject: replySubject.trim(),
                 html: `
                     <div style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; padding: 30px; color: #1e293b;">
                         <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; padding: 30px; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
                             <div style="text-align: center; padding-bottom: 20px; border-bottom: 2px solid #b38058;">
-                                <h2 style="color: #b38058; margin: 0; font-size: 24px; letter-spacing: 1px;">GOOD INTERIOR DESIGN STUDIO</h2>
+                                <h2 style="color: #b38058; margin: 0; font-size: 24px; letter-spacing: 1px;">Senkadagala Architects</h2>
                                 <p style="font-size: 12px; color: #64748b; margin: 5px 0 0 0; letter-spacing: 2px;">LUXURY ARCHITECTURE & INTERIORS</p>
                             </div>
                             
@@ -205,7 +205,7 @@ router.post('/:id/reply', async (req, res) => {
 
                             <div style="border-top: 1px solid #e2e8f0; padding-top: 20px; text-align: center; font-size: 12px; color: #94a3b8;">
                                 <p style="margin: 0 0 4px 0;">Best Regards,</p>
-                                <p style="font-weight: 700; color: #b38058; margin: 0;">Good Interior Studio Executive Team</p>
+                                <p style="font-weight: 700; color: #b38058; margin: 0;">Senkadagala Architects Executive Team</p>
                                 <p style="margin: 8px 0 0 0; font-size: 11px;">www.goodinterior.com | info@goodinterior.com</p>
                             </div>
                         </div>

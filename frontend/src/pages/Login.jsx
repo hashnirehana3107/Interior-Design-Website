@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FaArrowLeft, FaEyeSlash, FaEye } from 'react-icons/fa';
 import { MdOutlineEmail, MdLockOutline } from 'react-icons/md';
-import logo from '../assets/logo.svg';
+import logo from '../assets/senkadagala_logo.png';
 import detailImg from '../assets/detail_img.png';
 import ForgotPasswordModal from '../components/ForgotPasswordModal';
 import { useAuth } from '../context/AuthContext';
@@ -186,15 +186,6 @@ const Login = () => {
         <div className="login-page-container">
             {/* Top Bar specific to Login Page */}
             <div className="login-top-bar">
-                <Link to="/" className="login-logo-container">
-                    <div className="login-logo-mark">
-                        <img src={logo} alt="Good Interior" />
-                    </div>
-                    <div className="login-logo-text">
-                        <span className="logo-title">GOOD INTERIOR</span>
-                        <span className="logo-subtitle">DESIGN STUDIO</span>
-                    </div>
-                </Link>
                 <Link to="/" className="back-to-home">
                     <FaArrowLeft className="back-icon" /> Back to Home
                 </Link>

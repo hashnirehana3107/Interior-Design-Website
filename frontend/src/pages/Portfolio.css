@@ -36,7 +36,7 @@
 .portfolio-kicker {
     font-size: 11px;
     font-weight: 700;
-    color: #c48b59;
+    color: #6c7a89;
     letter-spacing: 2.5px;
     text-transform: uppercase;
     display: block;
@@ -53,7 +53,7 @@
 }
 
 .portfolio-hero-content .gold-text {
-    color: #c48b59;
+    color: #6c7a89;
 }
 
 .portfolio-hero-content p {
@@ -98,13 +98,13 @@
 }
 
 .filter-tab-btn:hover {
-    color: #c48b59;
+    color: #6c7a89;
 }
 
 .filter-tab-btn.active {
-    background-color: #c48b59;
+    background-color: #000000;
     color: #ffffff;
-    border-color: #c48b59;
+    border-color: #6c7a89;
     font-weight: 700;
 }
 
@@ -157,7 +157,7 @@
     top: 0;
     left: 0;
     background-color: #1a1917;
-    color: #c48b59;
+    color: #ffffff;
     font-size: 13px;
     font-weight: 600;
     padding: 10px 14px;
@@ -184,7 +184,7 @@
 .project-category-tag {
     font-size: 10px;
     font-weight: 700;
-    color: #c48b59;
+    color: #6c7a89;
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 20px;
@@ -202,7 +202,7 @@
 .project-view-link {
     font-size: 11px;
     font-weight: 700;
-    color: #c48b59;
+    color: #6c7a89;
     letter-spacing: 1.5px;
     text-decoration: none;
     display: inline-flex;
@@ -229,8 +229,8 @@
 
 .btn-view-more {
     background-color: transparent;
-    border: 1px solid #c48b59;
-    color: #c48b59;
+    border: 1px solid #6c7a89;
+    color: #6c7a89;
     padding: 13px 32px;
     font-size: 11px;
     font-weight: 700;
@@ -245,7 +245,7 @@
 }
 
 .btn-view-more:hover {
-    background-color: #c48b59;
+    background-color: #6c7a89;
     color: #ffffff;
 }
 
@@ -276,7 +276,7 @@
 .cta-icon-box {
     width: 68px;
     height: 68px;
-    border: 1.5px solid #c48b59;
+    border: 1.5px solid #6c7a89;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -294,7 +294,7 @@
 .cta-strip-subtitle {
     font-size: 10px;
     font-weight: 700;
-    color: #c48b59;
+    color: #6c7a89;
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 6px;
@@ -326,12 +326,14 @@
 }
 
 .cta-strip-right .btn-solid-gold {
+    background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
+    box-shadow: 0 4px 15px rgba(71, 85, 105, 0.4);
     display: inline-flex;
     align-items: center;
     gap: 12px;
     padding: 13.5px 28px;
-    background-color: #c48b59;
-    border: 1px solid #c48b59;
+
+    border: 1px solid #6c7a89;
     color: #ffffff;
     text-decoration: none;
     font-size: 11px;
@@ -343,7 +345,9 @@
 }
 
 .cta-strip-right .btn-solid-gold:hover {
-    background-color: #aa7344;
+    background: linear-gradient(135deg, #718096 0%, #475569 50%, #1e293b 100%);
+    box-shadow: 0 6px 20px rgba(71, 85, 105, 0.6);
+
     border-color: #aa7344;
 }
 

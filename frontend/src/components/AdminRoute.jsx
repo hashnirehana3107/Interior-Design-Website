@@ -52,7 +52,7 @@ const AdminRoute = ({ children }) => {
  fontWeight: '600'
  }}>Return Home</a>
  <a href="/login" style={{
- background: '#b38058',
+ background: '#6c7a89',
  color: '#ffffff',
  padding: '12px 24px',
  borderRadius: '8px',

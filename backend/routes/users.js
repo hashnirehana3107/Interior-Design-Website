@@ -2,13 +2,14 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+const { getCache, setCache, clearCache } = require('../utils/cache');
 
 // @route   GET /api/users
 // @desc    Get all users (admin only)
 // @access  Admin
 router.get('/', async (req, res) => {
     try {
-        const users = await User.find({}).select('-password').sort({ createdAt: -1 });
+        const users = await User.find({}).select('-password').sort({ createdAt: -1 }).lean();
         res.status(200).json({ users });
     } catch (err) {
         console.error('Get Users Error:', err);
@@ -45,6 +46,7 @@ router.post('/', async (req, res) => {
         });
 
         await newUser.save();
+        clearCache('admin_users');
         const userObj = newUser.toObject();
         delete userObj.password;
 
@@ -85,6 +87,7 @@ router.put('/:id', async (req, res) => {
             return res.status(404).json({ message: 'User not found.' });
         }
 
+        clearCache('admin_users');
         res.status(200).json({ message: 'User updated successfully.', user: updatedUser });
     } catch (err) {
         console.error('Update User Error:', err);
@@ -101,6 +104,7 @@ router.delete('/:id', async (req, res) => {
         if (!deleted) {
             return res.status(404).json({ message: 'User not found.' });
         }
+        clearCache('admin_users');
         res.status(200).json({ message: 'User deleted successfully.' });
     } catch (err) {
         console.error('Delete User Error:', err);

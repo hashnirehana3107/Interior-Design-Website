@@ -4,7 +4,7 @@ import { FiUser } from 'react-icons/fi';
 import { MdOutlineEmail, MdOutlinePhone, MdOutlineSubject, MdOutlineChatBubbleOutline } from 'react-icons/md';
 import {
     TbMapPin, TbPhone, TbMail, TbClock,
-    TbBrandFacebook, TbBrandInstagram, TbBrandPinterest, TbBrandLinkedin,
+    TbBrandFacebook, TbBrandInstagram, TbBrandTiktok, TbBrandLinkedin,
     TbArrowRight, TbHome, TbUsers, TbShieldCheck
 } from 'react-icons/tb';
 import './Contact.css';
@@ -372,43 +372,43 @@ const Contact = () => {
                             <div className="feature-icon-wrap">
                                 {feature.iconName === 'home' && (
                                     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M24 4L40 10V22C40 32.5 33 40.5 24 44C15 40.5 8 32.5 8 22V10L24 4Z" stroke="#c48b59" strokeWidth="1.5" fill="rgba(196,139,89,0.06)" />
-                                        <path d="M24 8L36 12.8V21.6C36 29.8 30.6 36.1 24 39C17.4 36.1 12 29.8 12 21.6V12.8L24 8Z" stroke="#c48b59" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.6" />
-                                        <path d="M19 30V22H29V30" stroke="#c48b59" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                        <path d="M16 23L24 16L32 23" stroke="#c48b59" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M24 4L40 10V22C40 32.5 33 40.5 24 44C15 40.5 8 32.5 8 22V10L24 4Z" stroke="#6c7a89" strokeWidth="1.5" fill="rgba(108, 122, 137,0.06)" />
+                                        <path d="M24 8L36 12.8V21.6C36 29.8 30.6 36.1 24 39C17.4 36.1 12 29.8 12 21.6V12.8L24 8Z" stroke="#6c7a89" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.6" />
+                                        <path d="M19 30V22H29V30" stroke="#6c7a89" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M16 23L24 16L32 23" stroke="#6c7a89" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                 )}
                                 {feature.iconName === 'team' && (
                                     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M24 4L40 10V22C40 32.5 33 40.5 24 44C15 40.5 8 32.5 8 22V10L24 4Z" stroke="#c48b59" strokeWidth="1.5" fill="rgba(196,139,89,0.06)" />
-                                        <path d="M24 8L36 12.8V21.6C36 29.8 30.6 36.1 24 39C17.4 36.1 12 29.8 12 21.6V12.8L24 8Z" stroke="#c48b59" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.6" />
-                                        <path d="M17 18H31M17 30H31M20 18V30M24 18V30M28 18V30" stroke="#c48b59" strokeWidth="1.5" strokeLinecap="round" />
-                                        <path d="M15 30H33V32H15V30Z" fill="#c48b59" />
-                                        <path d="M24 14L33 18H15L24 14Z" fill="#c48b59" />
+                                        <path d="M24 4L40 10V22C40 32.5 33 40.5 24 44C15 40.5 8 32.5 8 22V10L24 4Z" stroke="#6c7a89" strokeWidth="1.5" fill="rgba(108, 122, 137,0.06)" />
+                                        <path d="M24 8L36 12.8V21.6C36 29.8 30.6 36.1 24 39C17.4 36.1 12 29.8 12 21.6V12.8L24 8Z" stroke="#6c7a89" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.6" />
+                                        <path d="M17 18H31M17 30H31M20 18V30M24 18V30M28 18V30" stroke="#6c7a89" strokeWidth="1.5" strokeLinecap="round" />
+                                        <path d="M15 30H33V32H15V30Z" fill="#6c7a89" />
+                                        <path d="M24 14L33 18H15L24 14Z" fill="#6c7a89" />
                                     </svg>
                                 )}
                                 {feature.iconName === 'quality' && (
                                     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M24 4L40 10V22C40 32.5 33 40.5 24 44C15 40.5 8 32.5 8 22V10L24 4Z" stroke="#c48b59" strokeWidth="1.5" fill="rgba(196,139,89,0.06)" />
-                                        <path d="M24 8L36 12.8V21.6C36 29.8 30.6 36.1 24 39C17.4 36.1 12 29.8 12 21.6V12.8L24 8Z" stroke="#c48b59" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.6" />
-                                        <rect x="17" y="17" width="14" height="14" rx="2" stroke="#c48b59" strokeWidth="1.5" />
-                                        <circle cx="24" cy="24" r="3" stroke="#c48b59" strokeWidth="1.5" />
+                                        <path d="M24 4L40 10V22C40 32.5 33 40.5 24 44C15 40.5 8 32.5 8 22V10L24 4Z" stroke="#6c7a89" strokeWidth="1.5" fill="rgba(108, 122, 137,0.06)" />
+                                        <path d="M24 8L36 12.8V21.6C36 29.8 30.6 36.1 24 39C17.4 36.1 12 29.8 12 21.6V12.8L24 8Z" stroke="#6c7a89" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.6" />
+                                        <rect x="17" y="17" width="14" height="14" rx="2" stroke="#6c7a89" strokeWidth="1.5" />
+                                        <circle cx="24" cy="24" r="3" stroke="#6c7a89" strokeWidth="1.5" />
                                     </svg>
                                 )}
                                 {feature.iconName === 'clock' && (
                                     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M24 4L40 10V22C40 32.5 33 40.5 24 44C15 40.5 8 32.5 8 22V10L24 4Z" stroke="#c48b59" strokeWidth="1.5" fill="rgba(196,139,89,0.06)" />
-                                        <path d="M24 8L36 12.8V21.6C36 29.8 30.6 36.1 24 39C17.4 36.1 12 29.8 12 21.6V12.8L24 8Z" stroke="#c48b59" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.6" />
-                                        <circle cx="24" cy="25" r="7" stroke="#c48b59" strokeWidth="1.5" />
-                                        <path d="M24 21V25H27" stroke="#c48b59" strokeWidth="1.5" strokeLinecap="round" />
-                                        <path d="M22 15H26" stroke="#c48b59" strokeWidth="1.5" strokeLinecap="round" />
+                                        <path d="M24 4L40 10V22C40 32.5 33 40.5 24 44C15 40.5 8 32.5 8 22V10L24 4Z" stroke="#6c7a89" strokeWidth="1.5" fill="rgba(108, 122, 137,0.06)" />
+                                        <path d="M24 8L36 12.8V21.6C36 29.8 30.6 36.1 24 39C17.4 36.1 12 29.8 12 21.6V12.8L24 8Z" stroke="#6c7a89" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.6" />
+                                        <circle cx="24" cy="25" r="7" stroke="#6c7a89" strokeWidth="1.5" />
+                                        <path d="M24 21V25H27" stroke="#6c7a89" strokeWidth="1.5" strokeLinecap="round" />
+                                        <path d="M22 15H26" stroke="#6c7a89" strokeWidth="1.5" strokeLinecap="round" />
                                     </svg>
                                 )}
                                 {!['home', 'team', 'quality', 'clock'].includes(feature.iconName) && (
                                     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M24 4L40 10V22C40 32.5 33 40.5 24 44C15 40.5 8 32.5 8 22V10L24 4Z" stroke="#c48b59" strokeWidth="1.5" fill="rgba(196,139,89,0.06)" />
-                                        <circle cx="24" cy="24" r="6" stroke="#c48b59" strokeWidth="1.5" />
-                                        <path d="M24 18V24L28 28" stroke="#c48b59" strokeWidth="1.5" strokeLinecap="round" />
+                                        <path d="M24 4L40 10V22C40 32.5 33 40.5 24 44C15 40.5 8 32.5 8 22V10L24 4Z" stroke="#6c7a89" strokeWidth="1.5" fill="rgba(108, 122, 137,0.06)" />
+                                        <circle cx="24" cy="24" r="6" stroke="#6c7a89" strokeWidth="1.5" />
+                                        <path d="M24 18V24L28 28" stroke="#6c7a89" strokeWidth="1.5" strokeLinecap="round" />
                                     </svg>
                                 )}
                             </div>
@@ -446,21 +446,23 @@ const Contact = () => {
                                 <TbBrandInstagram />
                             </a>
                             <a
-                                href={pageSettings?.journey?.socialLinks?.pinterest || '#'}
-                                target={pageSettings?.journey?.socialLinks?.pinterest ? "_blank" : undefined}
+                                href={pageSettings?.journey?.socialLinks?.tiktok || '#'}
+                                target={pageSettings?.journey?.socialLinks?.tiktok ? "_blank" : undefined}
                                 rel="noopener noreferrer"
-                                title="Pinterest"
+                                title="TikTok"
                             >
-                                <TbBrandPinterest />
+                                <TbBrandTiktok />
                             </a>
-                            <a
-                                href={pageSettings?.journey?.socialLinks?.linkedin || '#'}
-                                target={pageSettings?.journey?.socialLinks?.linkedin ? "_blank" : undefined}
-                                rel="noopener noreferrer"
-                                title="LinkedIn"
-                            >
-                                <TbBrandLinkedin />
-                            </a>
+                            {pageSettings?.journey?.socialLinks?.linkedin && (
+                                <a
+                                    href={pageSettings?.journey?.socialLinks?.linkedin}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    title="LinkedIn"
+                                >
+                                    <TbBrandLinkedin />
+                                </a>
+                            )}
                         </div>
                     </div>
                     <div className="journey-right-grid">

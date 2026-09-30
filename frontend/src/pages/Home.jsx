@@ -65,7 +65,7 @@ const Home = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await fetch('/api/hero-slides');
+                const res = await fetch(`${API_BASE}/api/hero-slides`);
                 if (res.ok) {
                     const data = await res.json();
                     if (data.slides && data.slides.length > 0) {
@@ -79,7 +79,7 @@ const Home = () => {
                 const projRes = await fetch(`${API_BASE}/api/projects`);
                 if (projRes.ok) {
                     const projData = await projRes.json();
-                    if (projData) setProjects(projData.projects || []);
+                    if (projData) setProjects(Array.isArray(projData) ? projData : (projData.projects || []));
                 }
             } catch (error) {
                 console.error('Error fetching projects:', error);
@@ -88,10 +88,8 @@ const Home = () => {
                 const servRes = await fetch(`${API_BASE}/api/services`);
                 if (servRes.ok) {
                     const servData = await servRes.json();
-                    if (servData.services && servData.services.length > 0) {
+                    if (Array.isArray(servData.services)) {
                         setServices(servData.services);
-                    } else {
-                        setServices(servicesData);
                     }
                 }
             } catch (error) {
@@ -232,7 +230,7 @@ const Home = () => {
                     <div className="feature-item">
                         <span className="feature-icon-svg">
                             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#B38058" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="rgba(179,128,88,0.15)" />
+                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#6c7a89" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="rgba(108, 122, 137,0.15)" />
                             </svg>
                         </span>
                         <span className="feature-text">Creative Designs</span>
@@ -240,11 +238,11 @@ const Home = () => {
                     <div className="feature-item">
                         <span className="feature-icon-svg">
                             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M6 3L1 10L12 21L23 10L18 3H6Z" stroke="#B38058" strokeWidth="2" strokeLinejoin="round" fill="rgba(179,128,88,0.12)" />
-                                <path d="M1 10H23" stroke="#B38058" strokeWidth="2" />
-                                <path d="M12 21L9 10L6 3" stroke="#B38058" strokeWidth="1.5" strokeLinejoin="round" />
-                                <path d="M12 21L15 10L18 3" stroke="#B38058" strokeWidth="1.5" strokeLinejoin="round" />
-                                <path d="M12 3V10" stroke="#B38058" strokeWidth="1.5" />
+                                <path d="M6 3L1 10L12 21L23 10L18 3H6Z" stroke="#6c7a89" strokeWidth="2" strokeLinejoin="round" fill="rgba(108, 122, 137,0.12)" />
+                                <path d="M1 10H23" stroke="#6c7a89" strokeWidth="2" />
+                                <path d="M12 21L9 10L6 3" stroke="#6c7a89" strokeWidth="1.5" strokeLinejoin="round" />
+                                <path d="M12 21L15 10L18 3" stroke="#6c7a89" strokeWidth="1.5" strokeLinejoin="round" />
+                                <path d="M12 3V10" stroke="#6c7a89" strokeWidth="1.5" />
                             </svg>
                         </span>
                         <span className="feature-text">Quality Materials</span>
@@ -252,8 +250,8 @@ const Home = () => {
                     <div className="feature-item">
                         <span className="feature-icon-svg">
                             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="12" cy="12" r="10" stroke="#B38058" strokeWidth="2" />
-                                <path d="M12 6V12L16 14" stroke="#B38058" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                <circle cx="12" cy="12" r="10" stroke="#6c7a89" strokeWidth="2" />
+                                <path d="M12 6V12L16 14" stroke="#6c7a89" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </span>
                         <span className="feature-text">On-time Delivery</span>
@@ -261,10 +259,10 @@ const Home = () => {
                     <div className="feature-item">
                         <span className="feature-icon-svg">
                             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20 21V19C20 16.79 18.21 15 16 15H8C5.79 15 4 16.79 4 19V21" stroke="#B38058" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                <circle cx="12" cy="7" r="4" stroke="#B38058" strokeWidth="2" />
-                                <path d="M16 3.13C17.79 3.57 19 5.14 19 7C19 8.86 17.79 10.43 16 10.87" stroke="#B38058" strokeWidth="2" strokeLinecap="round" />
-                                <path d="M21 21V19C21 17.14 19.79 15.57 18 15.13" stroke="#B38058" strokeWidth="2" strokeLinecap="round" />
+                                <path d="M20 21V19C20 16.79 18.21 15 16 15H8C5.79 15 4 16.79 4 19V21" stroke="#6c7a89" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                <circle cx="12" cy="7" r="4" stroke="#6c7a89" strokeWidth="2" />
+                                <path d="M16 3.13C17.79 3.57 19 5.14 19 7C19 8.86 17.79 10.43 16 10.87" stroke="#6c7a89" strokeWidth="2" strokeLinecap="round" />
+                                <path d="M21 21V19C21 17.14 19.79 15.57 18 15.13" stroke="#6c7a89" strokeWidth="2" strokeLinecap="round" />
                             </svg>
                         </span>
                         <span className="feature-text">Client Focused</span>
@@ -278,7 +276,7 @@ const Home = () => {
                     <p className="section-kicker">{homeSettings?.about?.kicker || 'WHO WE ARE'}</p>
                     <h2 className="section-title" dangerouslySetInnerHTML={{ __html: (homeSettings?.about?.title || 'We are a passionate\ninterior design studio.').replace(/\n/g, ' <br />') }}></h2>
                     <div className="about-desc">
-                        <p>{homeSettings?.about?.desc1 || 'At Good Interior, we believe that great design improves the way people live and work.'}</p>
+                        <p>{homeSettings?.about?.desc1 || 'At Senkadagala Architects, we believe that great design improves the way people live and work.'}</p>
                         <p>{homeSettings?.about?.desc2 || 'We blend creativity, functionality and detail to deliver spaces that are beautiful, comfortable and uniquely yours.'}</p>
                     </div>
                     <Link to={homeSettings?.about?.buttonLink || '/about'} className="btn-outline">{homeSettings?.about?.buttonText || 'ABOUT OUR STUDIO'} <FaArrowRight /></Link>
@@ -318,7 +316,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="portfolio-grid">
-                    {projects.length > 0 ? [...projects].reverse().slice(0, 4).map((project, idx) => (
+                    {projects.length > 0 ? projects.slice(0, 4).map((project, idx) => (
                         <ProjectCard key={project._id} project={project} index={idx} />
                     )) : (
                         <p style={{ textAlign: 'center', width: '100%', color: '#94a3b8', padding: '40px 0' }}>Loading portfolio projects...</p>
@@ -404,7 +402,7 @@ const Home = () => {
                         <div className="testi-row-container">
                             <div className="testi-quote-side">
                                 <svg className="quote-line-icon" width="36" height="30" viewBox="0 0 44 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 4C7.03 4 3 8.03 3 13V31H21V13H12C12 9.13 15.13 6 19 6V4H12ZM35 4C30.03 4 26 8.03 26 13V31H44V13H35C35 9.13 38.13 6 42 6V4H35Z" stroke="#B38058" strokeWidth="2.2" fill="none" strokeLinejoin="round" />
+                                    <path d="M12 4C7.03 4 3 8.03 3 13V31H21V13H12C12 9.13 15.13 6 19 6V4H12ZM35 4C30.03 4 26 8.03 26 13V31H44V13H35C35 9.13 38.13 6 42 6V4H35Z" stroke="#6c7a89" strokeWidth="2.2" fill="none" strokeLinejoin="round" />
                                 </svg>
                                 <p className="testi-quote-text" style={{ minHeight: '100px' }}>
                                     {currentTesti.quote}

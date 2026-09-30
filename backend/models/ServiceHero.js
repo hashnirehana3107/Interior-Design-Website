@@ -63,7 +63,7 @@ const serviceHeroSchema = new mongoose.Schema({
     },
     whyQuoteAuthor: {
         type: String,
-        default: 'GOOD INTERIOR DESIGN STUDIO'
+        default: 'Senkadagala Architects'
     }
 }, { timestamps: true });
 

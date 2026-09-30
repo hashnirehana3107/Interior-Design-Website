@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer');
 const JobApplication = require('../models/JobApplication');
 const JobOpening = require('../models/JobOpening');
 const CareersHero = require('../models/CareersHero');
+const { getCache, setCache, clearCache, getOrRevalidate } = require('../utils/cache');
 
 const EMAIL_USER = process.env.EMAIL_USER || 'unicstationary39a@gmail.com';
 const EMAIL_PASS = process.env.EMAIL_PASS || 'afdhtikubzqyrlzs';
@@ -60,7 +61,7 @@ const initialMockJobs = [
         salaryRange: 'Negotiable (Based on Portfolio)',
         icon: 'architecture',
         order: 2,
-        overview: 'Good Interior Design Studio is looking for an experienced Interior Architect to oversee technical drawings, structural interior modifications, ceiling & lighting plans, and detailed architectural joinery for high-end developments.',
+        overview: 'Senkadagala Architects is looking for an experienced Interior Architect to oversee technical drawings, structural interior modifications, ceiling & lighting plans, and detailed architectural joinery for high-end developments.',
         responsibilities: [
             'Prepare comprehensive architectural working drawing sets, MEP coordination drawings, and joinery details.',
             'Design structural interior alterations, staircase details, wall paneling, and custom ceiling layouts.',
@@ -122,9 +123,9 @@ const initialMockJobs = [
         salaryRange: 'Competitive + Bonus',
         icon: 'marketing',
         order: 4,
-        overview: 'We are seeking a dynamic Marketing Executive to drive Good Interior’s brand presence across digital channels, manage social media campaigns, produce luxury content, and nurture prospective client leads.',
+        overview: 'We are seeking a dynamic Marketing Executive to drive Senkadagala Architects’s brand presence across digital channels, manage social media campaigns, produce luxury content, and nurture prospective client leads.',
         responsibilities: [
-            'Develop and execute integrated digital marketing strategies across Instagram, LinkedIn, Pinterest, and Meta ads.',
+            'Develop and execute integrated digital marketing strategies across Instagram, LinkedIn, TikTok, and Meta ads.',
             'Curate high-quality visual content, photoshoots, video reels, and client story highlights.',
             'Manage website SEO content, monthly blog articles, and email newsletter campaigns.',
             'Monitor marketing performance metrics, website traffic analytics, and conversion rates.',
@@ -213,19 +214,20 @@ const initialMockJobs = [
 // GET /api/careers/hero
 router.get('/hero', async (req, res) => {
     try {
-        let hero = await CareersHero.findOne();
-        if (!hero) {
-            hero = new CareersHero({
-                kicker: 'JOIN OUR TEAM',
-                title: 'Build Your Career in Interior Design',
-                description: "We're always looking for passionate, creative and talented individuals to join our team. If you love design and want to make a difference, we'd love to hear from you."
-            });
-            await hero.save();
-        }
-        res.status(200).json({ hero });
+        const payload = await getOrRevalidate('careers_hero', async () => {
+            let hero = await CareersHero.findOne().lean();
+            if (!hero) {
+                hero = await CareersHero.create({
+                    kicker: 'JOIN OUR TEAM',
+                    title: 'Build Your Career in Interior Design',
+                    description: "We're always looking for passionate, creative and talented individuals to join our team."
+                });
+            }
+            return { hero };
+        }, 300, { hero: { kicker: 'JOIN OUR TEAM', title: 'Build Your Career in Interior Design' } });
+        res.status(200).json(payload);
     } catch (error) {
-        console.error('Fetch Careers Hero Error:', error);
-        res.status(500).json({ message: 'Failed to fetch careers hero content' });
+        res.status(200).json({ hero: { kicker: 'JOIN OUR TEAM', title: 'Build Your Career in Interior Design' } });
     }
 });
 
@@ -240,6 +242,7 @@ router.put('/hero', async (req, res) => {
             hero.updatedAt = Date.now();
         }
         await hero.save();
+        clearCache('careers');
         res.status(200).json({ message: 'Careers hero updated successfully', hero });
     } catch (error) {
         console.error('Update Careers Hero Error:', error);
@@ -252,16 +255,19 @@ router.put('/hero', async (req, res) => {
 // GET /api/careers/jobs
 router.get('/jobs', async (req, res) => {
     try {
-        let jobs = await JobOpening.find().sort({ order: 1, createdAt: 1 });
-        if (jobs.length === 0) {
-            await JobOpening.insertMany(initialMockJobs);
-            jobs = await JobOpening.find().sort({ order: 1, createdAt: 1 });
-            console.log('✅ [CAREERS SEEDED] Default 6 mock job openings seeded into MongoDB!');
+        let jobs = await JobOpening.find().sort({ order: 1, createdAt: 1 }).lean();
+        if (!jobs || jobs.length === 0) {
+            try {
+                await JobOpening.insertMany(initialMockJobs);
+                jobs = await JobOpening.find().sort({ order: 1, createdAt: 1 }).lean();
+            } catch (e) {
+                jobs = initialMockJobs;
+            }
         }
-        res.status(200).json({ count: jobs.length, jobs });
+        const list = jobs && jobs.length > 0 ? jobs : initialMockJobs;
+        res.status(200).json({ count: list.length, jobs: list });
     } catch (error) {
-        console.error('Get Job Openings Error:', error);
-        res.status(500).json({ message: 'Failed to fetch job openings.' });
+        res.status(200).json({ count: initialMockJobs.length, jobs: initialMockJobs });
     }
 });
 
@@ -290,6 +296,7 @@ router.post('/jobs', async (req, res) => {
         });
 
         await newJob.save();
+        clearCache('careers');
         res.status(201).json({ message: 'Job opening created successfully', job: newJob });
     } catch (error) {
         console.error('Create Job Opening Error:', error);
@@ -326,6 +333,7 @@ router.put('/jobs/:id', async (req, res) => {
         if (!updatedJob) {
             return res.status(404).json({ message: 'Job opening not found.' });
         }
+        clearCache('careers');
 
         res.status(200).json({ message: 'Job opening updated successfully', job: updatedJob });
     } catch (error) {
@@ -341,6 +349,7 @@ router.delete('/jobs/:id', async (req, res) => {
         if (!deletedJob) {
             return res.status(404).json({ message: 'Job opening not found.' });
         }
+        clearCache('careers');
         res.status(200).json({ message: 'Job opening deleted successfully.' });
     } catch (error) {
         console.error('Delete Job Opening Error:', error);
@@ -384,7 +393,7 @@ router.post('/apply', async (req, res) => {
         try {
             const transporter = createTransporter();
             const mailOptionsAdmin = {
-                from: `"Good Interior Studio Careers" <${EMAIL_USER}>`,
+                from: `"Senkadagala Architects Careers" <${EMAIL_USER}>`,
                 to: ADMIN_EMAIL,
                 replyTo: `"${fullName.trim()}" <${email.trim()}>`,
                 subject: `[NEW JOB APPLICATION] ${position.trim()} - ${fullName.trim()}`,
@@ -392,7 +401,7 @@ router.post('/apply', async (req, res) => {
                     <div style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; padding: 30px; color: #1e293b;">
                         <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; padding: 30px; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
                             <div style="text-align: center; padding-bottom: 20px; border-bottom: 2px solid #b38058;">
-                                <h2 style="color: #b38058; margin: 0; font-size: 22px; letter-spacing: 1px;">GOOD INTERIOR DESIGN STUDIO</h2>
+                                <h2 style="color: #b38058; margin: 0; font-size: 22px; letter-spacing: 1px;">Senkadagala Architects</h2>
                                 <p style="font-size: 12px; color: #64748b; margin: 5px 0 0 0; letter-spacing: 2px;">NEW CAREER JOB APPLICATION</p>
                             </div>
                             
@@ -421,7 +430,7 @@ router.post('/apply', async (req, res) => {
                             </div>
 
                             <div style="border-top: 1px solid #e2e8f0; padding-top: 15px; text-align: center; font-size: 12px; color: #94a3b8;">
-                                <p style="margin: 0;">Good Interior Studio Automated Recruitment System</p>
+                                <p style="margin: 0;">Senkadagala Architects Automated Recruitment System</p>
                             </div>
                         </div>
                     </div>
@@ -432,21 +441,21 @@ router.post('/apply', async (req, res) => {
 
             // Send Auto-Acknowledgement Email to the Applicant
             const mailOptionsApplicant = {
-                from: `"Good Interior Studio Careers" <${EMAIL_USER}>`,
+                from: `"Senkadagala Architects Careers" <${EMAIL_USER}>`,
                 to: email.trim(),
-                subject: `Application Received - ${position.trim()} | Good Interior Studio`,
+                subject: `Application Received - ${position.trim()} | Senkadagala Architects`,
                 html: `
                     <div style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; padding: 30px; color: #1e293b;">
                         <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; padding: 30px; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
                             <div style="text-align: center; padding-bottom: 20px; border-bottom: 2px solid #b38058;">
-                                <h2 style="color: #b38058; margin: 0; font-size: 22px; letter-spacing: 1px;">GOOD INTERIOR DESIGN STUDIO</h2>
+                                <h2 style="color: #b38058; margin: 0; font-size: 22px; letter-spacing: 1px;">Senkadagala Architects</h2>
                                 <p style="font-size: 12px; color: #64748b; margin: 5px 0 0 0; letter-spacing: 2px;">APPLICATION ACKNOWLEDGEMENT</p>
                             </div>
                             
                             <div style="padding: 24px 0;">
                                 <h3 style="color: #0f172a; margin-top: 0;">Dear ${fullName.trim()},</h3>
                                 <p style="font-size: 14px; color: #334155; line-height: 1.6;">
-                                    Thank you for applying for the <strong>${position.trim()}</strong> position at Good Interior Studio. We have successfully received your job application and details.
+                                    Thank you for applying for the <strong>${position.trim()}</strong> position at Senkadagala Architects. We have successfully received your job application and details.
                                 </p>
                                 <p style="font-size: 14px; color: #334155; line-height: 1.6;">
                                     Our HR and Lead Architecture team will review your CV and portfolio. If your qualifications match our requirements, we will reach out to you directly for an interview.
@@ -463,18 +472,18 @@ router.post('/apply', async (req, res) => {
                                 </div>
 
                                 <p style="font-size: 14px; color: #334155; line-height: 1.6;">
-                                    We appreciate your interest in building a career with Good Interior Studio.
+                                    We appreciate your interest in building a career with Senkadagala Architects.
                                 </p>
                                 
                                 <p style="font-size: 14px; color: #0f172a; margin-top: 25px;">
                                     Best regards,<br/>
                                     <strong>Recruitment & Talent Team</strong><br/>
-                                    <span style="color: #b38058; font-weight: 600;">Good Interior Studio, Colombo</span>
+                                    <span style="color: #b38058; font-weight: 600;">Senkadagala Architects, Colombo</span>
                                 </p>
                             </div>
 
                             <div style="border-top: 1px solid #e2e8f0; padding-top: 15px; text-align: center; font-size: 12px; color: #94a3b8;">
-                                <p style="margin: 0;">Good Interior Studio • Colombo, Sri Lanka</p>
+                                <p style="margin: 0;">Senkadagala Architects • Colombo, Sri Lanka</p>
                             </div>
                         </div>
                     </div>
@@ -499,8 +508,9 @@ router.post('/apply', async (req, res) => {
 // GET /api/careers/applications (Admin)
 router.get('/applications', async (req, res) => {
     try {
-        const applications = await JobApplication.find().sort({ createdAt: -1 });
-        res.status(200).json({ count: applications.length, applications });
+        const applications = await JobApplication.find().sort({ createdAt: -1 }).lean();
+        const payload = { count: applications.length, applications };
+        res.status(200).json(payload);
     } catch (error) {
         console.error('Get Job Applications Error:', error);
         res.status(500).json({ message: 'Failed to fetch job applications.' });
@@ -537,14 +547,14 @@ router.post('/send-candidate-email', async (req, res) => {
 
         const transporter = createTransporter();
         const mailOptions = {
-            from: `"Good Interior Studio Careers" <${EMAIL_USER}>`,
+            from: `"Senkadagala Architects Careers" <${EMAIL_USER}>`,
             to: recipientEmail.trim(),
             subject: subject.trim(),
             html: `
                 <div style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; padding: 30px; color: #1e293b;">
                     <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; padding: 30px; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
                         <div style="text-align: center; padding-bottom: 20px; border-bottom: 2px solid #b38058;">
-                            <h2 style="color: #b38058; margin: 0; font-size: 22px; letter-spacing: 1px;">GOOD INTERIOR DESIGN STUDIO</h2>
+                            <h2 style="color: #b38058; margin: 0; font-size: 22px; letter-spacing: 1px;">Senkadagala Architects</h2>
                             <p style="font-size: 12px; color: #64748b; margin: 5px 0 0 0; letter-spacing: 2px;">CAREERS & RECRUITMENT TEAM</p>
                         </div>
                         
@@ -555,12 +565,12 @@ router.post('/send-candidate-email', async (req, res) => {
                             <p style="font-size: 14px; color: #0f172a; margin-top: 25px;">
                                 Warm regards,<br/>
                                 <strong>HR & Talent Acquisition</strong><br/>
-                                <span style="color: #b38058; font-weight: 600;">Good Interior Studio, Colombo</span>
+                                <span style="color: #b38058; font-weight: 600;">Senkadagala Architects, Colombo</span>
                             </p>
                         </div>
 
                         <div style="border-top: 1px solid #e2e8f0; padding-top: 15px; text-align: center; font-size: 12px; color: #94a3b8;">
-                            <p style="margin: 0;">Good Interior Studio • Colombo, Sri Lanka</p>
+                            <p style="margin: 0;">Senkadagala Architects • Colombo, Sri Lanka</p>
                         </div>
                     </div>
                 </div>

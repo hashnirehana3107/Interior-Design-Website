@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const ContactPageSettings = require('../models/ContactPageSettings');
+const { getCache, setCache, clearCache } = require('../utils/cache');
 
 // Helper: get or create singleton settings document
 const getSettings = async () => {
@@ -8,8 +9,6 @@ const getSettings = async () => {
     if (!settings) {
         settings = await ContactPageSettings.create({});
     } else {
-        // If mongoose generated dynamic defaults in-memory because they were missing in the physical DB document,
-        // we must save them so their ObjectIds become permanent instead of regenerating on every request.
         let needsSave = false;
         if (!settings.get('features', null, { getters: false })) {
             settings.markModified('features');
@@ -27,8 +26,13 @@ const getSettings = async () => {
 // @access  Public
 router.get('/', async (req, res) => {
     try {
+        const cached = getCache('contact_settings');
+        if (cached) return res.status(200).json(cached);
+
         const settings = await getSettings();
-        res.status(200).json({ settings });
+        const payload = { settings };
+        setCache('contact_settings', payload, 60);
+        res.status(200).json(payload);
     } catch (error) {
         console.error('Get Contact Settings Error:', error);
         res.status(500).json({ message: 'Failed to fetch contact page settings.' });
@@ -97,7 +101,7 @@ router.put('/journey', async (req, res) => {
         if (socialLinks !== undefined) {
             settings.journey.socialLinks.facebook = socialLinks.facebook || '';
             settings.journey.socialLinks.instagram = socialLinks.instagram || '';
-            settings.journey.socialLinks.pinterest = socialLinks.pinterest || '';
+            settings.journey.socialLinks.tiktok = socialLinks.tiktok || '';
             settings.journey.socialLinks.linkedin = socialLinks.linkedin || '';
         }
 
@@ -118,6 +122,9 @@ router.put('/journey', async (req, res) => {
 // @access  Public
 router.get('/features', async (req, res) => {
     try {
+        const cached = getCache('contact_features');
+        if (cached) return res.status(200).json(cached);
+
         const settings = await getSettings();
         // If features is empty, seed defaults
         if (!settings.features || settings.features.length === 0) {
@@ -131,7 +138,9 @@ router.get('/features', async (req, res) => {
             await settings.save();
         }
         const sorted = [...settings.features].sort((a, b) => (a.order || 0) - (b.order || 0));
-        res.status(200).json({ features: sorted });
+        const payload = { features: sorted };
+        setCache('contact_features', payload, 60);
+        res.status(200).json(payload);
     } catch (error) {
         console.error('Get Features Error:', error);
         res.status(500).json({ message: 'Failed to fetch features.' });

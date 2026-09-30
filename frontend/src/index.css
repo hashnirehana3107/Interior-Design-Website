@@ -2,7 +2,7 @@
 
 :root {
   --primary-color: #1a1a1a;
-  --secondary-color: #d4af37;
+  --secondary-color: #9ca3af;
   /* Gold */
   --bg-color: #fcfbf9;
   --text-main: #333333;
@@ -87,4 +87,51 @@ a {
   font-size: 13.5px;
   font-weight: 600;
   margin-bottom: 20px;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   GLOBAL SECTION KICKER / SUBTITLE BRAND GRADIENT & TYPOGRAPHY
+   ════════════════════════════════════════════════════════════════ */
+.section-kicker,
+.section-subtitle,
+.dark-section-subtitle,
+.sub-title,
+.hero-kicker,
+.about-kicker,
+.services-kicker,
+.process-kicker,
+.why-kicker,
+.contact-kicker,
+.blog-kicker,
+.careers-kicker,
+.portfolio-kicker,
+.galleries-kicker,
+.light-cta-subtitle,
+.cta-strip-subtitle,
+.cta-subtitle,
+.cta-kicker,
+.testi-kicker,
+.testi-kicker-center,
+.testi-cta-kicker,
+.cm-kicker,
+.jdm-kicker-tag,
+.sc-modal-kicker,
+.sc-kicker,
+.section-label,
+.srv-modal-kicker,
+.pd-kicker,
+.blog-kicker-text,
+.blog-cta-kicker,
+.gold-kicker,
+.profile-hero-subtitle,
+.gallery-modal-kicker,
+.gallery-modal-category {
+  background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  font-weight: 800 !important;
+  letter-spacing: 2.5px;
+  display: inline-block;
+  text-transform: uppercase;
 }

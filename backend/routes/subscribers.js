@@ -36,22 +36,22 @@ router.post('/', async (req, res) => {
         const htmlEmailConfig = `
             <div style="font-family: 'Arial', sans-serif; max-width: 600px; margin: 0 auto; color: #333; line-height: 1.6;">
                 <div style="text-align: center; padding: 30px; background-color: #0f172a;">
-                    <h1 style="color: #c48b59; margin: 0;">GOOD INTERIOR</h1>
+                    <h1 style="color: #c48b59; margin: 0;">Senkadagala Architects</h1>
                     <p style="color: #cbd5e1; font-size: 14px; letter-spacing: 2px;">DESIGN STUDIO</p>
                 </div>
                 <div style="padding: 40px 30px; background-color: #ffffff; border: 1px solid #eaeaea;">
                     <h2 style="color: #1e293b; margin-top: 0;">Welcome to our Design Community! 🎉</h2>
                     <p>Hi there,</p>
-                    <p>Thank you for subscribing to the Good Interior Design Studio newsletter. We are thrilled to have you here.</p>
+                    <p>Thank you for subscribing to the Senkadagala Architects newsletter. We are thrilled to have you here.</p>
                     <p>Get ready to explore the latest interior design trends, exclusive tips, and inspiration tailored just for you. We regularly share content that will help you transform your spaces.</p>
                     <div style="text-align: center; margin: 35px 0;">
                         <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}" style="background-color: #c48b59; color: #ffffff; text-decoration: none; padding: 14px 28px; border-radius: 4px; font-weight: bold; font-size: 15px;">EXPLORE OUR WORK</a>
                     </div>
                     <p>If you have a project in mind, don't hesitate to reach out for a consultation.</p>
-                    <p>Stay inspired,<br/><strong>The Good Interior Team</strong></p>
+                    <p>Stay inspired,<br/><strong>The Senkadagala Architects Team</strong></p>
                 </div>
                 <div style="text-align: center; padding: 20px; font-size: 12px; color: #94a3b8; background-color: #f8fafc;">
-                    &copy; 2025 Good Interior Design Studio. All rights reserved.<br/>
+                    &copy; 2025 Senkadagala Architects. All rights reserved.<br/>
                     123 Design Street, Colombo 05, Sri Lanka
                 </div>
             </div>
@@ -60,9 +60,9 @@ router.post('/', async (req, res) => {
         if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
             try {
                 await transporter.sendMail({
-                    from: `"Good Interior Design" <${process.env.EMAIL_USER}>`,
+                    from: `"Senkadagala Architects Design" <${process.env.EMAIL_USER}>`,
                     to: newSub.email,
-                    subject: 'Welcome to Good Interior Design Studio!',
+                    subject: 'Welcome to Senkadagala Architects!',
                     html: htmlEmailConfig,
                 });
                 console.log(`✅ Welcome Email successfully sent to ${newSub.email}`);
@@ -74,7 +74,7 @@ router.post('/', async (req, res) => {
             console.log(`\n========================================`);
             console.log(`📧 SIMULATED EMAIL SENT (Because EMAIL_USER / EMAIL_PASS are missing in .env)`);
             console.log(`To: ${newSub.email}`);
-            console.log(`Subject: Welcome to Good Interior Design Studio!`);
+            console.log(`Subject: Welcome to Senkadagala Architects!`);
             console.log(`========================================\n`);
         }
 

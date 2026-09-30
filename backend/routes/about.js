@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const About = require('../models/About');
+const { getCache, setCache, clearCache } = require('../utils/cache');
 
 // Seed default data matching existing UI
 const defaultSeedData = {
@@ -14,10 +15,9 @@ const defaultSeedData = {
 };
 
 const getAboutData = async () => {
-    let doc = await About.findOne();
+    let doc = await About.findOne().maxTimeMS(5000).lean();
     if (!doc) {
-        doc = new About(defaultSeedData);
-        await doc.save();
+        doc = await About.create(defaultSeedData);
     }
     return doc;
 };
@@ -25,7 +25,11 @@ const getAboutData = async () => {
 // GET single about data
 router.get('/', async (req, res) => {
     try {
+        const cached = getCache('about_data');
+        if (cached) return res.json(cached);
+
         const data = await getAboutData();
+        setCache('about_data', data, 60);
         res.json(data);
     } catch (err) {
         res.status(500).json({ error: 'Server error fetching about data.' });
@@ -35,7 +39,8 @@ router.get('/', async (req, res) => {
 // PUT update about sections
 router.put('/', async (req, res) => {
     try {
-        let doc = await getAboutData();
+        let doc = await About.findOne();
+        if (!doc) doc = new About(defaultSeedData);
 
         // Merge updates
         if (req.body.heroInfo) doc.heroInfo = { ...doc.heroInfo, ...req.body.heroInfo };
@@ -46,6 +51,7 @@ router.put('/', async (req, res) => {
         if (req.body.team) doc.team = { ...doc.team, ...req.body.team };
 
         await doc.save();
+        clearCache('about_data');
         res.json(doc);
     } catch (err) {
         res.status(500).json({ error: 'Server error updating about data.' });

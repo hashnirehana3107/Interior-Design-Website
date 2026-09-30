@@ -2,13 +2,14 @@ const express = require('express');
 const router = express.Router();
 const Testimonial = require('../models/Testimonial');
 const TestiHero = require('../models/TestiHero');
+const { getCache, setCache, clearCache } = require('../utils/cache');
 
 // Seed default data matching the original frontend exactly
 const defaultSeedData = [
     {
         category: 'RESIDENTIAL',
         image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=600&q=80',
-        quote: "Good Interior transformed our empty apartment into a warm and elegant home. Their attention to detail and professionalism exceeded our expectations.",
+        quote: "Senkadagala Architects transformed our empty apartment into a warm and elegant home. Their attention to detail and professionalism exceeded our expectations.",
         name: "Sarah Thompson",
         role: "Homeowner • Colombo",
         avatar: "https://randomuser.me/api/portraits/women/44.jpg",
@@ -53,7 +54,7 @@ const defaultSeedData = [
     {
         category: 'RENOVATION',
         image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80',
-        quote: "Renovating our 40-year-old family bungalow felt daunting until Good Interior stepped in. They preserved the heritage character while introducing modern luxury.",
+        quote: "Renovating our 40-year-old family bungalow felt daunting until Senkadagala Architects stepped in. They preserved the heritage character while introducing modern luxury.",
         name: "Robert Vance",
         role: "Heritage Villa Owner • Galle",
         avatar: "https://randomuser.me/api/portraits/men/54.jpg",
@@ -71,7 +72,7 @@ const defaultSeedData = [
     {
         category: 'COMMERCIAL',
         image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80',
-        quote: "Good Interior designed our boutique hotel lobby and executive suites. The positive guest reviews regarding our interior aesthetic speak for themselves.",
+        quote: "Senkadagala Architects designed our boutique hotel lobby and executive suites. The positive guest reviews regarding our interior aesthetic speak for themselves.",
         name: "Marcus Brody",
         role: "Boutique Hotel Director • Bentota",
         avatar: "https://randomuser.me/api/portraits/men/62.jpg",
@@ -79,7 +80,9 @@ const defaultSeedData = [
     }
 ];
 
+let hasSeeded = false;
 async function ensureSeedData() {
+    if (hasSeeded) return;
     try {
         const count = await Testimonial.countDocuments();
         if (count === 0) {
@@ -91,6 +94,7 @@ async function ensureSeedData() {
         if (heroCount === 0) {
             await TestiHero.create({});
         }
+        hasSeeded = true;
     } catch (err) {
         console.error('Error seeding testimonials data:', err);
     }
@@ -100,7 +104,7 @@ async function ensureSeedData() {
 router.get('/hero', async (req, res) => {
     try {
         await ensureSeedData();
-        let hero = await TestiHero.findOne();
+        let hero = await TestiHero.findOne().lean();
         res.status(200).json(hero);
     } catch (err) {
         res.status(500).json({ message: 'Error fetching hero', error: err.message });
@@ -117,6 +121,7 @@ router.put('/hero', async (req, res) => {
             Object.assign(hero, req.body);
         }
         await hero.save();
+        clearCache('testi');
         res.status(200).json({ message: 'Hero updated successfully', hero });
     } catch (err) {
         res.status(500).json({ message: 'Error updating hero', error: err.message });
@@ -127,7 +132,7 @@ router.put('/hero', async (req, res) => {
 router.get('/public', async (req, res) => {
     try {
         await ensureSeedData();
-        const t = await Testimonial.find({ isApproved: true }).sort({ createdAt: -1 });
+        const t = await Testimonial.find({ isApproved: true }).sort({ createdAt: -1 }).lean();
         res.status(200).json(t);
     } catch (err) {
         res.status(500).json({ message: 'Error fetching testimonials', error: err.message });
@@ -138,7 +143,7 @@ router.get('/public', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         await ensureSeedData();
-        const t = await Testimonial.find().sort({ createdAt: -1 });
+        const t = await Testimonial.find().sort({ createdAt: -1 }).lean();
         res.status(200).json(t);
     } catch (err) {
         res.status(500).json({ message: 'Error fetching testimonials', error: err.message });
@@ -165,6 +170,7 @@ router.post('/', async (req, res) => {
         });
 
         await newT.save();
+        clearCache('testi');
         res.status(201).json({ message: 'Testimonial created successfully', testimonial: newT });
     } catch (err) {
         res.status(500).json({ message: 'Error creating testimonial', error: err.message });
@@ -176,6 +182,7 @@ router.put('/:id', async (req, res) => {
     try {
         const updated = await Testimonial.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!updated) return res.status(404).json({ message: 'Not found' });
+        clearCache('testi');
         res.status(200).json({ message: 'Updated successfully', testimonial: updated });
     } catch (err) {
         res.status(500).json({ message: 'Error updating', error: err.message });
@@ -187,6 +194,7 @@ router.delete('/:id', async (req, res) => {
     try {
         const deleted = await Testimonial.findByIdAndDelete(req.params.id);
         if (!deleted) return res.status(404).json({ message: 'Not found' });
+        clearCache('testi');
         res.status(200).json({ message: 'Deleted successfully' });
     } catch (err) {
         res.status(500).json({ message: 'Error deleting', error: err.message });

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const GalleryItem = require('../models/GalleryItem');
 const GalleryHero = require('../models/GalleryHero');
+const { getCache, setCache, clearCache } = require('../utils/cache');
 
 const initialGalleryItems = [
     { order: 1, type: 'living', src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80', shape: 'tall', title: 'Luxury Living Room' },
@@ -28,11 +29,16 @@ const defaultHero = {
 // ── GET HERO SETTINGS ──
 router.get('/hero', async (req, res) => {
     try {
-        let hero = await GalleryHero.findOne();
+        const cached = getCache('gallery_hero');
+        if (cached) return res.status(200).json(cached);
+
+        let hero = await GalleryHero.findOne().lean();
         if (!hero) {
             hero = await GalleryHero.create(defaultHero);
         }
-        res.status(200).json({ hero });
+        const payload = { hero };
+        setCache('gallery_hero', payload, 60);
+        res.status(200).json(payload);
     } catch (error) {
         console.error('Fetch Gallery Hero Error:', error);
         res.status(500).json({ message: 'Failed to fetch gallery hero settings' });
@@ -54,6 +60,7 @@ router.put('/hero', async (req, res) => {
             if (heroBg !== undefined) hero.heroBg = heroBg;
         }
         await hero.save();
+        clearCache('gallery');
         res.status(200).json({ message: 'Gallery hero settings updated successfully', hero });
     } catch (error) {
         console.error('Update Gallery Hero Error:', error);
@@ -62,19 +69,22 @@ router.put('/hero', async (req, res) => {
 });
 
 // ── GET ALL GALLERY ITEMS ──
-router.get('/items', async (req, res) => {
+const fetchGalleryItems = async (req, res) => {
     try {
-        let items = await GalleryItem.find().sort({ order: 1, createdAt: 1 });
+        let items = await GalleryItem.find().sort({ order: 1, createdAt: 1 }).lean();
         if (items.length === 0) {
             await GalleryItem.insertMany(initialGalleryItems);
-            items = await GalleryItem.find().sort({ order: 1, createdAt: 1 });
+            items = await GalleryItem.find().sort({ order: 1, createdAt: 1 }).lean();
         }
         res.status(200).json({ items });
     } catch (error) {
         console.error('Fetch Gallery Items Error:', error);
         res.status(500).json({ message: 'Failed to fetch gallery items' });
     }
-});
+};
+
+router.get('/items', fetchGalleryItems);
+router.get('/', fetchGalleryItems);
 
 // ── CREATE GALLERY ITEM ──
 router.post('/items', async (req, res) => {

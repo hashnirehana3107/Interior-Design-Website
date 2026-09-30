@@ -1,4 +1,4 @@
-/* src/pages/Services.css */
+﻿/* src/pages/Services.css */
 
 .services-page {
     font-family: 'Montserrat', sans-serif;
@@ -50,16 +50,13 @@
     color: #a0a0a0;
     line-height: 2.5;
     text-align: right;
-    border-right: 1px solid #c48b59;
+    border-right: 1px solid #6c7a89;
     padding-right: 15px;
 }
 
 .services-hero-content .section-label {
     font-size: 11px;
-    font-weight: 700;
-    color: #c48b59;
     letter-spacing: 2.5px;
-    text-transform: uppercase;
     display: block;
     margin-bottom: 15px;
 }
@@ -74,7 +71,7 @@
 }
 
 .highlight-text {
-    color: #c48b59;
+    color: #6c7a89;
     font-style: italic;
     font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
     font-weight: 400;
@@ -107,10 +104,7 @@
 
 .section-subtitle {
     font-size: 11px;
-    font-weight: 700;
-    color: #B38058;
     letter-spacing: 2px;
-    text-transform: uppercase;
     display: block;
     margin-bottom: 15px;
 }
@@ -145,8 +139,8 @@
     align-items: center;
     gap: 10px;
     padding: 14px 30px;
-    border: 1px solid #B38058;
-    color: #B38058;
+    border: 1px solid #6c7a89;
+    color: #6c7a89;
     text-decoration: none;
     font-size: 11px;
     font-weight: 600;
@@ -157,7 +151,7 @@
 }
 
 .btn-outline-gold:hover {
-    background-color: #B38058;
+    background-color: #6c7a89;
     color: #ffffff;
 }
 
@@ -210,7 +204,7 @@
     align-items: center;
     justify-content: center;
     font-size: 24px;
-    color: #B38058;
+    color: #6c7a89;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
 
@@ -232,7 +226,7 @@
 .service-link {
     font-size: 11px;
     font-weight: 700;
-    color: #B38058;
+    color: #6c7a89;
     text-decoration: none;
     letter-spacing: 1px;
     display: inline-flex;
@@ -254,10 +248,7 @@
 
 .dark-section-subtitle {
     font-size: 11px;
-    font-weight: 700;
-    color: #B38058;
     letter-spacing: 2px;
-    text-transform: uppercase;
     display: block;
     margin-bottom: 15px;
 }
@@ -312,7 +303,7 @@
     left: 40px;
     right: 40px;
     height: 1px;
-    background: linear-gradient(90deg, rgba(196, 139, 89, 0.4) 0%, rgba(255, 255, 255, 0.15) 100%);
+    background: linear-gradient(90deg, rgba(108, 122, 137, 0.4) 0%, rgba(255, 255, 255, 0.15) 100%);
     z-index: 0;
 }
 
@@ -329,13 +320,13 @@
 .process-icon {
     width: 50px;
     height: 50px;
-    border: 1px solid rgba(196, 139, 89, 0.6);
+    border: 1px solid rgba(108, 122, 137, 0.6);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 20px;
-    color: #c48b59;
+    color: #6c7a89;
     background-color: #1a1a1a;
     box-shadow: 0 0 0 8px #1a1a1a;
     flex-shrink: 0;
@@ -344,8 +335,8 @@
 }
 
 .process-step:hover .process-icon {
-    border-color: #c48b59;
-    background-color: #c48b59;
+    border-color: #6c7a89;
+    background-color: #6c7a89;
     color: #ffffff;
     transform: translateY(-2px);
 }
@@ -358,7 +349,7 @@
 .process-info h4 {
     font-size: 13px;
     font-weight: 700;
-    color: #c48b59;
+    color: #6c7a89;
     margin: 0 0 4px;
     letter-spacing: 1px;
 }
@@ -434,7 +425,7 @@
 
 .why-feature-icon {
     font-size: 32px;
-    color: #B38058;
+    color: #6c7a89;
     margin-bottom: 15px;
 }
 
@@ -477,7 +468,7 @@
     width: 50%;
     background-color: #fdfaf6;
     padding: 40px;
-    border-left: 2px solid #B38058;
+    border-left: 2px solid #6c7a89;
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
     /* Frame effect anchor */
     isolation: isolate;
@@ -491,8 +482,8 @@
     right: 10px;
     width: 36px;
     height: 36px;
-    border-top: 1.5px solid #B38058;
-    border-right: 1.5px solid #B38058;
+    border-top: 1.5px solid #6c7a89;
+    border-right: 1.5px solid #6c7a89;
     pointer-events: none;
     opacity: 0.7;
     transition: opacity 0.3s ease;
@@ -506,8 +497,8 @@
     left: 10px;
     width: 36px;
     height: 36px;
-    border-bottom: 1.5px solid #B38058;
-    border-left: 1.5px solid #B38058;
+    border-bottom: 1.5px solid #6c7a89;
+    border-left: 1.5px solid #6c7a89;
     pointer-events: none;
     opacity: 0.7;
     transition: opacity 0.3s ease;
@@ -520,7 +511,7 @@
 
 .quote-icon-mark {
     font-size: 30px;
-    color: #B38058;
+    color: #6c7a89;
     opacity: 0.5;
     margin-bottom: 15px;
 }
@@ -542,7 +533,7 @@
 }
 
 .quote-author span {
-    color: #B38058;
+    color: #6c7a89;
     font-weight: 500;
 }
 
@@ -568,10 +559,7 @@
 
 .cta-subtitle {
     font-size: 11px;
-    font-weight: 600;
-    color: #c48b59;
     letter-spacing: 2.5px;
-    text-transform: uppercase;
     margin-bottom: 12px;
     z-index: 2;
     position: relative;
@@ -601,13 +589,15 @@
 }
 
 .services-cta-section .btn-solid-gold {
+    background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
+    box-shadow: 0 4px 15px rgba(71, 85, 105, 0.4);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
     padding: 16px 44px;
-    background-color: #c48b59;
-    border: 1.5px solid #c48b59;
+    
+    border: 1.5px solid #6c7a89;
     color: #ffffff;
     text-decoration: none;
     font-size: 12px;
@@ -619,9 +609,11 @@
 }
 
 .services-cta-section .btn-solid-gold:hover {
-    background-color: #aa7344;
+    background: linear-gradient(135deg, #718096 0%, #475569 50%, #1e293b 100%);
+    box-shadow: 0 6px 20px rgba(71, 85, 105, 0.6);
+    
     border-color: #aa7344;
-    box-shadow: 0 8px 24px rgba(196, 139, 89, 0.4);
+    box-shadow: 0 8px 24px rgba(108, 122, 137, 0.4);
     transform: translateY(-1px);
 }
 

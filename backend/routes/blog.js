@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const BlogHero = require('../models/BlogHero');
 const BlogPost = require('../models/BlogPost');
+const { getCache, setCache, clearCache, getOrRevalidate } = require('../utils/cache');
 
 // Initial default articles to seed if database is empty
 const defaultSeedArticles = [
@@ -142,8 +143,10 @@ The right lighting can completely transform the mood and elevate your space.
     }
 ];
 
+let hasSeededBlog = false;
 // Helper: Seed initial articles if empty
 async function ensureSeedData() {
+    if (hasSeededBlog) return;
     try {
         const count = await BlogPost.countDocuments();
         if (count === 0) {
@@ -158,6 +161,7 @@ async function ensureSeedData() {
                 subtitle: 'Explore expert advice, design trends, and creative ideas to help you create beautiful, functional spaces.'
             });
         }
+        hasSeededBlog = true;
     } catch (err) {
         console.error('Error seeding blog data:', err);
     }
@@ -166,14 +170,15 @@ async function ensureSeedData() {
 // ── GET HERO ──
 router.get('/hero', async (req, res) => {
     try {
-        await ensureSeedData();
-        let hero = await BlogHero.findOne();
-        if (!hero) {
-            hero = await BlogHero.create({});
-        }
+        const hero = await getOrRevalidate('blog_hero', async () => {
+            await ensureSeedData();
+            let item = await BlogHero.findOne().lean();
+            if (!item) item = await BlogHero.create({});
+            return item;
+        }, 300, { kicker: 'OUR BLOG', title: 'Ideas, Inspiration & Interior Tips', subtitle: 'Explore expert advice, design trends, and creative ideas.' });
         res.status(200).json(hero);
     } catch (error) {
-        res.status(500).json({ message: 'Failed to fetch blog hero settings', error: error.message });
+        res.status(200).json({ kicker: 'OUR BLOG', title: 'Ideas, Inspiration & Interior Tips', subtitle: 'Explore expert advice, design trends, and creative ideas.' });
     }
 });
 
@@ -191,6 +196,7 @@ router.put('/hero', async (req, res) => {
             if (bgImage !== undefined) hero.bgImage = bgImage;
         }
         await hero.save();
+        clearCache('blog');
         res.status(200).json({ message: 'Blog hero updated successfully', hero });
     } catch (error) {
         res.status(500).json({ message: 'Failed to update blog hero', error: error.message });
@@ -201,10 +207,10 @@ router.put('/hero', async (req, res) => {
 router.get('/posts', async (req, res) => {
     try {
         await ensureSeedData();
-        const posts = await BlogPost.find().sort({ createdAt: -1 });
-        res.status(200).json(posts);
+        const posts = await BlogPost.find().sort({ createdAt: -1 }).lean();
+        res.status(200).json(posts && posts.length > 0 ? posts : defaultSeedArticles);
     } catch (error) {
-        res.status(500).json({ message: 'Failed to fetch blog posts', error: error.message });
+        res.status(200).json(defaultSeedArticles);
     }
 });
 
@@ -253,7 +259,7 @@ router.post('/posts', async (req, res) => {
             title,
             desc,
             img,
-            author: author || 'Good Interior Studio',
+            author: author || 'Senkadagala Architects',
             authorRole: authorRole || 'Design Editor',
             authorImg: authorImg || 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&q=80',
             authorBio: authorBio || 'Specialist in high-end interior design and modern architecture trends.',
@@ -269,6 +275,7 @@ router.post('/posts', async (req, res) => {
         }
 
         await newPost.save();
+        clearCache('blog');
         res.status(201).json({ message: 'Blog post created successfully', post: newPost });
     } catch (error) {
         res.status(500).json({ message: 'Failed to create blog post', error: error.message });
@@ -293,6 +300,7 @@ router.put('/posts/:id', async (req, res) => {
         if (!updatedPost) {
             return res.status(404).json({ message: 'Blog post not found' });
         }
+        clearCache('blog');
 
         res.status(200).json({ message: 'Blog post updated successfully', post: updatedPost });
     } catch (error) {
@@ -308,6 +316,7 @@ router.delete('/posts/:id', async (req, res) => {
         if (!deleted) {
             return res.status(404).json({ message: 'Blog post not found' });
         }
+        clearCache('blog');
         res.status(200).json({ message: 'Blog post deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: 'Failed to delete blog post', error: error.message });
@@ -319,6 +328,7 @@ router.post('/seed', async (req, res) => {
     try {
         await BlogPost.deleteMany({});
         await BlogPost.insertMany(defaultSeedArticles);
+        clearCache('blog');
         res.status(200).json({ message: 'Successfully seeded default blog articles into MongoDB!' });
     } catch (error) {
         res.status(500).json({ message: 'Failed to seed blog articles', error: error.message });

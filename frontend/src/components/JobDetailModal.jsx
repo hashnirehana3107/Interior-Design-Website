@@ -41,7 +41,7 @@ const JOB_DETAILS_DATA = {
         location: 'Colombo, Sri Lanka',
         experience: '3 - 5 Years Experience',
         salaryRange: 'Negotiable (Based on Portfolio)',
-        overview: 'Good Interior Design Studio is looking for a experienced Interior Architect to oversee technical drawings, structural interior modifications, ceiling & lighting plans, and detailed architectural joinery for high-end developments.',
+        overview: 'Senkadagala Architects is looking for a experienced Interior Architect to oversee technical drawings, structural interior modifications, ceiling & lighting plans, and detailed architectural joinery for high-end developments.',
         responsibilities: [
             'Prepare comprehensive architectural working drawing sets, MEP coordination drawings, and joinery details.',
             'Design structural interior alterations, staircase details, wall paneling, and custom ceiling layouts.',
@@ -101,9 +101,9 @@ const JOB_DETAILS_DATA = {
         location: 'Colombo, Sri Lanka',
         experience: '2 - 4 Years Experience',
         salaryRange: 'Competitive + Bonus',
-        overview: 'We are seeking a dynamic Marketing Executive to drive Good Interior’s brand presence across digital channels, manage social media campaigns, produce luxury content, and nurture prospective client leads.',
+        overview: 'We are seeking a dynamic Marketing Executive to drive Senkadagala Architects’s brand presence across digital channels, manage social media campaigns, produce luxury content, and nurture prospective client leads.',
         responsibilities: [
-            'Develop and execute integrated digital marketing strategies across Instagram, LinkedIn, Pinterest, and Meta ads.',
+            'Develop and execute integrated digital marketing strategies across Instagram, LinkedIn, TikTok, and Meta ads.',
             'Curate high-quality visual content, photoshoots, video reels, and client story highlights.',
             'Manage website SEO content, monthly blog articles, and email newsletter campaigns.',
             'Monitor marketing performance metrics, website traffic analytics, and conversion rates.',
@@ -200,7 +200,7 @@ const JobDetailModal = ({ isOpen, onClose, jobTitle, jobData, onApplyClick }) =>
                 {/* Modal Header */}
                 <div className="jdm-header">
                     <div className="jdm-kicker-tag">
-                        <TbSparkles className="jdm-sparkle-icon" /> GOOD INTERIOR CAREERS
+                        <TbSparkles className="jdm-sparkle-icon" /> Senkadagala Architects CAREERS
                     </div>
                     <h2 className="jdm-job-title">{job.title}</h2>
                     <div className="jdm-badges-row">

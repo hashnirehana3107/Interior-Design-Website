@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import {
     TbChevronRight, TbChevronLeft, TbCalendar, TbClock, TbUser, TbBulb, TbArrowRight,
-    TbHome, TbLeaf, TbBrandFacebook, TbBrandTwitter, TbBrandPinterest, TbBrandLinkedin, TbMail,
+    TbHome, TbLeaf, TbBrandFacebook, TbBrandTwitter, TbBrandTiktok, TbBrandLinkedin, TbMail,
     TbSofa
 } from 'react-icons/tb';
 import { FiMonitor } from 'react-icons/fi';
@@ -172,7 +172,7 @@ const BlogDetail = () => {
                             <span className="meta-dot">•</span>
                             <span className="meta-item"><TbClock className="meta-icon" /> {currentArticle.readTime}</span>
                             <span className="meta-dot">•</span>
-                            <span className="meta-item"><TbUser className="meta-icon" /> By {currentArticle.author || 'Good Interior Studio'}</span>
+                            <span className="meta-item"><TbUser className="meta-icon" /> By {currentArticle.author || 'Senkadagala Architects'}</span>
                         </div>
 
                         <div className="blog-main-img-wrap">
@@ -205,7 +205,7 @@ const BlogDetail = () => {
                             <div className="share-icons">
                                 <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer" className="share-icon"><TbBrandFacebook /></a>
                                 <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(currentArticle.title)}`} target="_blank" rel="noopener noreferrer" className="share-icon"><TbBrandTwitter /></a>
-                                <a href={`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(window.location.href)}&media=${encodeURIComponent(currentArticle.img)}&description=${encodeURIComponent(currentArticle.title)}`} target="_blank" rel="noopener noreferrer" className="share-icon"><TbBrandPinterest /></a>
+                                <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" className="share-icon"><TbBrandTiktok /></a>
                                 <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer" className="share-icon"><TbBrandLinkedin /></a>
                                 <a href={`mailto:?subject=${encodeURIComponent(currentArticle.title)}&body=I thought you might find this interesting: ${encodeURIComponent(window.location.href)}`} className="share-icon"><TbMail /></a>
                             </div>
@@ -221,7 +221,7 @@ const BlogDetail = () => {
                             <div className="author-content">
                                 <img src={currentArticle.authorImg || "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&q=80"} alt={currentArticle.author} className="author-img" />
                                 <div className="author-info">
-                                    <h4>{currentArticle.author || 'Good Interior Studio'}</h4>
+                                    <h4>{currentArticle.author || 'Senkadagala Architects'}</h4>
                                     <span className="author-role">{currentArticle.authorRole || "Interior Designer"}</span>
                                 </div>
                             </div>
@@ -251,7 +251,7 @@ const BlogDetail = () => {
                         <div className="sidebar-subscribe" style={{ backgroundImage: `url(${heroBg})` }}>
                             <div className="subscribe-overlay">
                                 <div className="subs-icon">
-                                    <TbBulb style={{ fontSize: '24px', color: '#c48b59' }} />
+                                    <TbBulb style={{ fontSize: '24px', color: '#6c7a89' }} />
                                 </div>
                                 <h3>Design Inspiration<br />Delivered to You</h3>
                                 <p>Subscribe to our newsletter and get the latest tips, trends and ideas.</p>

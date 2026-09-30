@@ -174,7 +174,7 @@ const Galleries = () => {
  {(activeTab !== 'all' || sortOption !== 'ORDER') && (
  <button
  className="sort-btn"
- style={{ gap: '10px', color: '#B38058', borderColor: '#B38058' }}
+ style={{ gap: '10px', color: '#6c7a89', borderColor: '#6c7a89' }}
  onClick={() => {
  setActiveTab('all');
  setSortOption('ORDER');
@@ -297,7 +297,7 @@ const Galleries = () => {
  {/* Left Info Panel */}
  <div className="gallery-modal-panel">
  <div className="gallery-modal-panel-top">
- <span className="gallery-modal-kicker">GOOD INTERIOR</span>
+ <span className="gallery-modal-kicker">Senkadagala Architects</span>
  <div className="gallery-modal-gold-line"></div>
  <span className="gallery-modal-category">
  {filterCategories.find(c => c.key === selectedImage.type)?.label || (selectedImage.type ? selectedImage.type.toUpperCase() : 'UNCATEGORIZED')}

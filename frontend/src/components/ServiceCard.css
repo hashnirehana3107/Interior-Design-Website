@@ -58,7 +58,7 @@
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 2px;
-    background: rgba(179, 128, 88, 0.9);
+    background: rgba(108, 122, 137, 0.9);
     padding: 8px 16px;
     border-radius: 2px;
     text-transform: uppercase;
@@ -86,7 +86,7 @@
     align-items: center;
     justify-content: center;
     font-size: 24px;
-    color: #B38058;
+    color: #6c7a89;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
 
@@ -114,7 +114,7 @@
     font-family: 'Outfit', sans-serif;
     font-size: 11px;
     font-weight: 700;
-    color: #B38058;
+    color: #6c7a89;
     letter-spacing: 1.5px;
     display: inline-flex;
     align-items: center;
@@ -127,7 +127,7 @@
 
 .sc-link:hover {
     gap: 13px;
-    color: #9a6d45;
+    color: #475569;
 }
 
 /* ════════════════════════════════════════
@@ -166,7 +166,7 @@
     border-radius: 6px;
     overflow-y: auto;
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(179, 128, 88, 0.3);
+    border: 1px solid rgba(108, 122, 137, 0.3);
     display: flex;
     flex-direction: column;
     padding: 40px;
@@ -206,9 +206,9 @@
 }
 
 .sc-modal-close-btn:hover {
-    background: #B38058;
+    background: #6c7a89;
     color: #ffffff;
-    border-color: #B38058;
+    border-color: #6c7a89;
     transform: rotate(90deg);
 }
 
@@ -223,7 +223,7 @@
     font-family: 'Outfit', sans-serif;
     font-size: 11px;
     font-weight: 700;
-    color: #B38058;
+    color: #6c7a89;
     letter-spacing: 2.5px;
     text-transform: uppercase;
     display: block;
@@ -293,8 +293,8 @@
 }
 
 .sc-carousel-arrow:hover {
-    background: #B38058;
-    border-color: #B38058;
+    background: #6c7a89;
+    border-color: #6c7a89;
 }
 
 .sc-carousel-arrow.left {
@@ -352,9 +352,9 @@
 }
 
 .sc-thumb-btn.active {
-    border-color: #B38058;
+    border-color: #6c7a89;
     opacity: 1;
-    box-shadow: 0 0 10px rgba(179, 128, 88, 0.4);
+    box-shadow: 0 0 10px rgba(108, 122, 137, 0.4);
 }
 
 /* ── Right Column: Info & Features ── */
@@ -369,7 +369,7 @@
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 2px;
-    color: #B38058;
+    color: #6c7a89;
     text-transform: uppercase;
     margin: 0 0 10px;
 }
@@ -401,7 +401,7 @@
 }
 
 .sc-check-icon {
-    color: #B38058;
+    color: #6c7a89;
     font-size: 17px;
     flex-shrink: 0;
     margin-top: 2px;
@@ -413,7 +413,7 @@
     border: 1px solid #eae6df;
     padding: 16px 20px;
     border-radius: 4px;
-    border-left: 3px solid #B38058;
+    border-left: 3px solid #6c7a89;
 }
 
 .sc-deliverables-label {
@@ -442,7 +442,8 @@
 }
 
 .sc-btn-gold {
-    background-color: #B38058;
+    background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
+    box-shadow: 0 4px 15px rgba(71, 85, 105, 0.4);
     color: #ffffff;
     padding: 14px 28px;
     font-family: 'Outfit', sans-serif;
@@ -450,7 +451,7 @@
     font-weight: 700;
     letter-spacing: 1.5px;
     border: none;
-    border-radius: 2px;
+    border-radius: 4px;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -460,9 +461,10 @@
 }
 
 .sc-btn-gold:hover {
-    background-color: #9a6d45;
+    background: linear-gradient(135deg, #718096 0%, #475569 50%, #1e293b 100%);
     color: #ffffff;
-    box-shadow: 0 5px 15px rgba(179, 128, 88, 0.3);
+    box-shadow: 0 6px 20px rgba(71, 85, 105, 0.6);
+    transform: translateY(-2px);
 }
 
 .sc-btn-outline {

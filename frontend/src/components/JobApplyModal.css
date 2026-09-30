@@ -23,7 +23,7 @@
     padding: 36px 40px;
     position: relative;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(179, 128, 88, 0.2);
+    border: 1px solid rgba(108, 122, 137, 0.2);
 }
 
 .jam-close-btn {
@@ -45,9 +45,9 @@
 }
 
 .jam-close-btn:hover {
-    background: #b38058;
+    background: #6c7a89;
     color: #ffffff;
-    border-color: #b38058;
+    border-color: #6c7a89;
 }
 
 .jam-header {
@@ -59,7 +59,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    color: #b38058;
+    color: #6c7a89;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 2px;
@@ -132,15 +132,16 @@
 .jam-form-group select:focus,
 .jam-form-group textarea:focus {
     outline: none;
-    border-color: #b38058;
+    border-color: #6c7a89;
     background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(179, 128, 88, 0.15);
+    box-shadow: 0 0 0 3px rgba(108, 122, 137, 0.15);
 }
 
 .jam-submit-btn {
     width: 100%;
     padding: 14px;
-    background: linear-gradient(135deg, #b38058, #94633c);
+    background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
+    box-shadow: 0 4px 15px rgba(71, 85, 105, 0.4);
     color: #ffffff;
     font-weight: 700;
     font-size: 13px;
@@ -158,8 +159,8 @@
 }
 
 .jam-submit-btn:hover {
-    background: linear-gradient(135deg, #94633c, #7a4f2c);
-    box-shadow: 0 6px 16px rgba(179, 128, 88, 0.3);
+    background: linear-gradient(135deg, #718096 0%, #475569 50%, #1e293b 100%);
+    box-shadow: 0 6px 20px rgba(71, 85, 105, 0.6);
 }
 
 .jam-success-view {
@@ -209,13 +210,13 @@
     cursor: pointer;
     font-size: 12px;
     font-weight: 700;
-    color: #b38058;
+    color: #6c7a89;
     transition: all 0.2s ease;
 }
 
 .jam-file-label:hover {
     background: #fff8f3;
-    border-color: #b38058;
+    border-color: #6c7a89;
 }
 
 .jam-file-hint {

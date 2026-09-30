@@ -31,7 +31,7 @@ const contactPageSettingsSchema = new mongoose.Schema({
     map: {
         latitude: { type: Number, default: 6.8921 },
         longitude: { type: Number, default: 79.8612 },
-        label: { type: String, default: 'Good Interior Design Studio' },
+        label: { type: String, default: 'Senkadagala Architects' },
         address: { type: String, default: '123 Design Street, Colombo 05, Sri Lanka' }
     },
     // Follow Our Journey Section
@@ -41,7 +41,7 @@ const contactPageSettingsSchema = new mongoose.Schema({
         socialLinks: {
             facebook: { type: String, default: '' },
             instagram: { type: String, default: '' },
-            pinterest: { type: String, default: '' },
+            tiktok: { type: String, default: '' },
             linkedin: { type: String, default: '' }
         },
         images: [{ type: String }]

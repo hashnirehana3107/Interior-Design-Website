@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const User = require('../models/User');
+const { clearCache } = require('../utils/cache');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'interior_design_studio_jwt_secret_key_2026';
 
@@ -52,6 +53,7 @@ router.post('/register', async (req, res) => {
         });
 
         await newUser.save();
+        clearCache('admin_users');
         console.log(`✅ [DB WRITE SUCCESS] New User saved in database "${newUser._id}": ${newUser.email}`);
 
 
@@ -185,6 +187,7 @@ router.post('/google', async (req, res) => {
             });
 
             await user.save();
+            clearCache('admin_users');
             console.log(`✅ [REAL GOOGLE DB WRITE] New User created in MongoDB "${user._id}": ${user.email}`);
         } else {
             console.log(`✅ [REAL GOOGLE DB AUTH] Existing User authenticated in MongoDB "${user._id}": ${user.email}`);
@@ -331,19 +334,19 @@ router.post('/forgot-password', async (req, res) => {
         });
 
         await transporter.sendMail({
-            from: `"Good Interior Studio" <${process.env.EMAIL_USER}>`,
+            from: `"Senkadagala Architects" <${process.env.EMAIL_USER}>`,
             to: user.email,
-            subject: 'Password Reset Request — Good Interior Design Studio',
+            subject: 'Password Reset Request — Senkadagala Architects',
             html: `
                 <div style="font-family:'Segoe UI',Arial,sans-serif;background:#f8fafc;padding:30px;color:#1e293b;">
                     <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:12px;padding:30px;border:1px solid #e2e8f0;box-shadow:0 4px 12px rgba(0,0,0,0.05);">
                         <div style="text-align:center;padding-bottom:20px;border-bottom:2px solid #b38058;">
-                            <h2 style="color:#b38058;margin:0;font-size:24px;letter-spacing:1px;">GOOD INTERIOR DESIGN STUDIO</h2>
+                            <h2 style="color:#b38058;margin:0;font-size:24px;letter-spacing:1px;">Senkadagala Architects</h2>
                             <p style="font-size:12px;color:#64748b;margin:5px 0 0;letter-spacing:2px;">LUXURY ARCHITECTURE &amp; INTERIORS</p>
                         </div>
                         <div style="padding:28px 0 16px;">
                             <p style="font-size:16px;font-weight:600;color:#0f172a;">Dear ${user.fullName},</p>
-                            <p style="font-size:14px;line-height:1.7;color:#334155;">We received a request to reset your password for your Good Interior Design Studio account. Click the button below to set a new password. This link will expire in <strong>1 hour</strong>.</p>
+                            <p style="font-size:14px;line-height:1.7;color:#334155;">We received a request to reset your password for your Senkadagala Architects account. Click the button below to set a new password. This link will expire in <strong>1 hour</strong>.</p>
                             <div style="text-align:center;margin:28px 0;">
                                 <a href="${resetLink}" style="display:inline-block;background:linear-gradient(135deg,#b38058,#8c603e);color:#fff;text-decoration:none;padding:14px 32px;border-radius:8px;font-weight:700;font-size:15px;letter-spacing:0.5px;">RESET MY PASSWORD</a>
                             </div>
@@ -351,7 +354,7 @@ router.post('/forgot-password', async (req, res) => {
                         </div>
                         <div style="border-top:1px solid #e2e8f0;padding-top:20px;text-align:center;font-size:12px;color:#94a3b8;">
                             <p style="margin:0 0 4px;">Best Regards,</p>
-                            <p style="font-weight:700;color:#b38058;margin:0;">Good Interior Studio Executive Team</p>
+                            <p style="font-weight:700;color:#b38058;margin:0;">Senkadagala Architects Executive Team</p>
                         </div>
                     </div>
                 </div>`

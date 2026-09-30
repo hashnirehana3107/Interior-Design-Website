@@ -293,7 +293,7 @@ const Blog = () => {
 
                             {sortedPosts.length === 0 && (
                                 <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '60px 20px', color: '#888' }}>
-                                    <p style={{ fontSize: '14px', marginBottom: '12px' }}>No articles found for tag <strong style={{ color: '#ba8c53' }}>&ldquo;{selectedTag}&rdquo;</strong>.</p>
+                                    <p style={{ fontSize: '14px', marginBottom: '12px' }}>No articles found for tag <strong style={{ color: '#475569' }}>&ldquo;{selectedTag}&rdquo;</strong>.</p>
                                     <button onClick={() => setSelectedTag(null)} className="tag-clear-btn" style={{ fontSize: '12px', padding: '8px 18px' }}>Show All Articles</button>
                                 </div>
                             )}
@@ -331,7 +331,7 @@ const Blog = () => {
                             <div className="subscribe-overlay">
                                 <div className="subs-icon">
                                     <img
-                                        src="data:image/svg+xml;utf8,<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M19 4H5C3.89543 4 3 4.89543 3 6V18C3 19.1046 3.89543 20 5 20H19C20.1046 20 21 19.1046 21 18V6C21 4.89543 20.1046 4 19 4Z' stroke='%23C48B59' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/><path d='M3 7L12 13L21 7' stroke='%23C48B59' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>"
+                                        src="data:image/svg+xml;utf8,<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M19 4H5C3.89543 4 3 4.89543 3 6V18C3 19.1046 3.89543 20 5 20H19C20.1046 20 21 19.1046 21 18V6C21 4.89543 20.1046 4 19 4Z' stroke='%236c7a89' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/><path d='M3 7L12 13L21 7' stroke='%236c7a89' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>"
                                         alt="Mail"
                                     />
                                 </div>

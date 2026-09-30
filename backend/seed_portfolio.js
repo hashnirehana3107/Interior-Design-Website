@@ -74,14 +74,18 @@ const projectsData = baseProjects.map(project => {
     };
 });
 
-mongoose.connect(process.env.MONGODB_URI).then(async () => {
-    console.log('Connected to MongoDB. Clearing existing projects and seeding 12 projects...');
-    await Project.deleteMany({}); // Delete all existing
+mongoose.connect(process.env.MONGODB_URI, { family: 4 }).then(async () => {
+    const existingCount = await Project.countDocuments();
+    if (existingCount > 0) {
+        console.log(`⚠️  Skipping seed — ${existingCount} projects already exist in the database.`);
+        console.log('   To force re-seed, manually delete all projects from MongoDB Atlas first.');
+        process.exit(0);
+    }
+    console.log('No projects found. Seeding 12 sample projects...');
     for (let p of projectsData) {
-        // Add random dates just to keep sorting order somewhat consistent with original ids
         await Project.create(p);
     }
-    console.log('Successfully seeded 12 projects!');
+    console.log('✅ Successfully seeded 12 projects!');
     process.exit(0);
 }).catch(err => {
     console.error(err);

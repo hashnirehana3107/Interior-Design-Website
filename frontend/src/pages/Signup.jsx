@@ -7,7 +7,7 @@ import { RiBookmarkLine } from 'react-icons/ri';
 import { LuFolderOpen } from 'react-icons/lu';
 import { BsEnvelopePaper } from 'react-icons/bs';
 import { IoShieldCheckmarkOutline, IoCheckmarkCircle } from 'react-icons/io5';
-import logo from '../assets/logo.svg';
+import logo from '../assets/senkadagala_logo.png';
 import detailImg from '../assets/detail_img.png';
 import { useAuth } from '../context/AuthContext';
 import { countriesList } from '../utils/countries';
@@ -239,15 +239,6 @@ const Signup = () => {
         <div className="login-page-container">
             {/* Top Bar */}
             <div className="login-top-bar">
-                <Link to="/" className="login-logo-container">
-                    <div className="login-logo-mark">
-                        <img src={logo} alt="Good Interior" />
-                    </div>
-                    <div className="login-logo-text">
-                        <span className="logo-title">GOOD INTERIOR</span>
-                        <span className="logo-subtitle">DESIGN STUDIO</span>
-                    </div>
-                </Link>
                 <Link to="/" className="back-to-home">
                     <FaArrowLeft className="back-icon" /> Back to Home
                 </Link>
@@ -262,7 +253,7 @@ const Signup = () => {
                         {/* Left Side Text & Features */}
                         <div className="login-text-content signup-text-content">
                             <h2 dangerouslySetInnerHTML={{ __html: authBranding?.signupTitle ? authBranding.signupTitle.replace(/\n/g, '<br/>') : 'Elevate Your<br />Interior Experience' }}></h2>
-                            <p dangerouslySetInnerHTML={{ __html: authBranding?.signupSubtitle ? authBranding.signupSubtitle.replace(/\n/g, '<br/>') : 'Join Good Interior Studio to curate your dream space,<br />track design consultations, and access exclusive<br />portfolio concepts.' }}></p>
+                            <p dangerouslySetInnerHTML={{ __html: authBranding?.signupSubtitle ? authBranding.signupSubtitle.replace(/\n/g, '<br/>') : 'Join Senkadagala Architects to curate your dream space,<br />track design consultations, and access exclusive<br />portfolio concepts.' }}></p>
 
                             <div className="signup-features-box">
                                 {(authBranding?.signupFeatures?.length > 0 ? authBranding.signupFeatures : [
@@ -362,8 +353,8 @@ const Signup = () => {
                                             >
                                                 <option value="" disabled hidden>Select country</option>
                                                 {countriesList.map((c) => (
-                                                     <option key={c} value={c}>{c}</option>
-                                                 ))}
+                                                    <option key={c} value={c}>{c}</option>
+                                                ))}
                                             </select>
                                             <FaChevronDown className="select-arrow" />
                                         </div>

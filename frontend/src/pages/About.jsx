@@ -54,7 +54,7 @@ const About = () => {
     if (loading) {
         return (
             <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#0b0d11' }}>
-                <div style={{ color: '#d4af37', fontSize: '1.2rem', letterSpacing: '2px' }}>LOADING EXPERIENCES...</div>
+                <div style={{ color: '#9ca3af', fontSize: '1.2rem', letterSpacing: '2px' }}>LOADING EXPERIENCES...</div>
             </div>
         );
     }

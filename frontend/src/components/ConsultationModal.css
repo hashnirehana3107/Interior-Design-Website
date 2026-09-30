@@ -32,7 +32,7 @@
     border-radius: 6px;
     overflow-y: auto;
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
-    border: 1px solid rgba(179, 128, 88, 0.35);
+    border: 1px solid rgba(108, 122, 137, 0.35);
     padding: 40px 45px;
     animation: cmPop 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -70,9 +70,9 @@
 }
 
 .cm-close-btn:hover {
-    background: #B38058;
+    background: #6c7a89;
     color: #ffffff;
-    border-color: #B38058;
+    border-color: #6c7a89;
     transform: rotate(90deg);
 }
 
@@ -87,7 +87,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    color: #B38058;
+    color: #6c7a89;
     margin-bottom: 8px;
 }
 
@@ -166,8 +166,8 @@
 .cm-form-group input:focus,
 .cm-form-group select:focus,
 .cm-form-group textarea:focus {
-    border-color: #B38058;
-    box-shadow: 0 0 0 3px rgba(179, 128, 88, 0.15);
+    border-color: #6c7a89;
+    box-shadow: 0 0 0 3px rgba(108, 122, 137, 0.15);
 }
 
 .cm-form-footer {
@@ -180,10 +180,11 @@
 .cm-submit-btn {
     width: 100%;
     padding: 16px;
-    background-color: #B38058;
+    background: #000000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     color: #ffffff;
     border: none;
-    border-radius: 2px;
+    border-radius: 6px;
     font-family: 'Outfit', sans-serif;
     font-size: 11.5px;
     font-weight: 700;
@@ -198,8 +199,9 @@
 }
 
 .cm-submit-btn:hover {
-    background-color: #9a6d45;
-    box-shadow: 0 6px 20px rgba(179, 128, 88, 0.35);
+    background: #1a1a1a;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    transform: translateY(-2px);
 }
 
 .cm-privacy-note {
