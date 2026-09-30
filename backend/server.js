@@ -31,14 +31,12 @@ const connectDB = async () => {
 
   if (!cachedPromise) {
     const opts = {
-      serverSelectionTimeoutMS: 12000,
-      connectTimeoutMS: 12000,
-      socketTimeoutMS: 45000,
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 5000,
+      socketTimeoutMS: 30000,
       maxPoolSize: 10,
+      family: 4, // Force IPv4 resolution for Vercel serverless compatibility
     };
-    if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
-      opts.family = 4;
-    }
 
     cachedPromise = mongoose.connect(MONGODB_URI, opts)
       .then((conn) => {
