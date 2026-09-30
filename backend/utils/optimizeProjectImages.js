@@ -1,11 +1,16 @@
-const sharp = require('sharp');
+let sharp;
+try {
+    sharp = require('sharp');
+} catch (err) {
+    console.warn('Sharp module not available or failed to load in serverless environment:', err.message);
+}
 
 const INPUT_SIZE_LIMIT = 300_000;
 const OUTPUT_SIZE_LIMIT = 220 * 1024;
 const DATA_URL_PATTERN = /^data:image\/[\w.+-]+;base64,(.+)$/s;
 
 const optimizeImage = async (value) => {
-    if (typeof value !== 'string' || Buffer.byteLength(value, 'utf8') <= INPUT_SIZE_LIMIT) {
+    if (!sharp || typeof value !== 'string' || Buffer.byteLength(value, 'utf8') <= INPUT_SIZE_LIMIT) {
         return value;
     }
 

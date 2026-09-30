@@ -123,26 +123,34 @@ app.use(async (req, res, next) => {
   }
 });
 
-// Routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/consultations', require('./routes/consultations'));
-app.use('/api/contact', require('./routes/contact'));
-app.use('/api/hero-slides', require('./routes/heroSlides'));
-app.use('/api/projects', require('./routes/projects'));
-app.use('/api/services', require('./routes/services'));
-app.use('/api/gallery', require('./routes/gallery'));
-app.use('/api/contact-settings', require('./routes/contactSettings'));
-app.use('/api/blog', require('./routes/blog'));
-app.use('/api/subscribers', require('./routes/subscribers'));
-app.use('/api/testimonials', require('./routes/testimonials'));
-app.use('/api/about', require('./routes/about'));
-app.use('/api/users', require('./routes/users'));
-app.use('/api/home-settings', require('./routes/homePageSettings'));
-app.use('/api/global-settings', require('./routes/globalSettings'));
-app.use('/api/auth-branding', require('./routes/authBranding'));
-app.use('/api/careers', require('./routes/careers'));
+// Helper to mount routes with and without /api prefix for Vercel serverless compatibility
+const mountRoute = (path, router) => {
+  app.use(path, router);
+  if (path.startsWith('/api/')) {
+    app.use(path.substring(4), router);
+  }
+};
 
-app.get('/api/health', (req, res) => {
+// Routes
+mountRoute('/api/auth', require('./routes/auth'));
+mountRoute('/api/consultations', require('./routes/consultations'));
+mountRoute('/api/contact', require('./routes/contact'));
+mountRoute('/api/hero-slides', require('./routes/heroSlides'));
+mountRoute('/api/projects', require('./routes/projects'));
+mountRoute('/api/services', require('./routes/services'));
+mountRoute('/api/gallery', require('./routes/gallery'));
+mountRoute('/api/contact-settings', require('./routes/contactSettings'));
+mountRoute('/api/blog', require('./routes/blog'));
+mountRoute('/api/subscribers', require('./routes/subscribers'));
+mountRoute('/api/testimonials', require('./routes/testimonials'));
+mountRoute('/api/about', require('./routes/about'));
+mountRoute('/api/users', require('./routes/users'));
+mountRoute('/api/home-settings', require('./routes/homePageSettings'));
+mountRoute('/api/global-settings', require('./routes/globalSettings'));
+mountRoute('/api/auth-branding', require('./routes/authBranding'));
+mountRoute('/api/careers', require('./routes/careers'));
+
+app.get(['/api/health', '/health'], (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Backend is running correctly.' });
 });
 
