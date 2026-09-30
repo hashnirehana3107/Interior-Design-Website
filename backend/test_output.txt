@@ -1,0 +1,51 @@
+--- TEST 1: First Request ---
+Finished 23 endpoints in 10073 ms total
+  /api/hero-slides                 65ms 200 (1561b)
+  /api/home-settings               57ms 200 (162896b)
+  /api/projects                    10058ms ERR:TIMEOUT
+  /api/projects/hero               58ms 200 (38729b)
+  /api/services                    10057ms ERR:TIMEOUT
+  /api/services/hero               74ms 200 (974069b)
+  /api/services/process            460ms 200 (1276b)
+  /api/services/why-features       439ms 200 (956b)
+  /api/gallery/hero                77ms 200 (39533b)
+  /api/gallery/items               78ms 200 (3436b)
+  /api/contact-settings            10053ms ERR:TIMEOUT
+  /api/contact-settings/features   10053ms ERR:TIMEOUT
+  /api/blog/hero                   99ms 200 (202054b)
+  /api/blog/posts                  90ms 200 (11058b)
+  /api/testimonials/hero           94ms 200 (39030b)
+  /api/testimonials                95ms 200 (5874b)
+  /api/about                       10052ms ERR:TIMEOUT
+  /api/users                       588ms 200 (2085b)
+  /api/global-settings             102ms 200 (36064b)
+  /api/auth-branding               103ms 200 (1055b)
+  /api/careers/hero                120ms 200 (165954b)
+  /api/careers/jobs                111ms 200 (10395b)
+  /api/careers/applications        10052ms ERR:TIMEOUT
+
+--- TEST 2: Second Request (Warm In-Memory Cache) ---
+⚡ Finished 23 endpoints in 9598 ms total!
+  /api/hero-slides                 9597ms 200 (1561b)
+  /api/home-settings               5028ms 500 (76b)
+  /api/projects                    5029ms 500 (111b)
+  /api/projects/hero               5032ms 500 (44b)
+  /api/services                    5034ms 500 (38b)
+  /api/services/hero               45ms 200 (974069b)
+  /api/services/process            5041ms 500 (43b)
+  /api/services/why-features       5045ms 500 (42b)
+  /api/gallery/hero                5047ms 500 (51b)
+  /api/gallery/items               5050ms 500 (43b)
+  /api/contact-settings            5053ms 500 (52b)
+  /api/contact-settings/features   5059ms 500 (39b)
+  /api/blog/hero                   45ms 200 (202054b)
+  /api/blog/posts                  5060ms 500 (113b)
+  /api/testimonials/hero           5061ms 500 (106b)
+  /api/testimonials                5062ms 500 (114b)
+  /api/about                       5063ms 500 (45b)
+  /api/users                       51ms 200 (2085b)
+  /api/global-settings             5067ms 500 (51b)
+  /api/auth-branding               5069ms 500 (58b)
+  /api/careers/hero                5072ms 500 (50b)
+  /api/careers/jobs                5086ms 500 (43b)
+  /api/careers/applications        5089ms 500 (47b)

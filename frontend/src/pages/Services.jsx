@@ -10,7 +10,7 @@ import { ImQuotesLeft } from 'react-icons/im';
 import heroBg from '../assets/hero_bg.png';
 import aboutImg from '../assets/about_img.png';
 import detailImg from '../assets/detail_img.png';
-import { servicesData } from '../data/servicesData';
+
 import ServiceCard from '../components/ServiceCard';
 import { useAuth } from '../context/AuthContext';
 import './Services.css';
@@ -61,7 +61,7 @@ const renderWhyIcon = (iconName) => {
 const Services = () => {
     const { openConsultation } = useAuth();
     const [heroData, setHeroData] = useState(null);
-    const [servicesList, setServicesList] = useState(servicesData);
+    const [servicesList, setServicesList] = useState([]);
     const [processSteps, setProcessSteps] = useState(defaultProcessSteps);
     const [whyFeatures, setWhyFeatures] = useState(defaultWhyFeatures);
     const [loading, setLoading] = useState(true);
@@ -103,7 +103,6 @@ const Services = () => {
                 }
             } catch (err) {
                 console.error('Failed to fetch services page data:', err);
-                setServicesList(servicesData);
             } finally {
                 setLoading(false);
             }
@@ -114,6 +113,14 @@ const Services = () => {
 
     const heroImage = heroData?.bgImage || heroBg;
     const heroTitleHtml = heroData?.title || 'Comprehensive<br /><span class="highlight-text">Interior Design</span> Services';
+
+    if (loading) {
+        return (
+            <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#0b0d11' }}>
+                <div style={{ color: '#9ca3af', fontSize: '1.2rem', letterSpacing: '2px' }}>LOADING SERVICES...</div>
+            </div>
+        );
+    }
 
     return (
         <div className="services-page">
